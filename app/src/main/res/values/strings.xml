@@ -1,3 +1,32 @@
 <resources>
-    <string name="app_name">Comic Vine Android Native App</string>
+<string name="app_name">Comic Vine Android Native App</string>
+<string name="number_of_episodes">Number of episodes</string>
+<string name="description">Description</string>
+<string name="summary">Summary</string>
+<string name="characters_page">Characters</string>
+<string name="movies_page">Movies</string>">
+<string name="issues_page">Issues</string>">
+<string name="volumes_page">Volumes</string>">
+<string name="character_details">Character Details</string>
+<string name="release_date">Release Date</string>
+<string name="aliases">Aliases</string>
+<string name="screen_one">Screen one</string>
+<string name="screen_two">Screen two</string>
+<string name="open_drawer">Open drawer</string>
+<string name="yes">Yes</string>
+<string name="do_you_want_to_exit_the_app">Do you want to exit the app?</string>
+<string name="close_the_app">Close the app</string>
+<string name="no">No</string>
+<string name="there_is_no_internet">There is no internet!</string>
+<string name="enter_username">Enter username</string>
+<string name="enter_password">Enter password</string>
+<string name="login">Login</string>
+<string name="biography">Biography</string>
+<string name="gender">Gender</string>
+<string name="birth_day">Birthday</string>
+<string name="creators">Creators</string>
+<string name="powers">Powers</string>
+<string name="powers_page">Powers</string>
+<string name="remove_from_favorite">Remove from favorite</string>
+<string name="do_you_wanna_remove_this_from_favorite">Do you want to remove this item from favorite list?</string>
 </resources>
