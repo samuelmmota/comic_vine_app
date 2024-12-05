@@ -25,7 +25,9 @@ android {
     productFlavors {
         create("develop") {
             dimension = "version"
-            buildConfigField("String", "API_KEY", providers.gradleProperty("COMIC_VINE_API_KEY").get())
+            buildConfigField(
+                "String", "API_KEY", providers.gradleProperty("COMIC_VINE_API_KEY").get()
+            )
         }
     }
 
@@ -33,8 +35,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -48,10 +49,9 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-   /* room {
-        schemaDirectory("$projectDir/schemas")
-    }*/
+    }/* room {
+         schemaDirectory("$projectDir/schemas")
+     }*/
 }
 
 dependencies {

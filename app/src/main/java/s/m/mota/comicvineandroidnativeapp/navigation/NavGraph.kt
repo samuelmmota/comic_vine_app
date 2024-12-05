@@ -13,6 +13,7 @@ import androidx.navigation.navArgument
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.CharactersScreen
 import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_detail.CharacterDetailsScreen
+import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.IssuesScreen
 
 @Composable
 fun Navigation(
@@ -46,6 +47,7 @@ fun Navigation(
             IssuesScreen(
                 navController = navController
             )
+        }
     }
 }
 
