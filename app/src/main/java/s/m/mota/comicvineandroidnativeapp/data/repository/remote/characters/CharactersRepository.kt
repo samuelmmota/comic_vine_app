@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiService
-import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.CharactersPagingDataSource
+import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.paging_datasource.CharactersPagingDataSource
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicVineApiResponse
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
@@ -22,7 +22,7 @@ class CharactersRepository @Inject constructor(
         config = PagingConfig(pageSize = 100)
     ).flow
 
-    override suspend fun characterDetail(characterApiId: String): Flow<DataState<ComicCharacter>> = flow {
+    override suspend fun characterDetails(characterApiId: String): Flow<DataState<ComicCharacter>> = flow {
         emit(DataState.Loading)
         try {
             val characterResult: ComicVineApiResponse<ComicCharacter> =

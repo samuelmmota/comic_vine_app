@@ -1,8 +1,8 @@
 package s.m.mota.comicvineandroidnativeapp.data.model.character
 
 import com.google.gson.annotations.SerializedName
-import s.m.mota.comicvineandroidnativeapp.data.model.Image
 import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
+import s.m.mota.comicvineandroidnativeapp.data.model.Image
 
 data class ComicCharacter(
     @SerializedName("aliases") val aliases: String?,
@@ -55,11 +55,27 @@ data class ComicCharacter(
 
     fun getAliasesAsString(): String? = getAliasesAsList()?.joinToString(", ")
 
+    fun getCreatorsAsList(): List<String>? {
+        return creators?.map { it.name }?.takeIf { it.isNotEmpty() }
+    }
+
+    fun getCreatorsAsString(): String? = getCreatorsAsList()?.joinToString(", ")
+
+    fun getPowersAsList(): List<String>? {
+        return powers?.map { it.name }?.takeIf { it.isNotEmpty() }
+    }
+
+    fun getPowersAsString(): String? = getPowersAsList()?.joinToString(", ")
 
     fun getCharacterApiId(): String? {
         val apiDetailUrl = apiDetailUrl ?: return null
         val parts = apiDetailUrl.split("/").dropLast(1)
         return parts.lastOrNull()
+    }
+
+    fun getImageUrl(): String? {
+        return image?.superUrl ?: image?.screenLargeUrl ?: image?.screenUrl ?: image?.originalUrl
+        ?: image?.mediumUrl
     }
 }
 

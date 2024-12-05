@@ -1,8 +1,9 @@
-package s.m.mota.comicvineandroidnativeapp.data.datasource.remote
+package s.m.mota.comicvineandroidnativeapp.data.datasource.remote.paging_datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import retrofit2.HttpException
+import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiService
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 
 import timber.log.Timber

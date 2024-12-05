@@ -2,7 +2,6 @@ package s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_detai
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,29 +10,30 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.repository.remote.characters.CharactersRepository
+import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class CharacterDetailViewModel @Inject constructor(
+class CharacterDetailsViewModel @Inject constructor(
     private val repository: CharactersRepository,
 ) : ViewModel() {
-    private val _characterDetail = MutableStateFlow<ComicCharacter?>(null)
-    val characterDetail get() = _characterDetail.asStateFlow()
+    private val _characterDetails = MutableStateFlow<ComicCharacter?>(null)
+    val characterDetails get() = _characterDetails.asStateFlow()
 
     private val _isLoading = MutableStateFlow<Boolean>(false)
     val isLoading get() = _isLoading.asStateFlow()
 
     fun characterDetail(characterApiId: String) {
         viewModelScope.launch {
-            repository.characterDetail(characterApiId).onEach {
+            repository.characterDetails(characterApiId).onEach {
                 when (it) {
                     is DataState.Loading -> {
                         _isLoading.value = true
                     }
 
                     is DataState.Success -> {
-                        _characterDetail.value = it.data
+                        _characterDetails.value = it.data
                         _isLoading.value = false
                     }
 

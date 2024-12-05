@@ -1,4 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.data.datasource.remote
+package s.m.mota.comicvineandroidnativeapp.data.datasource.remote.paging_datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

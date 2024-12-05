@@ -44,6 +44,7 @@ import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
+import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
 import s.m.mota.comicvineandroidnativeapp.ui.theme.DefaultBackgroundColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
@@ -169,37 +170,4 @@ fun CharacterListItem(item: ComicCharacter, navController: NavController) {
             )
         }
     }
-}
-
-@Composable
-fun AnnotatedHeaderContent(
-    header: String, content: String, maxLines: Int = 2, modifier: Modifier = Modifier
-) {
-    val annotatedString = buildAnnotatedString {
-        withStyle(
-            style = MaterialTheme.typography.titleSmall.copy(
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.SansSerif
-            ).toSpanStyle()
-        ) {
-            append(header)
-        }
-        withStyle(
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.onSurface
-            ).toSpanStyle()
-        ) {
-            append(content)
-        }
-    }
-
-    Text(
-        text = annotatedString,
-        modifier = modifier
-            .padding(bottom = 5.dp)
-            .wrapContentSize(Alignment.Center),
-        maxLines = maxLines,
-        overflow = TextOverflow.Ellipsis
-    )
 }
