@@ -2,11 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "s.m.mota.comicvineandroidnativeapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "s.m.mota.comicvineandroidnativeapp"
@@ -16,6 +17,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    namespace = "s.m.mota.comicvineandroidnativeapp"
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("develop") {
+            dimension = "version"
+            buildConfigField("String", "API_KEY", providers.gradleProperty("COMIC_VINE_API_KEY").get())
+        }
     }
 
     buildTypes {
@@ -36,7 +47,11 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+   /* room {
+        schemaDirectory("$projectDir/schemas")
+    }*/
 }
 
 dependencies {
@@ -56,4 +71,30 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Additional libraries
+    implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.multidex)
+    implementation(libs.material)
+
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+    implementation(libs.gson)
+
+    // Image Loading
+    implementation(libs.landscapist.coil)
+    implementation(libs.landscapist.placeholder)
+    implementation(libs.landscapist.animation)
+
+    // Dependency Injection
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
+
+    // Logger
+    implementation(libs.timber)
 }
