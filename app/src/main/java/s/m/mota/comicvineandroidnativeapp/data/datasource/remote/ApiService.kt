@@ -5,6 +5,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 import s.m.mota.comicvineandroidnativeapp.BuildConfig
+import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.data.model.Formats
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicVineApiResponse
@@ -53,4 +54,22 @@ interface ApiService {
         @Query("format") format: String = Formats.JSON.name,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
     ): ComicVineApiResponse<List<SearchResultModel>>
+
+    @Headers("User-Agent: ComicVineClient/1.0")
+    @GET("issues/")
+    suspend fun getIssues(
+        @Query("field_list") filedList: String? = null,
+        //"id,name,aliases,publisher,api_detail_url,site_detail_url,image",
+        @Query("limit") limit: Int = 100,
+        @Query("offset") offset: Int? = null,
+        @Query("sort") sort: String? = null,// EX: &sort=field:direction where direction is either asc or desc
+        @Query("filter") filter: String? = null,
+        /*The result can be filtered by the marked fields in the Fields section below.
+          Single filter: &filter=field:value
+          Multiple filters: &filter=field:value,field:value
+          Date filters: &filter=field:start value|end value (using datetime format)
+    */
+        @Query("format") format: String = Formats.JSON.name,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+    ): ComicVineApiResponse<List<ComicIssue>>
 }

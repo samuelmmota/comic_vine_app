@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -26,11 +25,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
@@ -43,6 +40,7 @@ import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
+import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
 import s.m.mota.comicvineandroidnativeapp.ui.theme.DefaultBackgroundColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
@@ -155,49 +153,5 @@ fun IssueListItem(item: ComicIssue, navController: NavController) {
         item.id?.let { text ->
             AnnotatedHeaderContent(header = "ID: ", content = text.toString())
         }
-        item.getAliasesAsString()?.let { text ->
-            AnnotatedHeaderContent(header = "Aliases: ", content = text, maxLines = 4)
-        }
-        item.countOfIssueAppearances?.let { text ->
-            AnnotatedHeaderContent(header = "Issue count: ", content = text.toString())
-        }
-        item.publisher?.name?.let { text ->
-            AnnotatedHeaderContent(
-                header = "Publisher:", content = text
-            )
-        }
     }
-}
-
-@Composable
-fun AnnotatedHeaderContent(
-    header: String, content: String, maxLines: Int = 2, modifier: Modifier = Modifier
-) {
-    val annotatedString = buildAnnotatedString {
-        withStyle(
-            style = MaterialTheme.typography.titleSmall.copy(
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.SansSerif
-            ).toSpanStyle()
-        ) {
-            append(header)
-        }
-        withStyle(
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.onSurface
-            ).toSpanStyle()
-        ) {
-            append(content)
-        }
-    }
-
-    Text(
-        text = annotatedString,
-        modifier = modifier
-            .padding(bottom = 5.dp)
-            .wrapContentSize(Alignment.Center),
-        maxLines = maxLines,
-        overflow = TextOverflow.Ellipsis
-    )
 }
