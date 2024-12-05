@@ -1,4 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.data.repository.remote
+package s.m.mota.comicvineandroidnativeapp.data.repository.remote.search_results
 
 import kotlinx.coroutines.flow.Flow
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ResourceType
