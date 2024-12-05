@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.data.model.response.SearchResultModel
-import s.m.mota.comicvineandroidnativeapp.data.repository.remote.SearchBaseModelRepository
+import s.m.mota.comicvineandroidnativeapp.data.repository.remote.SearchResultModelRepository
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val searchRepository: SearchBaseModelRepository) :
+class MainViewModel @Inject constructor(private val searchRepository: SearchResultModelRepository) :
     ViewModel() {
     val searchResultData: MutableState<DataState<List<SearchResultModel>>?> = mutableStateOf(null)
 
