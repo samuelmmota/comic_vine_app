@@ -1,16 +1,19 @@
 package s.m.mota.comicvineandroidnativeapp.di
 
+import android.content.Context
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiService
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiURL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.MockInterceptor
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -36,7 +39,7 @@ object NetworkModule {
     /**
      * Provides custom OkkHttp
      */
-    @Singleton
+    /*@Singleton
     @Provides
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val okHttpClient = OkHttpClient().newBuilder()
@@ -48,7 +51,24 @@ object NetworkModule {
         okHttpClient.addInterceptor(loggingInterceptor)
         okHttpClient.build()
         return okHttpClient.build()
+    }*/
+    @Singleton
+    @Provides
+    fun provideMockInterceptor(@ApplicationContext context: Context): MockInterceptor {
+        return MockInterceptor(context)
     }
+
+    /**
+     * Provides custom OkHttpClient with MockInterceptor
+     */
+    @Singleton
+    @Provides
+    fun provideMockOkHttpClient(mockInterceptor: MockInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(mockInterceptor)
+            .build()
+    }
+
     /**
      * Provides converter factory for retrofit
      */
@@ -81,5 +101,4 @@ object NetworkModule {
     fun provideRestApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
-
 }
