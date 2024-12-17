@@ -92,7 +92,7 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi) {
         AnnotatedHeaderContent(
             header = "Super Name:\t",
             content = characterUi.name,
-            modifier = Modifier.padding(top = 10.dp),
+            modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleLarge.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
             ),
@@ -102,11 +102,11 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi) {
         AnnotatedHeaderContent(
             header = "Real Name: ",
             content = characterUi.realName,
-            modifier = Modifier.padding(top = 10.dp),
-            headerStyle = MaterialTheme.typography.titleLarge.copy(
+            modifier = Modifier.padding(top = 5.dp),
+            headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
             ),
-            contentStyle = MaterialTheme.typography.bodyLarge
+            contentStyle = MaterialTheme.typography.bodyMedium
         )
 
 
@@ -117,19 +117,19 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi) {
         AnnotatedHeaderContent(
             header = "First Appearance: ",
             content = characterUi.firstAppearedInIssue,
-            modifier = Modifier.padding(top = 10.dp),
-            headerStyle = MaterialTheme.typography.titleLarge.copy(
+            modifier = Modifier.padding(top = 5.dp),
+            headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
             ),
-            contentStyle = MaterialTheme.typography.bodyLarge
+            contentStyle = MaterialTheme.typography.bodyMedium
         )
 
         Text(
             text = stringResource(R.string.description),
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 17.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = 10.dp)
+            style=  MaterialTheme.typography.titleMedium.copy(
+                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
+            ),
+            modifier = Modifier.padding(top = 5.dp)
         )
         HtmlView(text = characterUi.description)
     }
@@ -140,13 +140,13 @@ fun AliasesSection(aliases: List<String>) {
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 8.dp)
+            .padding(top = 5.dp)
     ) {
         Text(
             text = stringResource(R.string.aliases) + ":",
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 17.sp,
-            fontWeight = FontWeight.SemiBold,
+            style =  MaterialTheme.typography.titleMedium.copy(
+                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
+            ),
         )
         Spacer(modifier = Modifier.width(10.dp))
         LazyRow(
@@ -173,13 +173,13 @@ fun CreatorsSection(creators: List<String>) {
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 8.dp)
+            .padding(top = 5.dp)
     ) {
         Text(
             text = stringResource(R.string.creators) + ":",
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 17.sp,
-            fontWeight = FontWeight.SemiBold,
+            style =  MaterialTheme.typography.titleMedium.copy(
+                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
+            ),
         )
         Spacer(modifier = Modifier.width(8.dp))
         LazyRow(
@@ -206,13 +206,13 @@ fun PowersSection(powers: List<String>) {
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 8.dp)
+            .padding(top = 5.dp)
     ) {
         Text(
             text = stringResource(R.string.powers) + ":",
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 17.sp,
-            fontWeight = FontWeight.SemiBold,
+            style =  MaterialTheme.typography.titleMedium.copy(
+                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
+            ),
         )
         Spacer(modifier = Modifier.width(8.dp))
         LazyRow(
