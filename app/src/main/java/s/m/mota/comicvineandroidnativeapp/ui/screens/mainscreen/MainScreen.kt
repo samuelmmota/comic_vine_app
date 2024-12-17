@@ -99,7 +99,7 @@ fun MainScreen() {
             )
         }, navigationIcon = {
             when (currentRoute(navController)) {
-                Screen.CharacterDetails.route -> {
+                Screen.CharacterDetailsScreen.route -> {
                     val activeScreen = currentRoute(navController)
                     IconButton(onClick = {
                         if (activeScreen == Screen.CharactersScreen.route) {
@@ -126,7 +126,7 @@ fun MainScreen() {
                 isAppBarVisible.value = false
             }) {
                 if (currentRoute(navController) !in listOf(
-                        Screen.CharacterDetails.route,
+                        Screen.CharacterDetailsScreen.route,
                     )
                 ) {
                     Icon(
@@ -186,7 +186,7 @@ fun MainView(
 ) {
     Column {
         if (currentRoute(navigator) !in listOf(
-                Screen.CharacterDetails.route,
+                Screen.CharacterDetailsScreen.route,
             )
         ) {/*if (!isFavorite) {
                 MovieTvSeriesTabView(navigator, pagerState)

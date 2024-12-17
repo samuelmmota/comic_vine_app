@@ -1,6 +1,7 @@
 package s.m.mota.comicvineandroidnativeapp.ui.screens.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity

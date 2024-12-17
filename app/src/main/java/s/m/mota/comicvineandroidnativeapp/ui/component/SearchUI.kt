@@ -33,7 +33,6 @@ import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ResourceType
 import s.m.mota.comicvineandroidnativeapp.data.model.response.SearchResultModel
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
-import s.m.mota.comicvineandroidnativeapp.ui.theme.DefaultBackgroundColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.cornerRadius
 import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
@@ -51,7 +50,7 @@ fun SearchUI(
             .fillMaxWidth()
             .heightIn(0.dp, 350.dp) // define max height
             .clip(RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp))
-            .background(color = DefaultBackgroundColor)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(top = 8.dp)
 
     ) {
@@ -68,7 +67,7 @@ fun SearchUI(
                                     when (resourceType) {
                                         ResourceType.CHARACTER -> {
                                             item.getCharacterApiId()?.let { characterApiId ->
-                                                navController.navigate(Screen.CharacterDetails.route.plus("/$characterApiId"))
+                                                navController.navigate(Screen.CharacterDetailsScreen.route.plus("/$characterApiId"))
                                             }
                                         }
                                         else -> {}
@@ -97,7 +96,7 @@ fun SearchUI(
                                 +ShimmerPlugin(
                                     shimmer = Shimmer.Flash(
                                         baseColor = SecondaryFontColor,
-                                        highlightColor = DefaultBackgroundColor
+                                        highlightColor = MaterialTheme.colorScheme.background
                                     )
                                 )
                             },
