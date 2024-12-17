@@ -1,4 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_detail
+package s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,10 +38,8 @@ import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.R
-import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.HtmlView
-import s.m.mota.comicvineandroidnativeapp.ui.theme.DefaultBackgroundColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
 
@@ -63,7 +61,7 @@ fun CharacterDetailsImageView(imageUrl: String, onFavoriteClick: () -> Unit) {
                 +CircularRevealPlugin(duration = CircularRevealPluginDuration)
                 +ShimmerPlugin(
                     shimmer = Shimmer.Flash(
-                        baseColor = SecondaryFontColor, highlightColor = DefaultBackgroundColor
+                        baseColor = SecondaryFontColor, highlightColor = MaterialTheme.colorScheme.background
                     )
                 )
             })
@@ -85,7 +83,7 @@ fun CharacterDetailsImageView(imageUrl: String, onFavoriteClick: () -> Unit) {
 }
 
 @Composable
-fun CharacterDetailsView(characterUi: ComicCharacterUi) {
+fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -134,66 +132,6 @@ fun CharacterDetailsView(characterUi: ComicCharacterUi) {
             modifier = Modifier.padding(top = 10.dp)
         )
         HtmlView(text = characterUi.description)
-    }
-}
-
-@Composable
-fun CharacterDetailsView_Original(character: ComicCharacter) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp)
-    ) {
-        AnnotatedHeaderContent(
-            header = "Super Name:\t",
-            content = character.name ?: "No Super Name",
-            modifier = Modifier.padding(top = 10.dp),
-            headerStyle = MaterialTheme.typography.titleLarge.copy(
-                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
-            ),
-            contentStyle = MaterialTheme.typography.bodyLarge
-        )
-
-        AnnotatedHeaderContent(
-            header = "Real Name: ",
-            content = character.realName ?: "No Real Name",
-            modifier = Modifier.padding(top = 10.dp),
-            headerStyle = MaterialTheme.typography.titleLarge.copy(
-                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
-            ),
-            contentStyle = MaterialTheme.typography.bodyLarge
-        )
-
-        character.getAliasesAsList()?.let { aliasList ->
-            AliasesSection(aliasList)
-        }
-
-        /*character.creators?.let { creators ->
-            CreatorsSection(creators)
-        }
-
-        character.powers?.let { powers ->
-            PowersSection(powers)
-        }*/
-
-        AnnotatedHeaderContent(
-            header = "First Appearance: ",
-            content = character.firstAppearedInIssue?.name ?: "Unavailable Info",
-            modifier = Modifier.padding(top = 10.dp),
-            headerStyle = MaterialTheme.typography.titleLarge.copy(
-                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
-            ),
-            contentStyle = MaterialTheme.typography.bodyLarge
-        )
-
-        Text(
-            text = stringResource(R.string.description),
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 17.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = 10.dp)
-        )
-        HtmlView(text = character.description ?: "No description available")
     }
 }
 

@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import retrofit2.HttpException
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiService
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
+import s.m.mota.comicvineandroidnativeapp.utils.LIST_RESULT_FETCH_LIMIT
 
 import timber.log.Timber
 import java.io.IOException
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class CharactersPagingDataSource @Inject constructor(
     private val apiService: ApiService,
-    private val limit: Int = 10,
+    private val limit: Int =  LIST_RESULT_FETCH_LIMIT,
     private val sort: String? = null,
     private val filter: String? = null
 ) : PagingSource<Int, ComicCharacter>() {

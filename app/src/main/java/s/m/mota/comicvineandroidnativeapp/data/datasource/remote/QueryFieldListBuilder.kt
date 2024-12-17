@@ -62,4 +62,35 @@ class QueryFieldListBuilder {
 
     val ALIASES: QueryFieldListBuilder
         get() = addField("aliases")
+
+    val ISSUE_NUMBER: QueryFieldListBuilder
+        get() = addField("issue_number")
+
+    val HAS_STAFF_REVIEW: QueryFieldListBuilder
+        get() = addField("has_staff_review")
+
+    val CHARACTER_CREDITS: QueryFieldListBuilder
+        get() = addField("character_credits")
+
+    val CHARACTERS_DIED_IN: QueryFieldListBuilder
+        get() = addField("characters_died_in")
+
+    val COVER_DATE: QueryFieldListBuilder
+        get() = addField("cover_date")
+
+    val DATE_LAST_UPDATED: QueryFieldListBuilder
+        get() = addField("date_last_updated")
+
+    val DECK: QueryFieldListBuilder
+        get() = addField("deck")
+
+    val DESCRIPTION: QueryFieldListBuilder
+        get() = addField("description")
+
+    val FIRST_APPEARANCE_CHARACTERS: QueryFieldListBuilder
+        get() = addField("first_appearance_characters")
+
+
+    val STORE_DATE: QueryFieldListBuilder
+        get() = addField("store_date")
 }

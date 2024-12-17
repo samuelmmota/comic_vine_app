@@ -39,53 +39,33 @@ data class ComicCharacter(
     @SerializedName("teams") val teams: List<Team>,
     @SerializedName("volume_credits") val volumeCredits: List<Volume>*/
 ) {
-    fun getGender(): String {
-        return when (gender) {
+    val genderDescription: String
+        get() = when (gender) {
             1 -> "Male"
             2 -> "Female"
             3 -> "Other"
             else -> "No summary Available"
         }
-    }
 
-    fun getAliasesAsList(): List<String>? {
-        if (aliases.isNullOrEmpty()) return null
-        return aliases.split("\n")
-    }
 
-    fun getAliasesAsString(): String? = getAliasesAsList()?.joinToString(", ")
+    val aliasesList: List<String>?
+        get() {
+            if (aliases.isNullOrEmpty()) return null
+            return aliases.split("\n")
+        }
 
-    fun getCreatorsAsList(): List<String>? {
-        return creators?.map { it.name }?.takeIf { it.isNotEmpty() }
-    }
+    val aliasesAsString: String? get() = aliasesList?.joinToString(", ")
 
-    fun getCreatorsAsString(): String? = getCreatorsAsList()?.joinToString(", ")
+    val creatorsList: List<String>? get() = creators?.map { it.name }?.takeIf { it.isNotEmpty() }
 
-    fun getPowersAsList(): List<String>? {
-        return powers?.map { it.name }?.takeIf { it.isNotEmpty() }
-    }
+    val creatorsFormated: String? get() = creatorsList?.joinToString(", ")
 
-    fun getPowersAsString(): String? = getPowersAsList()?.joinToString(", ")
+    val powersList: List<String>? get() = powers?.map { it.name }?.takeIf { it.isNotEmpty() }
 
-    fun getCharacterApiId(): String? {
-        val apiDetailUrl = apiDetailUrl ?: return null
-        val parts = apiDetailUrl.split("/").dropLast(1)
-        return parts.lastOrNull()
-    }
+    val powersFormatedString: String? get() = powersList?.joinToString(", ")
 
-    fun getImageUrl(): String? {
-        return image?.superUrl ?: image?.screenLargeUrl ?: image?.screenUrl ?: image?.originalUrl
-        ?: image?.mediumUrl
-    }
+    val characterApiId: String? get() = apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()
 }
-
-//Nested Character Data Classes
-data class CharacterReference(val apiDetailUrl: String, val name: String)
-data class Movie(val apiDetailUrl: String, val name: String)
-data class StoryArc(val apiDetailUrl: String, val name: String)
-data class Team(val apiDetailUrl: String, val name: String)
-data class Volume(val apiDetailUrl: String, val name: String)
-
 
 
 

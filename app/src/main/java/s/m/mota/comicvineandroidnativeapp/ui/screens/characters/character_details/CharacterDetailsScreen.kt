@@ -1,4 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_detail
+package s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,8 +10,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -27,20 +27,25 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
-import s.m.mota.comicvineandroidnativeapp.ui.theme.DefaultBackgroundColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 
 @Composable
 fun CharacterDetailsScreen(navController: NavController, characterApiId: String) {
-    val viewModel = hiltViewModel<CharacterDetailsViewModel>()
+    val viewModel: CharacterDetailsViewModel = hiltViewModel<CharacterDetailsViewModel>()
     val isLoading by viewModel.isLoading.collectAsState()
     val characterDetail by viewModel.characterDetails.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
+    /*
+    Use LaunchedEffect if:
+    The parameter (characterApiId) is only relevant to the UI composition.
+    The data fetching logic depends on something transient in the @Composable function's scope (e.g., a navigation argument).
+    The ViewModel is used in multiple screens with different contexts.
+    This will happen when the user navigates between screens.
     LaunchedEffect(Unit) {
         viewModel.characterDetail(characterApiId)
-    }
+    }*/
 
     val showButton by remember {
         derivedStateOf {
@@ -51,7 +56,7 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(DefaultBackgroundColor)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         LazyColumn(
             state = lazyListState, modifier = Modifier.fillMaxSize()
@@ -61,12 +66,16 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
             }
             if (isLoading.not()) {
                 item {
-                    CharacterDetailsImageView(viewModel.toComicCharacter(characterDetail).imageUrl) {
-                        //onFavoriteButtonClick action
+                    characterDetail?.let {
+                        CharacterDetailsImageView(it.imageUrl) {
+                            //onFavoriteButtonClick action
+                        }
                     }
                 }
                 item {
-                    CharacterDetailsView(viewModel.toComicCharacter(characterDetail))
+                    characterDetail?.let {
+                        CharacterDetailsView(it)
+                    }
                 }
             }
         }

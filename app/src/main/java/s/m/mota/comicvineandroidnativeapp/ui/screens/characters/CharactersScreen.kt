@@ -12,6 +12,6 @@ fun CharactersScreen(
     val characterViewModel = hiltViewModel<CharactersViewModel>()
     CharactersListView(
         navController = navController,
-        characterItems = characterViewModel.allCharacters.collectAsLazyPagingItems(),
+        characterItems = characterViewModel.allCharactersUi.collectAsLazyPagingItems(),
     )
 }

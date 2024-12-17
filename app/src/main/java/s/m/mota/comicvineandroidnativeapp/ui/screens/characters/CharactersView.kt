@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -26,11 +25,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
@@ -41,11 +38,9 @@ import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import kotlinx.coroutines.launch
-import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
-import s.m.mota.comicvineandroidnativeapp.ui.theme.DefaultBackgroundColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.cornerRadius
@@ -56,7 +51,7 @@ import s.m.mota.comicvineandroidnativeapp.utils.extensions.pagingLoadingState
 @Composable
 fun CharactersListView(
     navController: NavController,
-    characterItems: LazyPagingItems<ComicCharacter>,
+    characterItems: LazyPagingItems<ComicCharacterUi>,
 ) {
     val progressBar = remember { mutableStateOf(false) }
     val lazyListState = rememberLazyGridState()
@@ -68,7 +63,7 @@ fun CharactersListView(
         }
     }
 
-    Box(modifier = Modifier.background(DefaultBackgroundColor)) {
+    Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
         CircularIndeterminateProgressBar(isDisplayed = progressBar.value, 0.4f)
         LazyVerticalGrid(state = lazyListState,
             columns = GridCells.Fixed(2),
@@ -109,18 +104,17 @@ fun CharactersListView(
 
 
 @Composable
-fun CharacterListItem(item: ComicCharacter, navController: NavController) {
+fun CharacterListItem(item: ComicCharacterUi, navController: NavController) {
     Column(modifier = Modifier
         .padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 10.dp)
         .clickable {
             item
-                .getCharacterApiId()
-                ?.let { characterApiId ->
-                    navController.navigate(Screen.CharacterDetails.route.plus("/$characterApiId"))
+                .characterApiId?.let { characterApiId ->
+                    navController.navigate(Screen.CharacterDetailsScreen.route.plus("/$characterApiId"))
                 }
         }) {
         Text(
-            text = item.name ?: "No Name",
+            text = item.name,
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .align(Alignment.CenterHorizontally),
@@ -137,7 +131,7 @@ fun CharacterListItem(item: ComicCharacter, navController: NavController) {
                 .size(250.dp)
                 .cornerRadius(10),
             //.clickable {},
-            imageModel = { item.image!!.superUrl },
+            imageModel = { item.imageUrl },
             imageOptions = ImageOptions(
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
@@ -150,24 +144,16 @@ fun CharacterListItem(item: ComicCharacter, navController: NavController) {
                 )
                 +ShimmerPlugin(
                     shimmer = Shimmer.Flash(
-                        baseColor = SecondaryFontColor, highlightColor = DefaultBackgroundColor
+                        baseColor = SecondaryFontColor,
+                        highlightColor = MaterialTheme.colorScheme.background
                     )
                 )
             },
         )
-        item.id?.let { text ->
-            AnnotatedHeaderContent(header = "ID: ", content = text.toString())
-        }
-        item.getAliasesAsString()?.let { text ->
-            AnnotatedHeaderContent(header = "Aliases: ", content = text, maxLines = 4)
-        }
-        item.countOfIssueAppearances?.let { text ->
-            AnnotatedHeaderContent(header = "Issue count: ", content = text.toString())
-        }
-        item.publisher?.name?.let { text ->
-            AnnotatedHeaderContent(
-                header = "Publisher:", content = text
-            )
-        }
+
+        AnnotatedHeaderContent(header = "ID: ", content = item.id)
+        AnnotatedHeaderContent(header = "Aliases: ", content = item.aliases, maxLines = 4)
+        AnnotatedHeaderContent(header = "Issue count: ", content = item.issueCount)
+        AnnotatedHeaderContent(header = "Publisher:", content = item.publisher)
     }
 }
