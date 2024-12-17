@@ -10,7 +10,6 @@ import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.paging_datasour
 import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicVineApiResponse
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
-
 import javax.inject.Inject
 
 class IssuesRepository @Inject constructor(
@@ -25,11 +24,11 @@ class IssuesRepository @Inject constructor(
     override suspend fun issueDetails(issueApiId: String): Flow<DataState<ComicIssue>> = flow {
         emit(DataState.Loading)
         try {
-            /*val issueResult: ComicVineApiResponse<ComicIssue> =
+            val issueResult: ComicVineApiResponse<ComicIssue> =
                 apiService.getIssueDetails(issueApiId)
             if (issueResult.results != null) {
                 emit(DataState.Success(issueResult.results))
-            }*/
+            }
             //TODO: Deal with null
 
         } catch (e: Exception) {

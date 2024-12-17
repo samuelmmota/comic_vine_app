@@ -39,9 +39,10 @@ import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
+import s.m.mota.comicvineandroidnativeapp.data.model.toComicIssueUi
+import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
-import s.m.mota.comicvineandroidnativeapp.ui.theme.DefaultBackgroundColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.cornerRadius
@@ -52,7 +53,7 @@ import s.m.mota.comicvineandroidnativeapp.utils.extensions.pagingLoadingState
 @Composable
 fun IssuesListView(
     navController: NavController,
-    issueItems: LazyPagingItems<ComicIssue>,
+    issueItems: LazyPagingItems<ComicIssueUi>,
 ) {
     val progressBar = remember { mutableStateOf(false) }
     val lazyListState = rememberLazyGridState()
@@ -64,7 +65,7 @@ fun IssuesListView(
         }
     }
 
-    Box(modifier = Modifier.background(DefaultBackgroundColor)) {
+    Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
         CircularIndeterminateProgressBar(isDisplayed = progressBar.value, 0.4f)
         LazyVerticalGrid(state = lazyListState,
             columns = GridCells.Fixed(2),
@@ -105,17 +106,17 @@ fun IssuesListView(
 
 
 @Composable
-fun IssueListItem(item: ComicIssue, navController: NavController) {
+fun IssueListItem(item: ComicIssueUi, navController: NavController) {
     Column(modifier = Modifier
         .padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 10.dp)
         .clickable {
-            /*item.getCharacterApiId()
-                ?.let { characterApiId ->
-                    navController.navigate(Screen.CharacterDetails.route.plus("/$characterApiId"))
-                }  */
+            item.issueApiId
+                ?.let { issueApiId ->
+                    navController.navigate(Screen.IssueDetailsScreen.route.plus("/$issueApiId"))
+                }
         }) {
         Text(
-            text = item.name ?: "No Name",
+            text = item.name,
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .align(Alignment.CenterHorizontally),
@@ -127,12 +128,13 @@ fun IssueListItem(item: ComicIssue, navController: NavController) {
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
+        println(item.imageUrl)
         CoilImage(
             modifier = Modifier
                 .size(250.dp)
                 .cornerRadius(10),
             //.clickable {},
-            imageModel = { item.image!!.superUrl },
+            imageModel = { item.imageUrl },
             imageOptions = ImageOptions(
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
@@ -145,13 +147,14 @@ fun IssueListItem(item: ComicIssue, navController: NavController) {
                 )
                 +ShimmerPlugin(
                     shimmer = Shimmer.Flash(
-                        baseColor = SecondaryFontColor, highlightColor = DefaultBackgroundColor
+                        baseColor = SecondaryFontColor,
+                        highlightColor = MaterialTheme.colorScheme.background
                     )
                 )
             },
         )
-        item.id?.let { text ->
-            AnnotatedHeaderContent(header = "ID: ", content = text.toString())
-        }
+
+        AnnotatedHeaderContent(header = "ID: ", content = item.id)
+        AnnotatedHeaderContent(header = "Issue Number: ", content = item.issueNumber)
     }
 }

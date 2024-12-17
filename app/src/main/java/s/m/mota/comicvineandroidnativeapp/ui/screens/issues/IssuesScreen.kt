@@ -12,6 +12,6 @@ fun IssuesScreen(
     val issueViewModel = hiltViewModel<IssueViewModel>()
     IssuesListView(
         navController = navController,
-        issueItems = issueViewModel.allIssues.collectAsLazyPagingItems(),
+        issueItems = issueViewModel.allIssuesUi.collectAsLazyPagingItems(),
     )
 }

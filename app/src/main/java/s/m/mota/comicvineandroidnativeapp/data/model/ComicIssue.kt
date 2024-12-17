@@ -14,6 +14,7 @@ data class ComicIssue(
     @SerializedName("date_last_updated") val dateLastUpdated: String?, // Last update date on Comic Vine
     @SerializedName("deck") val deck: String?, // Brief summary
     @SerializedName("description") val description: String?, // Detailed description
+    @SerializedName("associated_images") val associatedImages: List<AssociatedImage>?,
     //@SerializedName("disbanded_teams") val disbandedTeams: List<Team>?, // Teams disbanded in the issue
     @SerializedName("first_appearance_characters") val firstAppearanceCharacters: List<ComicCharacter>?, // Characters appearing for the first time
     //@SerializedName("first_appearance_concepts") val firstAppearanceConcepts: List<Concept>?, // Concepts appearing for the first time
@@ -35,4 +36,34 @@ data class ComicIssue(
     //@SerializedName("team_credits") val teamCredits: List<Team>?, // Teams in the issue
     //@SerializedName("teams_disbanded_in") val teamsDisbandedIn: List<Team>?, // Teams disbanded in the issue
     //@SerializedName("volume") val volume: Volume? // Volume this issue belongs to
+) {
+    val aliasesList: List<String>?
+        get() {
+            if (aliases.isNullOrEmpty()) return null
+            return aliases.split("\n")
+        }
+
+    val aliasesAsString: String? get() = aliasesList?.joinToString(", ")
+
+    val issueApiId: String? get() = apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()
+
+    val listImages: List<String> get() {
+       val primaryImage : String? =  image?.superUrl?: image?.screenLargeUrl?: image?.screenUrl?: image?.originalUrl
+        val secondaryImagesList: List<String>? = associatedImages?.mapNotNull {
+            it.originalUrl
+        }
+        return if (primaryImage != null) {
+            listOf(primaryImage) + (secondaryImagesList ?: emptyList())
+        } else {
+            secondaryImagesList ?: emptyList()
+        }
+    }
+}
+
+
+data class AssociatedImage(
+    @SerializedName("original_url") val originalUrl: String?,
+    @SerializedName("id") val id: Int?,
+    @SerializedName("caption") val caption: String?,
+    @SerializedName("image_tags") val imageTags: String?
 )
