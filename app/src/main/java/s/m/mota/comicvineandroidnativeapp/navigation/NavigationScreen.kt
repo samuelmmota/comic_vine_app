@@ -30,10 +30,15 @@ sealed class Screen(
     data object CharactersScreen : Screen(route = Routes.CHARACTERS_SCREEN_ROUTE)
     data object IssuesScreen : Screen(route = Routes.ISSUES_SCREEN_ROUTE)
 
-    data object CharacterDetails : Screen(
+    data object CharacterDetailsScreen : Screen(
         route = Routes.CHARACTER_DETAILS_ROUTE,
         objectName = "characterApiId",
         objectPath = "/{characterApiId}"
+    )
+    data object IssueDetailsScreen : Screen(
+        route = Routes.ISSUE_DETAILS_SCREEN_ROUTE,
+        objectName = "issueApiId",
+        objectPath = "/{issueApiId}"
     )
 
     // Bottom Navigation

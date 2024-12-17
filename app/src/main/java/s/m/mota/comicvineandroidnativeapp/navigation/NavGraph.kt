@@ -12,8 +12,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.CharactersScreen
-import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_detail.CharacterDetailsScreen
+import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_details.CharacterDetailsScreen
 import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.IssuesScreen
+import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.issue_details.IssueDetailsScreen
 
 @Composable
 fun Navigation(
@@ -28,13 +29,13 @@ fun Navigation(
         }
         // Character Details
         composable(
-            Screen.CharacterDetails.route.plus(Screen.CharacterDetails.objectPath),
-            arguments = listOf(navArgument(Screen.CharacterDetails.objectName) {
+            Screen.CharacterDetailsScreen.route.plus(Screen.CharacterDetailsScreen.objectPath),
+            arguments = listOf(navArgument(Screen.CharacterDetailsScreen.objectName) {
                 type = NavType.StringType
             })
         ) {
             label = stringResource(R.string.character_details)
-            val characterApiId = it.arguments?.getString(Screen.CharacterDetails.objectName)
+            val characterApiId = it.arguments?.getString(Screen.CharacterDetailsScreen.objectName)
             characterApiId?.let {
                 CharacterDetailsScreen(
                     navController = navController, characterApiId
@@ -48,6 +49,21 @@ fun Navigation(
                 navController = navController
             )
         }
+        // Issue Details
+        composable(
+            Screen.IssueDetailsScreen.route.plus(Screen.IssueDetailsScreen.objectPath),
+            arguments = listOf(navArgument(Screen.IssueDetailsScreen.objectName) {
+                type = NavType.StringType
+            })
+        ) {
+            label = stringResource(R.string.issue_details)
+            val issueApiId = it.arguments?.getString(Screen.IssueDetailsScreen.objectName)
+            issueApiId?.let {
+                IssueDetailsScreen(
+                    navController = navController, issueApiId
+                )
+            }
+        }
     }
 }
 
@@ -55,7 +71,7 @@ fun Navigation(
 fun navigationTitle(navController: NavController): String {
     return when (currentRoute(navController)) {
         Screen.CharactersScreen.route -> stringResource(id = R.string.app_name)
-        Screen.CharacterDetails.route -> stringResource(id = R.string.character_details)
+        Screen.CharacterDetailsScreen.route -> stringResource(id = R.string.character_details)
         else -> {
             stringResource(R.string.app_name)
         }
