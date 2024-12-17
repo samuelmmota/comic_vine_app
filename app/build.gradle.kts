@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.text.google.fonts)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -89,6 +90,9 @@ dependencies {
     implementation(libs.landscapist.coil)
     implementation(libs.landscapist.placeholder)
     implementation(libs.landscapist.animation)
+    implementation (libs.coil.compose)
+    implementation(libs.androidx.foundation)
+
 
     // Dependency Injection
     implementation(libs.hilt.android)
@@ -97,4 +101,10 @@ dependencies {
 
     // Logger
     implementation(libs.timber)
+    implementation(libs.accompanist.systemuicontroller)
+
+
+
+
+// implementation "com.google.accompanist:accompanist-pager:0.32.0"
 }

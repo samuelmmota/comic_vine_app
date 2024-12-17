@@ -6,6 +6,7 @@ import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiService
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicVineApiResponse
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ResourceType
 import s.m.mota.comicvineandroidnativeapp.data.model.response.SearchResultModel
+import s.m.mota.comicvineandroidnativeapp.utils.SEARCH_RESULT_FETCH_LIMIT
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 import javax.inject.Inject
 
@@ -25,6 +26,7 @@ class SearchResultModelRepository @Inject constructor(
             val searchResults: ComicVineApiResponse<List<SearchResultModel>> =
                 apiService.getSearchResults(
                     query = query,
+                    limit = SEARCH_RESULT_FETCH_LIMIT
                 )
             if (searchResults.results != null) {
                 emit(DataState.Success(searchResults.results))
@@ -41,7 +43,8 @@ class SearchResultModelRepository @Inject constructor(
         try {
             val searchResults: ComicVineApiResponse<List<SearchResultModel>> =
                 apiService.getSearchResults(
-                    query = query, resources = types.joinToString { it.typeName +"," }
+                    query = query, resources = types.joinToString { it.typeName +"," },
+                    limit = SEARCH_RESULT_FETCH_LIMIT
                 )
             if (searchResults.results != null) {
                 emit(DataState.Success(searchResults.results))
