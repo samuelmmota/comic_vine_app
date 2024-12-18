@@ -72,6 +72,8 @@ fun navigationTitle(navController: NavController): String {
     return when (currentRoute(navController)) {
         Screen.CharactersScreen.route -> stringResource(id = R.string.app_name)
         Screen.CharacterDetailsScreen.route -> stringResource(id = R.string.character_details)
+        Screen.IssuesScreen.route -> stringResource(id = R.string.issues)
+        Screen.IssueDetailsScreen.route -> stringResource(id = R.string.issue_details)
         else -> {
             stringResource(R.string.app_name)
         }

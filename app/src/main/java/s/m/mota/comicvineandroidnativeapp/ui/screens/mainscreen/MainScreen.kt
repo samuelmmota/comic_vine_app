@@ -99,7 +99,10 @@ fun MainScreen() {
             )
         }, navigationIcon = {
             when (currentRoute(navController)) {
-                Screen.CharacterDetailsScreen.route -> {
+                in listOf(
+                    Screen.CharacterDetailsScreen.route,
+                    Screen.IssueDetailsScreen.route
+                ) -> {
                     val activeScreen = currentRoute(navController)
                     IconButton(onClick = {
                         if (activeScreen == Screen.CharactersScreen.route) {
