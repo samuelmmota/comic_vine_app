@@ -20,13 +20,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
+import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
+import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHtmlContent
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 
 @Composable
@@ -36,7 +39,7 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
     val characterDetail by viewModel.characterDetails.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-
+    val parsedDescription by viewModel.parsedDescription.collectAsState()
     /*
     Use LaunchedEffect if:
     The parameter (characterApiId) is only relevant to the UI composition.
@@ -52,7 +55,6 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
             lazyListState.firstVisibleItemIndex > 1
         }
     }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -77,9 +79,15 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
                         CharacterDetailsView(it)
                     }
                 }
+                item {
+                    parsedDescription?.let {
+                        AnnotatedHtmlContent(
+                            stringResource(R.string.description), (it)
+                        )
+                    }
+                }
             }
         }
-
         if (showButton) {
             FloatingActionButton(
                 onClick = {

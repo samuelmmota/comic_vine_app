@@ -1,17 +1,23 @@
 package s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_details
 
+import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import s.m.mota.comicvineandroidnativeapp.data.model.toComicCharacterDetailsUi
 import s.m.mota.comicvineandroidnativeapp.data.repository.remote.characters.CharactersRepository
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
+import s.m.mota.comicvineandroidnativeapp.utils.Utils
+import s.m.mota.comicvineandroidnativeapp.utils.Utils.parseHtmlAsync
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 import timber.log.Timber
 import javax.inject.Inject
@@ -27,6 +33,9 @@ class CharacterDetailsViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow<Boolean>(false)
     val isLoading get() = _isLoading.asStateFlow()
 
+    private val _parsedDescription = MutableStateFlow<AnnotatedString?>(null)
+    val parsedDescription: StateFlow<AnnotatedString?> get() = _parsedDescription.asStateFlow()
+
 
     init {
         if (characterApiId != null) {
@@ -34,8 +43,17 @@ class CharacterDetailsViewModel @Inject constructor(
         }
     }
 
+
+    suspend fun parseHtml(description: String) {
+        withContext(Dispatchers.IO) {
+            val parsedText = parseHtmlAsync(description)
+            val anotatedString = Utils.parseHtmlToAnnotatedString(parsedText)
+            _parsedDescription.value = anotatedString
+        }
+    }
+
     fun getCharacterDetails(characterApiId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.characterDetails(characterApiId).onEach {
                 when (it) {
                     is DataState.Loading -> {
@@ -45,6 +63,7 @@ class CharacterDetailsViewModel @Inject constructor(
                     is DataState.Success -> {
                         _characterDetails.value = it.data.toComicCharacterDetailsUi()
                         _isLoading.value = false
+                        parseHtml(_characterDetails.value!!.description)
                     }
 
                     is DataState.Error -> {

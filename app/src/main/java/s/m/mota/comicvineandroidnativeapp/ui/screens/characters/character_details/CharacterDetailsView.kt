@@ -39,7 +39,6 @@ import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
-import s.m.mota.comicvineandroidnativeapp.ui.component.text.HtmlView
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
 
@@ -123,15 +122,6 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi) {
             ),
             contentStyle = MaterialTheme.typography.bodyMedium
         )
-
-        Text(
-            text = stringResource(R.string.description),
-            style=  MaterialTheme.typography.titleMedium.copy(
-                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
-            ),
-            modifier = Modifier.padding(top = 5.dp)
-        )
-        HtmlView(text = characterUi.description)
     }
 }
 
