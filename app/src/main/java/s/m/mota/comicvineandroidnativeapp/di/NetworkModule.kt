@@ -14,6 +14,7 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.MockInterceptor
+import s.m.mota.comicvineandroidnativeapp.utils.DEVELOPMENT_MOCK_API
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -36,22 +37,6 @@ object NetworkModule {
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
-    /**
-     * Provides custom OkkHttp
-     */
-    /*@Singleton
-    @Provides
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        val okHttpClient = OkHttpClient().newBuilder()
-
-        okHttpClient.callTimeout(40, TimeUnit.SECONDS)
-        okHttpClient.connectTimeout(40, TimeUnit.SECONDS)
-        okHttpClient.readTimeout(40, TimeUnit.SECONDS)
-        okHttpClient.writeTimeout(40, TimeUnit.SECONDS)
-        okHttpClient.addInterceptor(loggingInterceptor)
-        okHttpClient.build()
-        return okHttpClient.build()
-    }*/
     @Singleton
     @Provides
     fun provideMockInterceptor(@ApplicationContext context: Context): MockInterceptor {
@@ -63,10 +48,21 @@ object NetworkModule {
      */
     @Singleton
     @Provides
-    fun provideMockOkHttpClient(mockInterceptor: MockInterceptor): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(mockInterceptor)
-            .build()
+    fun provideOkHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        mockInterceptor: MockInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder().apply {
+            callTimeout(40, TimeUnit.SECONDS)
+            connectTimeout(40, TimeUnit.SECONDS)
+            readTimeout(40, TimeUnit.SECONDS)
+            writeTimeout(40, TimeUnit.SECONDS)
+            if (DEVELOPMENT_MOCK_API) {
+                addInterceptor(mockInterceptor) // Use mock interceptor if in development mode
+            } else {
+                addInterceptor(loggingInterceptor) // Use logging interceptor for real API
+            }
+        }.build()
     }
 
     /**

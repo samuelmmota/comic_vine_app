@@ -69,7 +69,6 @@ interface ApiService {
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
     ): ComicVineApiResponse<List<ComicIssue>>
 
-
     @Headers("User-Agent: ComicVineClient/1.0")
     @GET("issue/{issueApiId}/")
     suspend fun getIssueDetails(

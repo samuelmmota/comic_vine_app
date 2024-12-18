@@ -38,6 +38,10 @@ class MockInterceptor(private val context: Context) : Interceptor {
                 R.raw.volumes_mock_api_data, context
             )
 
+            request.url.encodedPath.contains("search/") -> loadJsonFromRaw(
+                R.raw.search_mock_api_data, context
+            )
+
             else -> "{}"
         }
 
@@ -56,5 +60,4 @@ class MockInterceptor(private val context: Context) : Interceptor {
             ""
         }
     }
-
 }

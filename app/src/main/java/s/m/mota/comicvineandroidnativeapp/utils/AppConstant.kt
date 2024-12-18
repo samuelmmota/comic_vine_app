@@ -7,3 +7,4 @@ const val ACTIVE_CHARACTERS_TAB = 0
 const val CircularRevealPluginDuration = 50
 const val LIST_RESULT_FETCH_LIMIT = 100
 const val SEARCH_RESULT_FETCH_LIMIT = 15
+const val DEVELOPMENT_MOCK_API = true // Set to `true` for mocks, `false` for real API
