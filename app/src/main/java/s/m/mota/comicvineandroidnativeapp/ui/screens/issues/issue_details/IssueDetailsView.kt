@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.SlidingImageGalleryWithDots
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
-import s.m.mota.comicvineandroidnativeapp.ui.component.text.HtmlView
 
 @Composable
 fun IssueDetailsImageView(imageList: List<String>, onFavoriteClick: () -> Unit) {
@@ -124,14 +123,6 @@ fun IssueDetailsView(issueUi: ComicIssueDetailsUi) {
             ),
             contentStyle = MaterialTheme.typography.bodyMedium
         )
-
-        Text(
-            text = stringResource(R.string.description)+":",
-            style = MaterialTheme.typography.titleMedium.copy(
-                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
-            ),
-        )
-        HtmlView(text = issueUi.description)
     }
 }
 

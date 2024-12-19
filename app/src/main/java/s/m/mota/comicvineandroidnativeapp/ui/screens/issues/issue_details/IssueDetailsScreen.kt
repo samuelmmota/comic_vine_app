@@ -20,14 +20,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
-import s.m.mota.comicvineandroidnativeapp.data.model.toComicIssueDetailsUi
+import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
+import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHtmlContent
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 
 @Composable
@@ -37,7 +39,7 @@ fun IssueDetailsScreen(navController: NavController, issueApiId: String) {
     val issueDetails by viewModel.issueDetails.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-
+    val parsedDescription by viewModel.parsedDescription.collectAsState()
     /*
     Use LaunchedEffect if:
     The parameter (issueApiId) is only relevant to the UI composition.
@@ -76,6 +78,13 @@ fun IssueDetailsScreen(navController: NavController, issueApiId: String) {
                 item {
                     issueDetails?.let {
                         IssueDetailsView(it)
+                    }
+                }
+                item {
+                    parsedDescription?.let {
+                        AnnotatedHtmlContent(
+                            stringResource(R.string.description), (it)
+                        )
                     }
                 }
             }
