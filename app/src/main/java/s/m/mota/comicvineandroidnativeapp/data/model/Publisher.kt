@@ -1,4 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.data.model.character
+package s.m.mota.comicvineandroidnativeapp.data.model
 
 import com.google.gson.annotations.SerializedName
 

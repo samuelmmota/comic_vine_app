@@ -8,7 +8,7 @@ data class ComicIssue(
     @SerializedName("api_detail_url") val apiDetailUrl: String?, // URL to the issue detail
     @SerializedName("character_credits") val characterCredits: List<ComicCharacter>?, // Characters in the issue
     @SerializedName("characters_died_in") val charactersDiedIn: List<ComicCharacter>?, // Characters who died in the issue
-    //@SerializedName("concept_credits") val conceptCredits: List<Concept>?, // Concepts in the issue
+    @SerializedName("concept_credits") val conceptCredits: List<ConceptCredit>?, // Concepts in the issue
     @SerializedName("cover_date") val coverDate: String?, // Publish date on cover
     @SerializedName("date_added") val dateAdded: String?, // Date added to Comic Vine
     @SerializedName("date_last_updated") val dateLastUpdated: String?, // Last update date on Comic Vine
@@ -26,16 +26,16 @@ data class ComicIssue(
     @SerializedName("id") val id: Int?, // Unique ID
     @SerializedName("image") val image: Image?, // Main image of the issue
     @SerializedName("issue_number") val issueNumber: String?, // Number assigned to the issue
-    //@SerializedName("location_credits") val locationCredits: List<Location>?, // Locations in the issue
+    @SerializedName("location_credits") val locationCredits: List<LocationCredit>?, // Locations in the issue
     @SerializedName("name") val name: String?, // Name of the issue
-    //@SerializedName("object_credits") val objectCredits: List<Object>?, // Objects in the issue
-    //@SerializedName("person_credits") val personCredits: List<Person>?, // People who worked on the issue
+    @SerializedName("object_credits") val objectCredits: List<ObjectCredit>?, // Objects in the issue
+    @SerializedName("person_credits") val personCredits: List<PersonCredit>?, // People who worked on the issue
     @SerializedName("site_detail_url") val siteDetailUrl: String?, // URL to the issue on Giant Bomb
     @SerializedName("store_date") val storeDate: String?, // Store release date
     //@SerializedName("story_arc_credits") val storyArcCredits: List<StoryArc>?, // Story arcs in the issue
-    //@SerializedName("team_credits") val teamCredits: List<Team>?, // Teams in the issue
+    @SerializedName("team_credits") val teamCredits: List<TeamCredit>?, // Teams in the issue
     //@SerializedName("teams_disbanded_in") val teamsDisbandedIn: List<Team>?, // Teams disbanded in the issue
-    //@SerializedName("volume") val volume: Volume? // Volume this issue belongs to
+    @SerializedName("volume") val volume: ComicVolume? // Volume this issue belongs to
 ) {
     val aliasesList: List<String>?
         get() {
