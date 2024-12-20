@@ -5,7 +5,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 import s.m.mota.comicvineandroidnativeapp.BuildConfig
-import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
+import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.data.model.ComicVolume
 import s.m.mota.comicvineandroidnativeapp.data.model.Formats
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
