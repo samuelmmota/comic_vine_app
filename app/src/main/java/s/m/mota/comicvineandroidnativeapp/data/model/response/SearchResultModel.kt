@@ -2,7 +2,7 @@ package s.m.mota.comicvineandroidnativeapp.data.model.response
 
 import com.google.gson.annotations.SerializedName
 import s.m.mota.comicvineandroidnativeapp.data.model.Image
-import s.m.mota.comicvineandroidnativeapp.data.model.character.Publisher
+import s.m.mota.comicvineandroidnativeapp.data.model.Publisher
 
 data class SearchResultModel(
     @SerializedName("id") val id: Int?,

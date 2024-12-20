@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -32,7 +32,7 @@ import s.m.mota.comicvineandroidnativeapp.ui.theme.Blue
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @Composable
-fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel) {
+fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel,onCloseClick: ()->Unit) {
     var text by remember { mutableStateOf("") }
     val focusRequester = FocusRequester()
     BackHandler(isAppBarVisible.value.not()) {
@@ -55,6 +55,17 @@ fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel) 
             },
             shape = RoundedCornerShape(8.dp),
             singleLine = true,
+            leadingIcon = {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Close Search bar",
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .offset(x = 10.dp)
+                        .clickable {
+                            onCloseClick.invoke()
+                        })
+
+            },
             trailingIcon = {
                 if (text.trim().isNotEmpty()) {
                     Icon(Icons.Filled.Clear,
@@ -65,16 +76,16 @@ fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel) 
                             .clickable {
                                 text = ""
                             })
-                } else {
+                } /*else {
                     Icon(Icons.Filled.Search,
                         contentDescription = "search",
                         modifier = Modifier
                             .padding(end = 16.dp)
                             .offset(x = 10.dp)
                             .clickable {
-
+                                onSearchClick.invoke()
                             })
-                }
+                }*/
             })
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()

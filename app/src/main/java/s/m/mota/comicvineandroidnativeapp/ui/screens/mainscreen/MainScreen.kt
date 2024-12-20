@@ -86,7 +86,10 @@ fun MainScreen() {
 
     Scaffold(topBar = {
         if (!isAppBarVisible.value) {
-            SearchBar(isAppBarVisible, mainViewModel)
+            SearchBar(isAppBarVisible, mainViewModel) {
+                //onCloseClick
+                isAppBarVisible.value = true
+            }
         } else CenterAlignedTopAppBar(colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary,
