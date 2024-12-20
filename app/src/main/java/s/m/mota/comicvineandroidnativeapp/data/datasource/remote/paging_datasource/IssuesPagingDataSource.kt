@@ -24,13 +24,12 @@ class IssuesPagingDataSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ComicIssue> {
         return try {
             val nextPage = params.key ?: 0
-            println("offset number: $nextPage")
             val issuesList = apiService.getIssues(
                 offset = nextPage, limit = limit, sort = sort, filter = filter
             )
 
             val nextKey =
-                if (issuesList.numberOfPageResults!! > 0 && nextPage + issuesList.numberOfPageResults!! < issuesList.numberOfTotalResults!!) {
+                if (issuesList.numberOfPageResults!! > 0 && nextPage + issuesList.numberOfPageResults < issuesList.numberOfTotalResults!!) {
                     nextPage + 1
                 } else {
                     null

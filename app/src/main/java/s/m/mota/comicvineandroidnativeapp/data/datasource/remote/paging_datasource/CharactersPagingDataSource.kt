@@ -26,13 +26,12 @@ class CharactersPagingDataSource @Inject constructor(
         // Ex result: "limit":100,"offset":0,"number_of_page_results":100,"number_of_total_results":163652,
         return try {
             val nextPage = params.key ?: 0
-            println("offset number: $nextPage")
             val charactersList = apiService.getCharacters(
                 offset = nextPage, limit = limit, sort = sort, filter = filter
             )
 
             val nextKey = if (charactersList.numberOfPageResults!! > 0 &&
-                nextPage + charactersList.numberOfPageResults!! < charactersList.numberOfTotalResults!!
+                nextPage + charactersList.numberOfPageResults < charactersList.numberOfTotalResults!!
             ) {
                 nextPage + 1
             } else {
