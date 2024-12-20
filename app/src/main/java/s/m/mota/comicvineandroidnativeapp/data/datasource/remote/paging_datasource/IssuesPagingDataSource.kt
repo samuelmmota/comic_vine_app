@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import retrofit2.HttpException
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiService
-import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
+import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.utils.LIST_RESULT_FETCH_LIMIT
 import timber.log.Timber
 import java.io.IOException

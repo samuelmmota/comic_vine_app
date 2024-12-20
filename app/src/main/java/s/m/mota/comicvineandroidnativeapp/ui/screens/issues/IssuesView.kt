@@ -38,8 +38,6 @@ import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import kotlinx.coroutines.launch
-import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
-import s.m.mota.comicvineandroidnativeapp.data.model.toComicIssueUi
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent

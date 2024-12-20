@@ -7,8 +7,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiService
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.paging_datasource.IssuesPagingDataSource
-import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
+import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicVineApiResponse
+import s.m.mota.comicvineandroidnativeapp.utils.PAGING_CONFIG_PAGE_SIZE
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ class IssuesRepository @Inject constructor(
 
     override fun allIssues(): Flow<PagingData<ComicIssue>> = Pager(
         pagingSourceFactory = { IssuesPagingDataSource(apiService) },
-        config = PagingConfig(pageSize = 100)
+        config = PagingConfig(pageSize = PAGING_CONFIG_PAGE_SIZE)
     ).flow
 
     override suspend fun issueDetails(issueApiId: String): Flow<DataState<ComicIssue>> = flow {

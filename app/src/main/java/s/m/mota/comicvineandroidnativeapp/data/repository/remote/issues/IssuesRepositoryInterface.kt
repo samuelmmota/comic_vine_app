@@ -2,7 +2,7 @@ package s.m.mota.comicvineandroidnativeapp.data.repository.remote.issues
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
+import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 
 interface IssuesRepositoryInterface {

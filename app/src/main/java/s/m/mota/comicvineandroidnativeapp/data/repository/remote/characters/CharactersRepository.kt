@@ -9,8 +9,8 @@ import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiService
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.paging_datasource.CharactersPagingDataSource
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicVineApiResponse
+import s.m.mota.comicvineandroidnativeapp.utils.PAGING_CONFIG_PAGE_SIZE
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
-
 import javax.inject.Inject
 
 class CharactersRepository @Inject constructor(
@@ -19,7 +19,8 @@ class CharactersRepository @Inject constructor(
 
     override fun allCharacters(): Flow<PagingData<ComicCharacter>> = Pager(
         pagingSourceFactory = { CharactersPagingDataSource(apiService) },
-        config = PagingConfig(pageSize = 100)
+        config = PagingConfig(
+            pageSize = PAGING_CONFIG_PAGE_SIZE)
     ).flow
 
     override suspend fun characterDetails(characterApiId: String): Flow<DataState<ComicCharacter>> = flow {

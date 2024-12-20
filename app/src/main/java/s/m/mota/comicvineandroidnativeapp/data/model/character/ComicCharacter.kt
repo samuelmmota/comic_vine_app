@@ -2,7 +2,7 @@ package s.m.mota.comicvineandroidnativeapp.data.model.character
 
 import com.google.gson.annotations.SerializedName
 import s.m.mota.comicvineandroidnativeapp.data.model.ComicCreator
-import s.m.mota.comicvineandroidnativeapp.data.model.ComicIssue
+import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.data.model.Image
 import s.m.mota.comicvineandroidnativeapp.data.model.Publisher
 

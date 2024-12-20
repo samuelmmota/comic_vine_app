@@ -1,6 +1,13 @@
-package s.m.mota.comicvineandroidnativeapp.data.model
+package s.m.mota.comicvineandroidnativeapp.data.model.issue
 
 import com.google.gson.annotations.SerializedName
+import s.m.mota.comicvineandroidnativeapp.data.model.ComicVolume
+import s.m.mota.comicvineandroidnativeapp.data.model.ConceptCredit
+import s.m.mota.comicvineandroidnativeapp.data.model.Image
+import s.m.mota.comicvineandroidnativeapp.data.model.LocationCredit
+import s.m.mota.comicvineandroidnativeapp.data.model.ObjectCredit
+import s.m.mota.comicvineandroidnativeapp.data.model.PersonCredit
+import s.m.mota.comicvineandroidnativeapp.data.model.TeamCredit
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 
 data class ComicIssue(
@@ -59,11 +66,3 @@ data class ComicIssue(
         }
     }
 }
-
-
-data class AssociatedImage(
-    @SerializedName("original_url") val originalUrl: String?,
-    @SerializedName("id") val id: Int?,
-    @SerializedName("caption") val caption: String?,
-    @SerializedName("image_tags") val imageTags: String?
-)

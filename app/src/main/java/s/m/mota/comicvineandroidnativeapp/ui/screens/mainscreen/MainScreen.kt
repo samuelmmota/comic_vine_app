@@ -104,7 +104,8 @@ fun MainScreen() {
             when (currentRoute(navController)) {
                 in listOf(
                     Screen.CharacterDetailsScreen.route,
-                    Screen.IssueDetailsScreen.route
+                    Screen.IssueDetailsScreen.route,
+                    Screen.VolumeDetailsScreen.route
                 ) -> {
                     val activeScreen = currentRoute(navController)
                     IconButton(onClick = {
@@ -145,7 +146,7 @@ fun MainScreen() {
         })
     }, floatingActionButton = {}, bottomBar = {
         when (currentRoute(navController)) {
-            Screen.CharactersScreen.route, Screen.IssuesScreen.route,
+            Screen.CharactersScreen.route, Screen.IssuesScreen.route, Screen.VolumesScreen.route
                 -> {
                 BottomNavigationUI(navController, pagerState)
             }
