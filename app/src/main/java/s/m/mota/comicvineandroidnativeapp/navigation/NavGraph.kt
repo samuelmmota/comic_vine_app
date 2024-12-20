@@ -15,6 +15,8 @@ import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.CharactersScreen
 import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_details.CharacterDetailsScreen
 import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.IssuesScreen
 import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.issue_details.IssueDetailsScreen
+import s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.VolumesScreen
+import s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.volume_details.VolumeDetailsScreen
 
 @Composable
 fun Navigation(
@@ -64,6 +66,28 @@ fun Navigation(
                 )
             }
         }
+
+        // Volumes
+        composable(Screen.VolumesScreen.route) {
+            VolumesScreen(
+                navController = navController
+            )
+        }
+        // Volume Details
+        composable(
+            Screen.VolumeDetailsScreen.route.plus(Screen.VolumeDetailsScreen.objectPath),
+            arguments = listOf(navArgument(Screen.VolumeDetailsScreen.objectName) {
+                type = NavType.StringType
+            })
+        ) {
+            label = stringResource(R.string.issue_details)
+            val volumeApiId = it.arguments?.getString(Screen.VolumeDetailsScreen.objectName)
+            volumeApiId?.let {
+                VolumeDetailsScreen(
+                    navController = navController, volumeApiId
+                )
+            }
+        }
     }
 }
 
@@ -74,6 +98,8 @@ fun navigationTitle(navController: NavController): String {
         Screen.CharacterDetailsScreen.route -> stringResource(id = R.string.character_details)
         Screen.IssuesScreen.route -> stringResource(id = R.string.issues)
         Screen.IssueDetailsScreen.route -> stringResource(id = R.string.issue_details)
+        Screen.VolumesScreen.route -> stringResource(id = R.string.volumes_page)
+        Screen.VolumeDetailsScreen.route -> stringResource(id = R.string.volume_details)
         else -> {
             stringResource(R.string.app_name)
         }
