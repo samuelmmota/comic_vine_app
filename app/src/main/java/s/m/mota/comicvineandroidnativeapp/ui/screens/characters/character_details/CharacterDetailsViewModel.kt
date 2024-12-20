@@ -44,11 +44,11 @@ class CharacterDetailsViewModel @Inject constructor(
     }
 
 
-    suspend fun parseHtml(description: String) {
+    private suspend fun parseHtml(description: String) {
         withContext(Dispatchers.IO) {
             val parsedText = parseHtmlAsync(description)
-            val anotatedString = Utils.parseHtmlToAnnotatedString(parsedText)
-            _parsedDescription.value = anotatedString
+            val annotatedString = Utils.parseHtmlToAnnotatedString(parsedText)
+            _parsedDescription.value = annotatedString
         }
     }
 
