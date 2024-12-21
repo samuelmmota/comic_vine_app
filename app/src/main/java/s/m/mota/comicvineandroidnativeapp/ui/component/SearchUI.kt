@@ -66,8 +66,18 @@ fun SearchUI(
                                 ?.let { resourceType ->
                                     when (resourceType) {
                                         ResourceType.CHARACTER -> {
-                                            item.getCharacterApiId()?.let { characterApiId ->
+                                            item.resourceApiId?.let { characterApiId ->
                                                 navController.navigate(Screen.CharacterDetailsScreen.route.plus("/$characterApiId"))
+                                            }
+                                        }
+                                        ResourceType.ISSUE -> {
+                                            item.resourceApiId?.let { issueApiId ->
+                                                navController.navigate(Screen.IssueDetailsScreen.route.plus("/$issueApiId"))
+                                            }
+                                        }
+                                        ResourceType.VOLUME -> {
+                                            item.resourceApiId?.let { volumeApiId ->
+                                                navController.navigate(Screen.VolumeDetailsScreen.route.plus("/$volumeApiId"))
                                             }
                                         }
                                         else -> {}

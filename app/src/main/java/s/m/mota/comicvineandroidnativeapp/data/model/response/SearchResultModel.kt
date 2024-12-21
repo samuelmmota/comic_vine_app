@@ -32,11 +32,13 @@ data class SearchResultModel(
             else -> null
         }
     }
-    fun getCharacterApiId():String?{
-        val apiDetailUrl = apiDetailUrl ?: return null
-        val parts = apiDetailUrl.split("/").dropLast(1)
-        return parts.lastOrNull()
-    }
+
+    val resourceApiId
+        get():String? {
+            val apiDetailUrl = apiDetailUrl ?: return null
+            val parts = apiDetailUrl.split("/").dropLast(1)
+            return parts.lastOrNull()
+        }
 }
 
 enum class ResourceType(val typeName: String) {
@@ -45,7 +47,8 @@ enum class ResourceType(val typeName: String) {
     ),
     STORY_ARC("story_arc"), VOLUME("volume"), PUBLISHER("publisher"), PERSON("person"), TEAM("team"), VIDEO(
         "video"
-    ),SERIES(
+    ),
+    SERIES(
         "series"
     );
 
