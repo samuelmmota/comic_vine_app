@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -38,6 +39,7 @@ import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import kotlinx.coroutines.launch
+import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
@@ -114,7 +116,7 @@ fun CharacterListItem(item: ComicCharacterUi, navController: NavController) {
                 }
         }) {
         Text(
-            text = item.name,
+            text = item.name ?: (stringResource(R.string.unknown_character) + item.id.let { " [$it]" }),
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .align(Alignment.CenterHorizontally),
@@ -151,9 +153,8 @@ fun CharacterListItem(item: ComicCharacterUi, navController: NavController) {
             },
         )
 
-        AnnotatedHeaderContent(header = "ID: ", content = item.id)
-        AnnotatedHeaderContent(header = "Aliases: ", content = item.aliases, maxLines = 4)
-        AnnotatedHeaderContent(header = "Issue count: ", content = item.issueCount)
-        AnnotatedHeaderContent(header = "Publisher:", content = item.publisher)
+        AnnotatedHeaderContent(header = "Aliases: ", content = item.aliases ?: stringResource(R.string.unknown_information), maxLines = 4)
+        AnnotatedHeaderContent(header = "Issue count: ", content = item.issueCount ?: stringResource(R.string.unknown_information))
+        AnnotatedHeaderContent(header = "Publisher:", content = item.publisher ?: stringResource(R.string.unknown_information))
     }
 }

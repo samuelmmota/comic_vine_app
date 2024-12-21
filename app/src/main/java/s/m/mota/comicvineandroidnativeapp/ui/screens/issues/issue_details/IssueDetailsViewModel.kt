@@ -61,7 +61,8 @@ class IssueDetailsViewModel @Inject constructor(
                     is DataState.Success -> {
                         _issueDetails.value = it.data.toComicIssueDetailsUi()
                         _isLoading.value = false
-                        parseHtml(_issueDetails.value!!.description)
+                        _issueDetails.value?.description?.let { description ->
+                            parseHtml(description) }
                     }
 
                     is DataState.Error -> {

@@ -8,108 +8,99 @@ import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.ComicIssueUi
 import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.issue_details.ComicIssueDetailsUi
 import s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.ComicVolumeUi
 import s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.volume_details.ComicVolumeDetailsUi
+import s.m.mota.comicvineandroidnativeapp.utils.Utils.updatedDateMessage
+
+const val blanckComicImageUrl: String =
+    "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png"
 
 fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
     return ComicCharacterDetailsUi(
-        id = id?.toString() ?: "Unknown Id",
-        name = name ?: "Unknown Super Name",
-        realName = realName ?: "Unknown Real Name",
+        id = id?.toString(),
+        name = name,
+        realName = realName,
         imageUrl = image?.superUrl ?: image?.screenLargeUrl ?: image?.screenUrl
-        ?: image?.originalUrl
-        ?: "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png",
-        aliases = aliasesList ?: listOf("No Aliases Known"),
-        creators = creatorsList ?: listOf("No Creators Known"),
-        powers = powersList ?: listOf("Powers Unknown"),
-        firstAppearedInIssue = firstAppearedInIssue?.name ?: "Unknown Information",
-        description = description ?: "Description Not Available"
+        ?: image?.originalUrl ?: blanckComicImageUrl,
+        aliases = aliasesList,
+        creators = creatorsList,
+        powers = powersList,
+        firstAppearedInIssue = firstAppearedInIssue?.name,
+        description = description
     )
 }
 
-
 fun ComicCharacter.toComicCharacterUi(): ComicCharacterUi {
     return ComicCharacterUi(
-        id = id?.toString() ?: "Unknown Id",
-        name = name ?: "Unknown Super Name",
-        imageUrl = image?.originalUrl ?: image?.mediumUrl
-        ?: "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png",
-        aliases = aliasesAsString ?: "No Aliases Known",
-        issueCount = characterApiId ?: "No Issue Count",
-        publisher = publisher?.name ?: "Publisher Unknown",
+        id = id?.toString(),
+        name = name,
+        imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
+        aliases = aliasesAsString,
+        issueCount = characterApiId,
+        publisher = publisher?.name,
         characterApiId = characterApiId
     )
 }
 
 fun ComicIssue.toComicIssueUi(): ComicIssueUi {
     return ComicIssueUi(
-        id = id?.toString() ?: "Unknown Id",
-        name = name ?: "Unknown Issue Name",
-        imageUrl = image?.originalUrl ?: image?.mediumUrl
-        ?: "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png",
-        issueNumber = issueNumber ?: "Unknown Issue Number",
+        id = id?.toString(),
+        name = name,
+        imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
+        issueNumber = issueNumber,
         issueApiId = issueApiId
     )
 }
 
 fun ComicIssue.toComicIssueDetailsUi(): ComicIssueDetailsUi {
     return ComicIssueDetailsUi(
-        id = id?.toString() ?: "Unknown Id",
-        name = name ?: "Unknown Issue Name",
-        imageUrl = image?.originalUrl ?: image?.mediumUrl
-        ?: "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png",
-        issueNumber = issueNumber ?: "Unknown Issue Number",
+        id = id?.toString(),
+        name = name,
+        issueNumber = issueNumber,
         issueApiId = issueApiId,
-        aliases = aliasesList ?: listOf("No Aliases Known"),
-        description = description ?: "Description Not Available",
+        aliases = aliasesList,
+        description = description,
         associatedImages = listImages,
-        coverDate = coverDate ?: "Cover Date Unknown",
-        dateAdded = dateAdded ?: "Added Date Unknown",
-        dateLastUpdated = dateLastUpdated ?: "Last Updated Date Unknown",
-        deck = deck ?: "Deck Unknown",
+        coverDate = coverDate,
+        dateAdded = dateAdded,
+        dateLastUpdated = dateLastUpdated,
+        deck = deck,
         hasStaffReview = hasStaffReview ?: false,
     )
 }
 
 fun ComicVolume.toComicVolumeUi(): ComicVolumeUi {
     return ComicVolumeUi(
-        id = id?.toString() ?: "Unknown Id",
-        name = name ?: "Unknown Issue Name",
-        imageUrl = image?.originalUrl ?: image?.mediumUrl
-        ?: "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png",
+        id = id?.toString(),
+        name = name,
+        imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
         volumeApiId = volumeApiId,
-        countOfIssues = countOfIssues?.toString() ?: "Number of Issues Unavailable",
-        dateAdded = dateAdded ?: "Added Date Unknown",
-        dateLastUpdated = dateLastUpdated ?: "Last Updated Date Unknown",
-        firstIssueNumber = firstIssue?.issueNumber ?: "Fist Issue Number Unknown",
-        firstIssueName = firstIssue?.name ?: "Fist Issue Name Unknown",
-        lastIssueNumber = lastIssue?.issueNumber ?: "Last Issue Number Unknown",
-        lastIssueName = lastIssue?.name ?: "Last Issue Name Unknown",
-        publisher = publisher?.name ?: "Publisher Unknown",
-        startYear = startYear ?: "Start Year Unknown",
+        countOfIssues = countOfIssues?.toString(),
+        dateLastUpdated = dateLastUpdated?.let { updatedDateMessage(it) },
+        lastIssueName = lastIssue?.name,
+        publisher = publisher?.name,
+        startYear = startYear,
     )
 }
 
 fun ComicVolume.toComicVolumeDetailsUi(): ComicVolumeDetailsUi {
     return ComicVolumeDetailsUi(
-        id = id?.toString() ?: "Unknown Id",
-        name = name ?: "Unknown Issue Name",
+        id = id?.toString(),
+        name = name,
         imageUrl = image?.superUrl ?: image?.screenLargeUrl ?: image?.screenUrl
-        ?: image?.originalUrl
-        ?: "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png",
-        description = description ?: "Description Not Available",
-        dateAdded = dateAdded ?: "Added Date Unknown",
-        dateLastUpdated = dateLastUpdated ?: "Last Updated Date Unknown",
-        deck = deck ?: "Deck Unknown",
+        ?: image?.originalUrl ?: blanckComicImageUrl,
+        description = description,
+        dateAdded = dateAdded,
+        dateLastUpdated = dateLastUpdated,
+        deck = deck,
         volumeApiId = volumeApiId,
-        countOfIssues = countOfIssues?.toString() ?: "Number of Issues Unavailable",
+        countOfIssues = countOfIssues?.toString(),
         firstIssue = firstIssue?.toComicIssueUi(),
         lastIssue = lastIssue?.toComicIssueUi(),
-        publisher = publisher?.name ?: "Publisher Unknown",
-        startYear = startYear ?: "Start Year Unknown",
-        locationCreditsName = locationCreditsList ?: listOf("No Locations Credits Known"),
-        characterCreditsName = characterCreditsList ?: listOf("No Characters Credits Known"),
-        objectCreditsName = objectCreditsList ?: listOf("No Object Credits Known"),
-        personCreditsName = personCreditsList ?: listOf("No Person Credits Known"),
-        teamCreditsName = teamCreditsList ?: listOf("No Team Credits Known"),
+        publisher = publisher?.name,
+        startYear = startYear,
+        locationCreditsName = locationCreditsList,
+        characterCreditsName = characterCreditsList,
+        objectCreditsName = objectCreditsList,
+        personCreditsName = personCreditsList,
+        teamCreditsName = teamCreditsList
     )
 }
-

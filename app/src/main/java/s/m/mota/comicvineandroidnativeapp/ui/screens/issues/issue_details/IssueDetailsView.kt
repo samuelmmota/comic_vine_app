@@ -58,7 +58,7 @@ fun IssueDetailsView(issueUi: ComicIssueDetailsUi) {
     ) {
         AnnotatedHeaderContent(
             header = "Issue Name:\t",
-            content = issueUi.name,
+            content = issueUi.name ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleLarge.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold,
@@ -66,10 +66,10 @@ fun IssueDetailsView(issueUi: ComicIssueDetailsUi) {
             contentStyle = MaterialTheme.typography.bodyMedium
         )
         VerificationSection(isVerified = issueUi.hasStaffReview)
-        AliasesSection(issueUi.aliases)
+        AliasesSection(issueUi.aliases ?: listOf(stringResource(R.string.unknown_information)))
         AnnotatedHeaderContent(
             header = "Issue Id: ",
-            content = issueUi.id,
+            content = issueUi.id ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 10.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -78,7 +78,7 @@ fun IssueDetailsView(issueUi: ComicIssueDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Cover Date: ",
-            content = issueUi.coverDate,
+            content = issueUi.coverDate ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -87,7 +87,7 @@ fun IssueDetailsView(issueUi: ComicIssueDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Added Date: ",
-            content = issueUi.dateAdded,
+            content = issueUi.dateAdded ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 10.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -96,7 +96,7 @@ fun IssueDetailsView(issueUi: ComicIssueDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Updated Date: ",
-            content = issueUi.dateLastUpdated,
+            content = issueUi.dateLastUpdated ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -106,7 +106,7 @@ fun IssueDetailsView(issueUi: ComicIssueDetailsUi) {
 
         AnnotatedHeaderContent(
             header = "Deck: ",
-            content = issueUi.deck,
+            content = issueUi.deck ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -116,7 +116,7 @@ fun IssueDetailsView(issueUi: ComicIssueDetailsUi) {
 
         AnnotatedHeaderContent(
             header = "Added Date: ",
-            content = issueUi.dateAdded,
+            content = issueUi.dateAdded ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -169,10 +169,8 @@ fun VerificationSection(isVerified: Boolean) {
     ) {
 
         Text(
-            text = "Verified: ",
-            style = MaterialTheme.typography.titleMedium.copy(
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold
+            text = "Verified: ", style = MaterialTheme.typography.titleMedium.copy(
+                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
             )
         )
 

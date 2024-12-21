@@ -91,7 +91,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
     ) {
         AnnotatedHeaderContent(
             header = "volume Name:\t",
-            content = volumeUi.name,
+            content = volumeUi.name ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleLarge.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold,
@@ -100,7 +100,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Volume Id: ",
-            content = volumeUi.id,
+            content = volumeUi.id ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 10.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -109,7 +109,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Added Date: ",
-            content = volumeUi.dateAdded,
+            content = volumeUi.dateAdded ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -118,7 +118,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Updated Date: ",
-            content = volumeUi.dateLastUpdated,
+            content = volumeUi.dateLastUpdated ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -127,7 +127,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Number of Issues: ",
-            content = volumeUi.countOfIssues,
+            content = volumeUi.countOfIssues ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -136,7 +136,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Number of Issues: ",
-            content = volumeUi.countOfIssues,
+            content = volumeUi.countOfIssues ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -145,7 +145,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Number of Issues: ",
-            content = volumeUi.countOfIssues,
+            content = volumeUi.countOfIssues ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -154,7 +154,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Publisher: ",
-            content = volumeUi.publisher,
+            content = volumeUi.publisher ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -163,7 +163,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
         )
         AnnotatedHeaderContent(
             header = "Started Year: ",
-            content = volumeUi.startYear,
+            content = volumeUi.startYear ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -173,7 +173,7 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
 
         AnnotatedHeaderContent(
             header = "Deck: ",
-            content = volumeUi.deck,
+            content = volumeUi.deck ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold

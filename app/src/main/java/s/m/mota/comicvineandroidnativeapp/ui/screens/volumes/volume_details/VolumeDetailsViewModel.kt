@@ -61,7 +61,9 @@ class VolumeDetailsViewModel @Inject constructor(
                     is DataState.Success -> {
                         _volumeDetails.value = it.data.toComicVolumeDetailsUi()
                         _isLoading.value = false
-                        parseHtml(_volumeDetails.value!!.description)
+                        _volumeDetails.value?.description?.let { description ->
+                            parseHtml(description)
+                        }
                     }
 
                     is DataState.Error -> {

@@ -60,7 +60,8 @@ fun CharacterDetailsImageView(imageUrl: String, onFavoriteClick: () -> Unit) {
                 +CircularRevealPlugin(duration = CircularRevealPluginDuration)
                 +ShimmerPlugin(
                     shimmer = Shimmer.Flash(
-                        baseColor = SecondaryFontColor, highlightColor = MaterialTheme.colorScheme.background
+                        baseColor = SecondaryFontColor,
+                        highlightColor = MaterialTheme.colorScheme.background
                     )
                 )
             })
@@ -90,7 +91,7 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi) {
     ) {
         AnnotatedHeaderContent(
             header = "Super Name:\t",
-            content = characterUi.name,
+            content = characterUi.name ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleLarge.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -100,7 +101,7 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi) {
 
         AnnotatedHeaderContent(
             header = "Real Name: ",
-            content = characterUi.realName,
+            content = characterUi.realName ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -109,13 +110,16 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi) {
         )
 
 
-        AliasesSection(characterUi.aliases)
-        CreatorsSection(characterUi.creators)
-        PowersSection(characterUi.powers)
+        AliasesSection(characterUi.aliases ?: listOf(stringResource(R.string.unknown_information)))
+        CreatorsSection(
+            characterUi.creators ?: listOf(stringResource(R.string.unknown_information))
+        )
+        PowersSection(characterUi.powers ?: listOf(stringResource(R.string.unknown_information)))
 
         AnnotatedHeaderContent(
             header = "First Appearance: ",
-            content = characterUi.firstAppearedInIssue,
+            content = characterUi.firstAppearedInIssue
+                ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -134,7 +138,7 @@ fun AliasesSection(aliases: List<String>) {
     ) {
         Text(
             text = stringResource(R.string.aliases) + ":",
-            style =  MaterialTheme.typography.titleMedium.copy(
+            style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
             ),
         )
@@ -167,7 +171,7 @@ fun CreatorsSection(creators: List<String>) {
     ) {
         Text(
             text = stringResource(R.string.creators) + ":",
-            style =  MaterialTheme.typography.titleMedium.copy(
+            style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
             ),
         )
@@ -200,7 +204,7 @@ fun PowersSection(powers: List<String>) {
     ) {
         Text(
             text = stringResource(R.string.powers) + ":",
-            style =  MaterialTheme.typography.titleMedium.copy(
+            style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
             ),
         )
