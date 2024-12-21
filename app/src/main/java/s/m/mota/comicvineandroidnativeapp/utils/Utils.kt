@@ -11,6 +11,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.core.text.HtmlCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 object Utils {
     suspend fun parseHtmlAsync(html: String): Spanned {
@@ -88,6 +92,25 @@ object Utils {
                     end = spannedHtml.getSpanEnd(span)
                 )
             }
+        }
+    }
+
+    fun updatedDateMessage(dateString: String) : String? {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val updatedDate: Date = dateFormat.parse(dateString) ?: return null
+        val currentDate = Calendar.getInstance()
+
+        val updatedCalendar = Calendar.getInstance().apply { time = updatedDate }
+        val yearDiff = currentDate.get(Calendar.YEAR) - updatedCalendar.get(Calendar.YEAR)
+        val monthDiff = currentDate.get(Calendar.MONTH) - updatedCalendar.get(Calendar.MONTH)
+        val dayDiff = currentDate.get(Calendar.DAY_OF_YEAR) - updatedCalendar.get(Calendar.DAY_OF_YEAR)
+
+        return when {
+            yearDiff == 0 && monthDiff == 0 && dayDiff == 0 -> "Updated today"
+            yearDiff == 0 && monthDiff == 0 && dayDiff > 0 -> "Updated this month"
+            yearDiff == 0 && monthDiff > 0 -> "Updated this year"
+            yearDiff > 0 -> "Updated on ${SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(updatedDate)}"
+            else -> "Invalid date"
         }
     }
 }
