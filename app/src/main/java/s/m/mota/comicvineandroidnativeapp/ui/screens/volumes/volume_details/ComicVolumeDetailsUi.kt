@@ -13,7 +13,6 @@ data class ComicVolumeDetailsUi(
     val firstIssue: ComicIssueUi?,
     val lastIssue: ComicIssueUi?,
     val publisher: String?,
-    //AnnotatedHeaderContent(header = "Date Added: ", content = item.dateAdded)
     val startYear: String?,
     val deck: String?,
     val description: String?,

@@ -1,26 +1,17 @@
 package s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.volume_details
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +21,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.animation.circular.CircularRevealPlugin
 import com.skydoves.landscapist.coil.CoilImage
@@ -38,6 +28,7 @@ import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.R
+import s.m.mota.comicvineandroidnativeapp.ui.component.HorizontalScrollableRowSection
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
@@ -60,7 +51,8 @@ fun VolumeDetailsImageView(imageUrl: String, onFavoriteClick: () -> Unit) {
                 +CircularRevealPlugin(duration = CircularRevealPluginDuration)
                 +ShimmerPlugin(
                     shimmer = Shimmer.Flash(
-                        baseColor = SecondaryFontColor, highlightColor = MaterialTheme.colorScheme.background
+                        baseColor = SecondaryFontColor,
+                        highlightColor = MaterialTheme.colorScheme.background
                     )
                 )
             })
@@ -135,24 +127,6 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
             contentStyle = MaterialTheme.typography.bodyMedium
         )
         AnnotatedHeaderContent(
-            header = "Number of Issues: ",
-            content = volumeUi.countOfIssues ?: stringResource(R.string.unknown_information),
-            modifier = Modifier.padding(top = 5.dp),
-            headerStyle = MaterialTheme.typography.titleMedium.copy(
-                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
-            ),
-            contentStyle = MaterialTheme.typography.bodyMedium
-        )
-        AnnotatedHeaderContent(
-            header = "Number of Issues: ",
-            content = volumeUi.countOfIssues ?: stringResource(R.string.unknown_information),
-            modifier = Modifier.padding(top = 5.dp),
-            headerStyle = MaterialTheme.typography.titleMedium.copy(
-                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
-            ),
-            contentStyle = MaterialTheme.typography.bodyMedium
-        )
-        AnnotatedHeaderContent(
             header = "Publisher: ",
             content = volumeUi.publisher ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
@@ -180,39 +154,26 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
             ),
             contentStyle = MaterialTheme.typography.bodyMedium
         )
-    }
-}
 
-
-@Composable
-fun AliasesSection(aliases: List<String>) {
-    Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 5.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.aliases) + ":",
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 17.sp,
-            fontWeight = FontWeight.SemiBold,
+        HorizontalScrollableRowSection(
+            "Location Credits :",
+            volumeUi.locationCreditsName ?: listOf(stringResource(R.string.unknown_information))
         )
-        Spacer(modifier = Modifier.width(10.dp))
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxSize()
-                .fillMaxHeight(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            items(aliases) { alias ->
-                Text(
-                    text = alias,
-                    color = MaterialTheme.colorScheme.secondary,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-        }
+        HorizontalScrollableRowSection(
+            "Character Credits :",
+            volumeUi.characterCreditsName ?: listOf(stringResource(R.string.unknown_information))
+        )
+        HorizontalScrollableRowSection(
+            "Object Credits :",
+            volumeUi.objectCreditsName ?: listOf(stringResource(R.string.unknown_information))
+        )
+        HorizontalScrollableRowSection(
+            "Person Credits :",
+            volumeUi.personCreditsName ?: listOf(stringResource(R.string.unknown_information))
+        )
+        HorizontalScrollableRowSection(
+            "Team Credits :",
+            volumeUi.teamCreditsName ?: listOf(stringResource(R.string.unknown_information))
+        )
     }
 }
