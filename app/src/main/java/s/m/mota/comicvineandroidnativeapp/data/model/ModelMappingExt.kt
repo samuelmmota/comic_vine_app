@@ -61,7 +61,7 @@ fun ComicIssue.toComicIssueDetailsUi(): ComicIssueDetailsUi {
         associatedImages = listImages,
         coverDate = coverDate,
         dateAdded = dateAdded,
-        dateLastUpdated = dateLastUpdated,
+        dateLastUpdated = dateLastUpdated?.let { updatedDateMessage(it) },
         deck = deck,
         hasStaffReview = hasStaffReview ?: false,
     )
@@ -89,7 +89,7 @@ fun ComicVolume.toComicVolumeDetailsUi(): ComicVolumeDetailsUi {
         ?: image?.originalUrl ?: blanckComicImageUrl,
         description = description,
         dateAdded = dateAdded,
-        dateLastUpdated = dateLastUpdated,
+        dateLastUpdated = dateLastUpdated?.let { updatedDateMessage(it) },
         deck = deck,
         volumeApiId = volumeApiId,
         countOfIssues = countOfIssues?.toString(),

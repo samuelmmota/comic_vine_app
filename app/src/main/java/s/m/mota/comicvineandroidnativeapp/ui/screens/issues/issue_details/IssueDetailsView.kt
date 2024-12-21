@@ -63,7 +63,7 @@ fun IssueDetailsView(issueUi: ComicIssueDetailsUi) {
             headerStyle = MaterialTheme.typography.titleLarge.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold,
             ),
-            contentStyle = MaterialTheme.typography.bodyMedium
+            contentStyle = MaterialTheme.typography.bodyLarge
         )
         VerificationSection(isVerified = issueUi.hasStaffReview)
         AliasesSection(issueUi.aliases ?: listOf(stringResource(R.string.unknown_information)))
