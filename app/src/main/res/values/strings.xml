@@ -36,4 +36,5 @@
 <string name="unknown_character">Character</string>
 <string name="unknown_issue">Issue</string>
 <string name="unknown_volume">Volume</string>
+<string name="first_appearance">First Appearance in Issue</string>
 </resources>

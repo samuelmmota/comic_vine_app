@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.animation.circular.CircularRevealPlugin
 import com.skydoves.landscapist.coil.CoilImage
@@ -36,7 +37,9 @@ import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.HorizontalScrollableRowSection
+import s.m.mota.comicvineandroidnativeapp.ui.component.RelatedComicResourceContentListView
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicCharacterDetailsUi
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
 
@@ -105,13 +108,15 @@ fun CharacterCard(characterUi: ComicCharacterDetailsUi) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Character » ${characterUi.name ?: ""} appears in ${characterUi.countOfIssueAppearances ?: stringResource(R.string.unknown_information)} issues.",
-                style = MaterialTheme.typography.bodyMedium,
-                fontSize = 16.sp
+                text = "Character » ${characterUi.name ?: ""} appears in ${
+                    characterUi.countOfIssueAppearances ?: stringResource(
+                        R.string.unknown_information
+                    )
+                } issues.", style = MaterialTheme.typography.bodyMedium, fontSize = 16.sp
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = characterUi.deck?: stringResource(R.string.unknown_information),
+                text = characterUi.deck ?: stringResource(R.string.unknown_information),
                 style = MaterialTheme.typography.bodyMedium,
                 fontSize = 14.sp
             )
@@ -120,21 +125,18 @@ fun CharacterCard(characterUi: ComicCharacterDetailsUi) {
 }
 
 @Composable
-fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi, firstApperanceOnClick: () -> Unit) {
+fun CharacterDetailsView(
+    characterUi: ComicCharacterDetailsUi, navController: NavController
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
     ) {
         Text(
-            text = "General Information",
-            style = MaterialTheme.typography.titleLarge.copy(
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold
-            ),
-            modifier = Modifier
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center
+            text = "General Information", style = MaterialTheme.typography.titleLarge.copy(
+                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
+            ), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center
         )
         AnnotatedHeaderContent(
             header = "Super Name: ",
@@ -196,16 +198,12 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi, firstApperanceOnC
             contentStyle = MaterialTheme.typography.bodyMedium
         )
 
-        AnnotatedHeaderContent(
-            header = "First Appearance: ",
-            content = characterUi.firstAppearedInIssue ?: stringResource(R.string.unknown_information),
-            modifier = Modifier.padding(top = 5.dp),
-            headerStyle = MaterialTheme.typography.titleMedium.copy(
-                color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
-            ),
-            contentStyle = MaterialTheme.typography.bodyMedium,
-        ){
-            firstApperanceOnClick()
+        characterUi.firstAppearedInIssue?.let { comicResource ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = listOf(comicResource),
+                title = stringResource(R.string.first_appearance),
+                navController = navController
+            )
         }
 
         AnnotatedHeaderContent(
@@ -221,8 +219,7 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi, firstApperanceOnC
 
         AnnotatedHeaderContent(
             header = "Birthday: ",
-            content = characterUi.birth
-                ?: stringResource(R.string.unknown_information),
+            content = characterUi.birth ?: stringResource(R.string.unknown_information),
             modifier = Modifier.padding(top = 5.dp),
             headerStyle = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold
@@ -230,10 +227,13 @@ fun CharacterDetailsView(characterUi: ComicCharacterDetailsUi, firstApperanceOnC
             contentStyle = MaterialTheme.typography.bodyMedium
         )
 
-        HorizontalScrollableRowSection(
-            "Died in :",
-            characterUi.issuesDiedIn ?: listOf(stringResource(R.string.unknown_information))
-        )
+        characterUi.issuesDiedIn?.let { comicResourceList ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = comicResourceList,
+                title = "Died in: ",
+                navController = navController
+            )
+        }
 
         HorizontalScrollableRowSection(
             stringResource(R.string.powers) + ":",

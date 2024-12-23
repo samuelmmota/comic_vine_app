@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.R
+import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHtmlContent
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
@@ -39,8 +40,7 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
     val characterDetail by viewModel.characterDetails.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    val parsedDescription by viewModel.parsedDescription.collectAsState()
-    /*
+    val parsedDescription by viewModel.parsedDescription.collectAsState()/*
     Use LaunchedEffect if:
     The parameter (characterApiId) is only relevant to the UI composition.
     The data fetching logic depends on something transient in the @Composable function's scope (e.g., a navigation argument).
@@ -83,9 +83,7 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
 
                 item {
                     characterDetail?.let {
-                        CharacterDetailsView(it, firstApperanceOnClick = {
-
-                        })
+                        CharacterDetailsView(it, navController)
                     }
                 }
                 item {
