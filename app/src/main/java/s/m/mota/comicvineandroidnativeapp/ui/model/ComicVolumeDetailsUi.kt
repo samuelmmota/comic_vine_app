@@ -1,6 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.volume_details
-
-import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.ComicIssueUi
+package s.m.mota.comicvineandroidnativeapp.ui.model
 
 data class ComicVolumeDetailsUi(
     val id: String?,

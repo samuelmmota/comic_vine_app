@@ -1,4 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.ui.screens.volumes
+package s.m.mota.comicvineandroidnativeapp.ui.model
 
 data class ComicVolumeUi(
     val id: String?,

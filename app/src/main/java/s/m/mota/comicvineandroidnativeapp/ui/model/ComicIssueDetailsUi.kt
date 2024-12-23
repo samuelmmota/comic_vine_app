@@ -1,4 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.ui.screens.issues.issue_details
+package s.m.mota.comicvineandroidnativeapp.ui.model
 
 data class ComicIssueDetailsUi(
     val id: String?,
