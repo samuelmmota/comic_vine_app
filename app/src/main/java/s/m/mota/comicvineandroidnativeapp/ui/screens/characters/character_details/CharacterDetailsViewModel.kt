@@ -16,6 +16,7 @@ import kotlinx.coroutines.withContext
 import s.m.mota.comicvineandroidnativeapp.data.model.toComicCharacterDetailsUi
 import s.m.mota.comicvineandroidnativeapp.data.repository.remote.characters.CharactersRepository
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicCharacterDetailsUi
 import s.m.mota.comicvineandroidnativeapp.utils.Utils
 import s.m.mota.comicvineandroidnativeapp.utils.Utils.parseHtmlAsync
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState

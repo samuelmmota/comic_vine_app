@@ -1,6 +1,7 @@
 package s.m.mota.comicvineandroidnativeapp.data.model.issue
 
 import com.google.gson.annotations.SerializedName
+import s.m.mota.comicvineandroidnativeapp.data.model.ComicResource
 import s.m.mota.comicvineandroidnativeapp.data.model.ComicVolume
 import s.m.mota.comicvineandroidnativeapp.data.model.ConceptCredit
 import s.m.mota.comicvineandroidnativeapp.data.model.Image
@@ -9,6 +10,7 @@ import s.m.mota.comicvineandroidnativeapp.data.model.ObjectCredit
 import s.m.mota.comicvineandroidnativeapp.data.model.PersonCredit
 import s.m.mota.comicvineandroidnativeapp.data.model.TeamCredit
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
+import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 
 data class ComicIssue(
     @SerializedName("aliases") val aliases: String?, // List of aliases separated by \n
@@ -30,11 +32,11 @@ data class ComicIssue(
     //@SerializedName("first_appearance_storyarcs") val firstAppearanceStoryArcs: List<StoryArc>?, // Story arcs appearing for the first time
     //@SerializedName("first_appearance_teams") val firstAppearanceTeams: List<Team>?, // Teams appearing for the first time
     @SerializedName("has_staff_review") val hasStaffReview: Boolean?, // Indicates if reviewed by staff
-    @SerializedName("id") val id: Int?, // Unique ID
-    @SerializedName("image") val image: Image?, // Main image of the issue
+    @SerializedName("id") override val id: Int?, // Unique ID
+    @SerializedName("image") override val image: Image?, // Main image of the issue
     @SerializedName("issue_number") val issueNumber: String?, // Number assigned to the issue
     @SerializedName("location_credits") val locationCredits: List<LocationCredit>?, // Locations in the issue
-    @SerializedName("name") val name: String?, // Name of the issue
+    @SerializedName("name") override val name: String?, // Name of the issue
     @SerializedName("object_credits") val objectCredits: List<ObjectCredit>?, // Objects in the issue
     @SerializedName("person_credits") val personCredits: List<PersonCredit>?, // People who worked on the issue
     @SerializedName("site_detail_url") val siteDetailUrl: String?, // URL to the issue on Giant Bomb
@@ -43,7 +45,10 @@ data class ComicIssue(
     @SerializedName("team_credits") val teamCredits: List<TeamCredit>?, // Teams in the issue
     //@SerializedName("teams_disbanded_in") val teamsDisbandedIn: List<Team>?, // Teams disbanded in the issue
     @SerializedName("volume") val volume: ComicVolume? // Volume this issue belongs to
-) {
+) : ComicResource {
+    override val apiId get(): String? = issueApiId
+    override val resourceType get(): ComicResourceType = ComicResourceType.ISSUE
+
     val aliasesList: List<String>?
         get() {
             if (aliases.isNullOrEmpty()) return null

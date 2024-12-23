@@ -30,7 +30,7 @@ import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
-import s.m.mota.comicvineandroidnativeapp.data.model.response.ResourceType
+import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 import s.m.mota.comicvineandroidnativeapp.data.model.response.SearchResultModel
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
@@ -65,17 +65,17 @@ fun SearchUI(
                                 .getResourceType()
                                 ?.let { resourceType ->
                                     when (resourceType) {
-                                        ResourceType.CHARACTER -> {
+                                        ComicResourceType.CHARACTER -> {
                                             item.resourceApiId?.let { characterApiId ->
                                                 navController.navigate(Screen.CharacterDetailsScreen.route.plus("/$characterApiId"))
                                             }
                                         }
-                                        ResourceType.ISSUE -> {
+                                        ComicResourceType.ISSUE -> {
                                             item.resourceApiId?.let { issueApiId ->
                                                 navController.navigate(Screen.IssueDetailsScreen.route.plus("/$issueApiId"))
                                             }
                                         }
-                                        ResourceType.VOLUME -> {
+                                        ComicResourceType.VOLUME -> {
                                             item.resourceApiId?.let { volumeApiId ->
                                                 navController.navigate(Screen.VolumeDetailsScreen.route.plus("/$volumeApiId"))
                                             }
@@ -129,7 +129,7 @@ fun SearchUI(
                             )
                             item.getResourceType()?.let { resourceType ->
                                 when (resourceType) {
-                                    ResourceType.CHARACTER -> {
+                                    ComicResourceType.CHARACTER -> {
                                         item.countOfIssueAppearances?.let { issueCount ->
                                             Text(
                                                 text = "$issueCount Issues",
@@ -140,7 +140,7 @@ fun SearchUI(
                                         }
                                     }
 
-                                    ResourceType.VOLUME -> {
+                                    ComicResourceType.VOLUME -> {
                                         item.countOfIssues?.let { issueCount ->
                                             Text(
                                                 text = "$issueCount Issues",
@@ -159,7 +159,7 @@ fun SearchUI(
                                         }
                                     }
 
-                                    ResourceType.SERIES -> {
+                                    ComicResourceType.SERIES -> {
                                         item.countOfEpisodes?.let { episodeCount ->
                                             Text(
                                                 text = "$episodeCount Episodes",

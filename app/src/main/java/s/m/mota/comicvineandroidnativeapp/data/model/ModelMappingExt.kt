@@ -2,16 +2,27 @@ package s.m.mota.comicvineandroidnativeapp.data.model
 
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
-import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.ComicCharacterUi
-import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_details.ComicCharacterDetailsUi
-import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.ComicIssueUi
-import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.issue_details.ComicIssueDetailsUi
-import s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.ComicVolumeUi
-import s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.volume_details.ComicVolumeDetailsUi
+import s.m.mota.comicvineandroidnativeapp.ui.component.ComicResourceUi
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicCharacterUi
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicCharacterDetailsUi
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicIssueUi
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicIssueDetailsUi
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeUi
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeDetailsUi
 import s.m.mota.comicvineandroidnativeapp.utils.Utils.updatedDateMessage
 
 const val blanckComicImageUrl: String =
     "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png"
+
+fun ComicResource.toComicResourceUi(): ComicResourceUi {
+    return ComicResourceUi(
+        id = id,
+        name = name,
+        thumbnailImageUrl = image?.thumbUrl ?: image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
+        resourceType = resourceType,
+        apiId = apiId
+    )
+}
 
 fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
     return ComicCharacterDetailsUi(
@@ -23,13 +34,13 @@ fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
         aliases = aliasesList,
         creators = creatorsList,
         powers = powersList,
-        firstAppearedInIssue = firstAppearedInIssue?.name,
+        firstAppearedInIssue = firstAppearedInIssue?.toComicResourceUi(),
         description = description,
         publisher = publisher?.name,
         characterType = characterType?.name,
         countOfIssueAppearances = countOfIssueAppearances?.toString(),
         birth = birth,
-        issuesDiedIn = issuesDiedInList,
+        issuesDiedIn = issuesDiedIn?.map { it.toComicResourceUi() },
         gender = genderDescription,
         deck=deck
     )

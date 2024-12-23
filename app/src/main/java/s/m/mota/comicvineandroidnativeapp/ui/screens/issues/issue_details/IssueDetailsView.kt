@@ -29,6 +29,7 @@ import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.HorizontalScrollableRowSection
 import s.m.mota.comicvineandroidnativeapp.ui.component.SlidingImageGalleryWithDots
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicIssueDetailsUi
 
 @Composable
 fun IssueDetailsImageView(imageList: List<String>, onFavoriteClick: () -> Unit) {

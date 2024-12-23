@@ -2,9 +2,11 @@ package s.m.mota.comicvineandroidnativeapp.data.model.character
 
 import com.google.gson.annotations.SerializedName
 import s.m.mota.comicvineandroidnativeapp.data.model.ComicCreator
+import s.m.mota.comicvineandroidnativeapp.data.model.ComicResource
 import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.data.model.Image
 import s.m.mota.comicvineandroidnativeapp.data.model.Publisher
+import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 
 data class ComicCharacter(
     @SerializedName("aliases") val aliases: String?,
@@ -17,9 +19,9 @@ data class ComicCharacter(
     @SerializedName("description") val description: String?,
     @SerializedName("first_appeared_in_issue") val firstAppearedInIssue: ComicIssue?,
     @SerializedName("gender") val gender: Int?,
-    @SerializedName("id") val id: Int?,
-    @SerializedName("image") val image: Image?,
-    @SerializedName("name") val name: String?,
+    @SerializedName("id") override val id: Int?,
+    @SerializedName("image") override val image: Image?,
+    @SerializedName("name") override val name: String?,
     @SerializedName("origin") val characterType: Origin?,
     @SerializedName("publisher") val publisher: Publisher?,
     @SerializedName("real_name") val realName: String?,
@@ -40,7 +42,10 @@ data class ComicCharacter(
     @SerializedName("team_friends") val teamFriends: List<Team>,
     @SerializedName("teams") val teams: List<Team>,
     @SerializedName("volume_credits") val volumeCredits: List<Volume>*/
-) {
+): ComicResource {
+    override val apiId get(): String? = characterApiId
+    override val resourceType get(): ComicResourceType = ComicResourceType.VOLUME
+
     val genderDescription: String
         get() = when (gender) {
             1 -> "Male"

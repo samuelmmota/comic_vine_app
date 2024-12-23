@@ -30,6 +30,7 @@ import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.HorizontalScrollableRowSection
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeDetailsUi
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
 

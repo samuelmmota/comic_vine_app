@@ -1,4 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.ui.screens.characters
+package s.m.mota.comicvineandroidnativeapp.ui.model
 
 data class ComicCharacterUi(
     val id: String?,

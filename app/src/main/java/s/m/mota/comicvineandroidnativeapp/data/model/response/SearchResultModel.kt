@@ -16,11 +16,11 @@ data class SearchResultModel(
     @SerializedName("publisher") val publisher: Publisher?,
     @SerializedName("resource_type") val resourceType: String?
 ) {
-    fun getResourceType(): ResourceType? {
+    fun getResourceType(): ComicResourceType? {
         return if (resourceType.isNullOrEmpty()) {
             return null
         } else {
-            ResourceType.fromTypeName(
+            ComicResourceType.fromTypeName(
                 resourceType
             )
         }
@@ -41,7 +41,7 @@ data class SearchResultModel(
         }
 }
 
-enum class ResourceType(val typeName: String) {
+enum class ComicResourceType(val typeName: String) {
     CHARACTER("character"), CONCEPT("concept"), ORIGIN("origin"), OBJECT("object"), LOCATION("location"), ISSUE(
         "issue"
     ),
@@ -53,7 +53,7 @@ enum class ResourceType(val typeName: String) {
     );
 
     companion object {
-        fun fromTypeName(typeName: String): ResourceType? {
+        fun fromTypeName(typeName: String): ComicResourceType? {
             return entries.find { it.typeName == typeName }
         }
     }

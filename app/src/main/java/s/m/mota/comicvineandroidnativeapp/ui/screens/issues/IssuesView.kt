@@ -43,6 +43,7 @@ import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicIssueUi
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.cornerRadius

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import s.m.mota.comicvineandroidnativeapp.data.datasource.remote.ApiService
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicVineApiResponse
-import s.m.mota.comicvineandroidnativeapp.data.model.response.ResourceType
+import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 import s.m.mota.comicvineandroidnativeapp.data.model.response.SearchResultModel
 import s.m.mota.comicvineandroidnativeapp.utils.SEARCH_RESULT_FETCH_LIMIT
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
@@ -38,7 +38,7 @@ class SearchResultModelRepository @Inject constructor(
         }
     }
 
-    override suspend fun searchResultsByType(query: String, types: List<ResourceType>): Flow<DataState<List<SearchResultModel>>> = flow {
+    override suspend fun searchResultsByType(query: String, types: List<ComicResourceType>): Flow<DataState<List<SearchResultModel>>> = flow {
         emit(DataState.Loading)
         try {
             val searchResults: ComicVineApiResponse<List<SearchResultModel>> =
