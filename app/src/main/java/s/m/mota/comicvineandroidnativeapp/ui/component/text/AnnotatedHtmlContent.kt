@@ -9,22 +9,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AnnotatedHtmlContent(title: String, annotatedString: AnnotatedString) {
+fun AnnotatedHtmlContent(
+    title: String, annotatedString: AnnotatedString, modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 10.dp)
+        .padding(top = 10.dp, bottom = 10.dp)
+) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp)
+        modifier = modifier
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium.copy(
+            style = MaterialTheme.typography.titleLarge.copy(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             ),
-            modifier = Modifier.padding(top = 5.dp)
+            modifier = Modifier
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
         )
         Text(
             text = annotatedString,

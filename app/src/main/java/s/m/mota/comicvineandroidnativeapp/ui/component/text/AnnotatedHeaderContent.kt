@@ -1,5 +1,6 @@
 package s.m.mota.comicvineandroidnativeapp.ui.component.text
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
@@ -28,7 +29,8 @@ fun AnnotatedHeaderContent(
     contentStyle: TextStyle = MaterialTheme.typography.bodyMedium.copy(
         color = MaterialTheme.colorScheme.onSurface
     ),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null
 ) {
     val annotatedString = buildAnnotatedString {
         withStyle(
@@ -47,7 +49,10 @@ fun AnnotatedHeaderContent(
         text = annotatedString,
         modifier = modifier
             .padding(bottom = 8.dp)
-            .wrapContentSize(Alignment.Center),
+            .wrapContentSize(Alignment.Center)
+            .clickable {
+               onClick?.invoke()
+            },
         maxLines = maxLines,
         overflow = TextOverflow.Ellipsis
     )

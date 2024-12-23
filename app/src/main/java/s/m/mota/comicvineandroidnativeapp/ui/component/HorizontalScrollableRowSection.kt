@@ -40,13 +40,15 @@ fun HorizontalScrollableRowSection(title: String, listItems: List<String>) {
                 .fillMaxHeight(),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
+            var index = 0
             items(listItems) { item ->
                 Text(
-                    text = item,
+                    text = item + if (listItems.lastIndex!=index) "," else "",
                     color = MaterialTheme.colorScheme.secondary,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold
                 )
+                index++
             }
         }
     }

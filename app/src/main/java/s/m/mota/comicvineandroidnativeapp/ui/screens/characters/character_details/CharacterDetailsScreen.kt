@@ -74,9 +74,18 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
                         }
                     }
                 }
+
                 item {
                     characterDetail?.let {
-                        CharacterDetailsView(it)
+                        CharacterCard(it)
+                    }
+                }
+
+                item {
+                    characterDetail?.let {
+                        CharacterDetailsView(it, firstApperanceOnClick = {
+
+                        })
                     }
                 }
                 item {

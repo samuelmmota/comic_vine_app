@@ -24,7 +24,14 @@ fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
         creators = creatorsList,
         powers = powersList,
         firstAppearedInIssue = firstAppearedInIssue?.name,
-        description = description
+        description = description,
+        publisher = publisher?.name,
+        characterType = characterType?.name,
+        countOfIssueAppearances = countOfIssueAppearances?.toString(),
+        birth = birth,
+        issuesDiedIn = issuesDiedInList,
+        gender = genderDescription,
+        deck=deck
     )
 }
 

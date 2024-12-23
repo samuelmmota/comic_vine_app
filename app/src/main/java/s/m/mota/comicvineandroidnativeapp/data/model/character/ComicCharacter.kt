@@ -20,7 +20,7 @@ data class ComicCharacter(
     @SerializedName("id") val id: Int?,
     @SerializedName("image") val image: Image?,
     @SerializedName("name") val name: String?,
-    @SerializedName("origin") val origin: Origin?,
+    @SerializedName("origin") val characterType: Origin?,
     @SerializedName("publisher") val publisher: Publisher?,
     @SerializedName("real_name") val realName: String?,
     @SerializedName("site_detail_url") val siteDetailUrl: String?,
@@ -58,7 +58,7 @@ data class ComicCharacter(
 
     val aliasesAsString: String? get() = aliasesList?.joinToString(", ")
 
-    val creatorsList: List<String>? get() = creators?.map { it.name }?.takeIf { it.isNotEmpty() }
+    val creatorsList: List<String>? get() = creators?.mapNotNull { it.name }
 
     val creatorsFormated: String? get() = creatorsList?.joinToString(", ")
 
@@ -67,6 +67,8 @@ data class ComicCharacter(
     val powersFormatedString: String? get() = powersList?.joinToString(", ")
 
     val characterApiId: String? get() = apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()
+
+    val issuesDiedInList: List<String>? get() = issuesDiedIn?.mapNotNull { it.name }
 }
 
 
