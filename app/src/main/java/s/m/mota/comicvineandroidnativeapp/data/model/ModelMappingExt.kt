@@ -18,10 +18,18 @@ fun ComicResource.toComicResourceUi(): ComicResourceUi {
     return ComicResourceUi(
         id = id,
         name = name,
-        thumbnailImageUrl = image?.thumbUrl ?: image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
+        thumbnailImageUrl = image?.thumbUrl ?: image?.originalUrl ?: image?.mediumUrl
+        ?: blanckComicImageUrl,
         resourceType = resourceType,
         apiId = apiId
     )
+}
+
+
+fun List<ComicResource>.toListOfComicResourceUi(): List<ComicResourceUi>? {
+    return this.map { it.toComicResourceUi() }.takeIf {
+        it.isNotEmpty()
+    }
 }
 
 fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
@@ -40,9 +48,9 @@ fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
         characterType = characterType?.name,
         countOfIssueAppearances = countOfIssueAppearances?.toString(),
         birth = birth,
-        issuesDiedIn = issuesDiedIn?.map { it.toComicResourceUi() },
+        issuesDiedIn = issuesDiedIn?.toListOfComicResourceUi(),
         gender = genderDescription,
-        deck=deck
+        deck = deck
     )
 }
 
@@ -64,7 +72,8 @@ fun ComicIssue.toComicIssueUi(): ComicIssueUi {
         name = name,
         imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
         issueNumber = issueNumber,
-        issueApiId = issueApiId
+        issueApiId = apiId,
+        volume = volume?.toComicVolumeUi()
     )
 }
 
@@ -73,15 +82,35 @@ fun ComicIssue.toComicIssueDetailsUi(): ComicIssueDetailsUi {
         id = id?.toString(),
         name = name,
         issueNumber = issueNumber,
-        issueApiId = issueApiId,
+        issueApiId = apiId,
         aliases = aliasesList,
         description = description,
         associatedImages = listImages,
         coverDate = coverDate,
         dateAdded = dateAdded,
         dateLastUpdated = dateLastUpdated?.let { updatedDateMessage(it) },
+        storeDate = storeDate,
         deck = deck,
         hasStaffReview = hasStaffReview ?: false,
+        volume = volume?.toComicVolumeUi(),
+        personCredits = personCredits?.map {
+            val updatedPerson = it.toComicResourceUi()
+            updatedPerson.copy(name = "${it.name}/${it.role}")
+        }?.takeIf { it.isNotEmpty() },
+        characterCredits = characterCredits?.toListOfComicResourceUi(),
+        teamCredits = teamCredits?.toListOfComicResourceUi(),
+        locationCredits = locationCredits?.toListOfComicResourceUi(),
+        conceptCredits = conceptCredits?.toListOfComicResourceUi(),
+        objectCredits = objectCredits?.toListOfComicResourceUi(),
+        storyArcCredits = storyArcCredits?.toListOfComicResourceUi(),
+        firstAppearanceCharacters = firstAppearanceCharacters?.toListOfComicResourceUi(),
+        firstAppearanceConcepts = firstAppearanceConcepts?.toListOfComicResourceUi(),
+        firstAppearanceLocations = firstAppearanceLocations?.toListOfComicResourceUi(),
+        firstAppearanceStoryArcs = firstAppearanceStoryArcs?.toListOfComicResourceUi(),
+        firstAppearanceTeams = firstAppearanceTeams?.toListOfComicResourceUi(),
+        teamsDisbandedIn = teamsDisbandedIn?.toListOfComicResourceUi(),
+        disbandedTeams = disbandedTeams?.toListOfComicResourceUi(),
+        charactersDiedIn = charactersDiedIn?.toListOfComicResourceUi()
     )
 }
 

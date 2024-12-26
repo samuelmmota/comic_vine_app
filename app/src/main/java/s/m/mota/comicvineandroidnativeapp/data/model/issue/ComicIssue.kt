@@ -8,6 +8,7 @@ import s.m.mota.comicvineandroidnativeapp.data.model.Image
 import s.m.mota.comicvineandroidnativeapp.data.model.LocationCredit
 import s.m.mota.comicvineandroidnativeapp.data.model.ObjectCredit
 import s.m.mota.comicvineandroidnativeapp.data.model.PersonCredit
+import s.m.mota.comicvineandroidnativeapp.data.model.StoryArcCredits
 import s.m.mota.comicvineandroidnativeapp.data.model.TeamCredit
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
@@ -24,13 +25,12 @@ data class ComicIssue(
     @SerializedName("deck") val deck: String?, // Brief summary
     @SerializedName("description") val description: String?, // Detailed description
     @SerializedName("associated_images") val associatedImages: List<AssociatedImage>?,
-    //@SerializedName("disbanded_teams") val disbandedTeams: List<Team>?, // Teams disbanded in the issue
+    @SerializedName("disbanded_teams") val disbandedTeams: List<TeamCredit>?, // Teams disbanded in the issue
     @SerializedName("first_appearance_characters") val firstAppearanceCharacters: List<ComicCharacter>?, // Characters appearing for the first time
-    //@SerializedName("first_appearance_concepts") val firstAppearanceConcepts: List<Concept>?, // Concepts appearing for the first time
-    //@SerializedName("first_appearance_locations") val firstAppearanceLocations: List<Location>?, // Locations appearing for the first time
-    //@SerializedName("first_appearance_objects") val firstAppearanceObjects: List<Object>?, // Objects appearing for the first time
-    //@SerializedName("first_appearance_storyarcs") val firstAppearanceStoryArcs: List<StoryArc>?, // Story arcs appearing for the first time
-    //@SerializedName("first_appearance_teams") val firstAppearanceTeams: List<Team>?, // Teams appearing for the first time
+    @SerializedName("first_appearance_concepts") val firstAppearanceConcepts: List<ConceptCredit>?, // Concepts appearing for the first time
+    @SerializedName("first_appearance_locations") val firstAppearanceLocations: List<LocationCredit>?, // Locations appearing for the first time @SerializedName("first_appearance_objects") val firstAppearanceObjects: List<Object>?, // Objects appearing for the first time
+    @SerializedName("first_appearance_storyarcs") val firstAppearanceStoryArcs: List<StoryArcCredits>?, // Story arcs appearing for the first time
+    @SerializedName("first_appearance_teams") val firstAppearanceTeams: List<TeamCredit>?, // Teams appearing for the first time
     @SerializedName("has_staff_review") val hasStaffReview: Boolean?, // Indicates if reviewed by staff
     @SerializedName("id") override val id: Int?, // Unique ID
     @SerializedName("image") override val image: Image?, // Main image of the issue
@@ -41,12 +41,12 @@ data class ComicIssue(
     @SerializedName("person_credits") val personCredits: List<PersonCredit>?, // People who worked on the issue
     @SerializedName("site_detail_url") val siteDetailUrl: String?, // URL to the issue on Giant Bomb
     @SerializedName("store_date") val storeDate: String?, // Store release date
-    //@SerializedName("story_arc_credits") val storyArcCredits: List<StoryArc>?, // Story arcs in the issue
+    @SerializedName("story_arc_credits") val storyArcCredits: List<StoryArcCredits>?, // Story arcs in the issue
     @SerializedName("team_credits") val teamCredits: List<TeamCredit>?, // Teams in the issue
-    //@SerializedName("teams_disbanded_in") val teamsDisbandedIn: List<Team>?, // Teams disbanded in the issue
+    @SerializedName("teams_disbanded_in") val teamsDisbandedIn: List<TeamCredit>?, // Teams disbanded in the issue
     @SerializedName("volume") val volume: ComicVolume? // Volume this issue belongs to
 ) : ComicResource {
-    override val apiId get(): String? = issueApiId
+    override val apiId get(): String? =  apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()
     override val resourceType get(): ComicResourceType = ComicResourceType.ISSUE
 
     val aliasesList: List<String>?
@@ -56,8 +56,6 @@ data class ComicIssue(
         }
 
     val aliasesAsString: String? get() = aliasesList?.joinToString(", ")
-
-    val issueApiId: String? get() = apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()
 
     val listImages: List<String> get() {
        val primaryImage : String? =  image?.superUrl?: image?.screenLargeUrl?: image?.screenUrl?: image?.originalUrl
