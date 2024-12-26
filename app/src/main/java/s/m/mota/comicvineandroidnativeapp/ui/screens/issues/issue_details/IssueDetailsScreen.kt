@@ -77,7 +77,12 @@ fun IssueDetailsScreen(navController: NavController, issueApiId: String) {
                 }
                 item {
                     issueDetails?.let {
-                        IssueDetailsView(it)
+                        IssueCard(it)
+                    }
+                }
+                item {
+                    issueDetails?.let {
+                        IssueDetailsView(it, navController)
                     }
                 }
                 item {
