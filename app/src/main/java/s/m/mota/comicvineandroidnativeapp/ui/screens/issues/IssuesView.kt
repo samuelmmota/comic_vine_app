@@ -116,8 +116,13 @@ fun IssueListItem(item: ComicIssueUi, navController: NavController) {
                     navController.navigate(Screen.IssueDetailsScreen.route.plus("/$issueApiId"))
                 }
         }) {
+        val issueName = item.volume?.let {
+            "${it.name} #${item.issueNumber?: "n/a"}"
+        } ?: "${item.name} ${item.issueNumber}".takeIf { item.issueNumber != null }
+        ?: (stringResource(R.string.unknown_issue) + item.id.let { " [$it]" })
+
         Text(
-            text = item.name ?: (stringResource(R.string.unknown_issue) + item.id.let { " [$it]" }),
+            text =issueName ,
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .align(Alignment.CenterHorizontally),
