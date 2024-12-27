@@ -117,7 +117,8 @@ fun CharacterListItem(item: ComicCharacterUi, navController: NavController) {
                 }
         }) {
         Text(
-            text = item.name ?: (stringResource(R.string.unknown_character) + item.id.let { " [$it]" }),
+            text = item.name
+                ?: (stringResource(R.string.unknown_character) + item.id.let { " [$it]" }),
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .align(Alignment.CenterHorizontally),
@@ -153,9 +154,16 @@ fun CharacterListItem(item: ComicCharacterUi, navController: NavController) {
                 )
             },
         )
-
-        AnnotatedHeaderContent(header = "Aliases: ", content = item.aliases ?: stringResource(R.string.unknown_information), maxLines = 4)
-        AnnotatedHeaderContent(header = "Issue count: ", content = item.issueCount ?: stringResource(R.string.unknown_information))
-        AnnotatedHeaderContent(header = "Publisher:", content = item.publisher ?: stringResource(R.string.unknown_information))
+        AnnotatedHeaderContent(
+            header = "Added Date: ",
+            content = item.dateAdded ?: stringResource(R.string.unknown_information)
+        )
+        AnnotatedHeaderContent(
+            header = "Publisher:",
+            content = item.publisher ?: stringResource(R.string.unknown_information)
+        )
+        item.aliases?.let { aliases ->
+            AnnotatedHeaderContent(header = "Aliases: ", content = aliases, maxLines = 4)
+        }
     }
 }

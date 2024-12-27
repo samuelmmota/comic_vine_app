@@ -9,7 +9,7 @@ import s.m.mota.comicvineandroidnativeapp.ui.model.ComicIssueUi
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicIssueDetailsUi
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeUi
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeDetailsUi
-import s.m.mota.comicvineandroidnativeapp.utils.Utils.updatedDateMessage
+import s.m.mota.comicvineandroidnativeapp.utils.Utils.formatedDateMessage
 
 const val blanckComicImageUrl: String =
     "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png"
@@ -60,9 +60,9 @@ fun ComicCharacter.toComicCharacterUi(): ComicCharacterUi {
         name = name,
         imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
         aliases = aliasesAsString,
-        issueCount = characterApiId,
         publisher = publisher?.name,
-        characterApiId = characterApiId
+        characterApiId = characterApiId,
+        dateAdded =dateAdded?.let { formatedDateMessage(it)},
     )
 }
 
@@ -88,7 +88,7 @@ fun ComicIssue.toComicIssueDetailsUi(): ComicIssueDetailsUi {
         associatedImages = listImages,
         coverDate = coverDate,
         dateAdded = dateAdded,
-        dateLastUpdated = dateLastUpdated?.let { updatedDateMessage(it) },
+        dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) },
         storeDate = storeDate,
         deck = deck,
         hasStaffReview = hasStaffReview ?: false,
@@ -121,7 +121,7 @@ fun ComicVolume.toComicVolumeUi(): ComicVolumeUi {
         imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
         volumeApiId = volumeApiId,
         countOfIssues = countOfIssues?.toString(),
-        dateLastUpdated = dateLastUpdated?.let { updatedDateMessage(it) },
+        dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) },
         lastIssueName = lastIssue?.name,
         publisher = publisher?.name,
         startYear = startYear,
@@ -136,7 +136,7 @@ fun ComicVolume.toComicVolumeDetailsUi(): ComicVolumeDetailsUi {
         ?: image?.originalUrl ?: blanckComicImageUrl,
         description = description,
         dateAdded = dateAdded,
-        dateLastUpdated = dateLastUpdated?.let { updatedDateMessage(it) },
+        dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) },
         deck = deck,
         volumeApiId = volumeApiId,
         countOfIssues = countOfIssues?.toString(),

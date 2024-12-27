@@ -6,6 +6,6 @@ data class ComicCharacterUi(
     val characterApiId: String?,
     val imageUrl: String,
     val aliases: String?,
-    val issueCount: String?,
-    val publisher: String?
+    val publisher: String?,
+    val dateAdded: String?
 )
