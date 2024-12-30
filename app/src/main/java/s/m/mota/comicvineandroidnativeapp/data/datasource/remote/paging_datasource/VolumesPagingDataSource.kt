@@ -13,7 +13,7 @@ import javax.inject.Inject
 class VolumesPagingDataSource @Inject constructor(
     private val apiService: ApiService,
     private val limit: Int = LIST_RESULT_FETCH_LIMIT,
-    private val sort: String? = null,
+    private val sort: String? = "date_added:desc",
     private val filter: String? = null
 ) : PagingSource<Int, ComicVolume>() {
 

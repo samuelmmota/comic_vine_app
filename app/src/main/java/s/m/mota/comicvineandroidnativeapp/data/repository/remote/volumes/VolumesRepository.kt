@@ -17,8 +17,8 @@ class VolumesRepository @Inject constructor(
     private val apiService: ApiService
 ) : VolumesRepositoryInterface {
 
-    override fun allVolumes(): Flow<PagingData<ComicVolume>> = Pager(
-        pagingSourceFactory = { VolumesPagingDataSource(apiService) },
+    override fun allVolumes(sort: String?): Flow<PagingData<ComicVolume>> = Pager(
+        pagingSourceFactory = { VolumesPagingDataSource(apiService = apiService, sort = sort) },
         config = PagingConfig(pageSize = PAGING_CONFIG_PAGE_SIZE)
     ).flow
 
