@@ -44,7 +44,7 @@ data class ComicCharacter(
     @SerializedName("volume_credits") val volumeCredits: List<Volume>*/
 ): ComicResource {
     override val apiId get(): String? = characterApiId
-    override val resourceType get(): ComicResourceType = ComicResourceType.VOLUME
+    override val resourceType get(): ComicResourceType = ComicResourceType.CHARACTER
 
     val genderDescription: String
         get() = when (gender) {
