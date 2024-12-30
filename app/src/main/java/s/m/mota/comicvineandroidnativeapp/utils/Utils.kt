@@ -95,7 +95,7 @@ object Utils {
         }
     }
 
-    fun updatedDateMessage(dateString: String) : String? {
+    fun formatedDateMessage(dateString: String) : String? {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val updatedDate: Date = dateFormat.parse(dateString) ?: return null
         val currentDate = Calendar.getInstance()
@@ -103,14 +103,16 @@ object Utils {
         val updatedCalendar = Calendar.getInstance().apply { time = updatedDate }
         val yearDiff = currentDate.get(Calendar.YEAR) - updatedCalendar.get(Calendar.YEAR)
         val monthDiff = currentDate.get(Calendar.MONTH) - updatedCalendar.get(Calendar.MONTH)
+        val weekDiff = currentDate.get(Calendar.WEEK_OF_YEAR) - updatedCalendar.get(Calendar.WEEK_OF_YEAR)
         val dayDiff = currentDate.get(Calendar.DAY_OF_YEAR) - updatedCalendar.get(Calendar.DAY_OF_YEAR)
 
         return when {
-            yearDiff == 0 && monthDiff == 0 && dayDiff == 0 -> "Updated today"
-            yearDiff == 0 && monthDiff == 0 && dayDiff > 0 -> "Updated this month"
-            yearDiff == 0 && monthDiff > 0 -> "Updated this year"
-            yearDiff > 0 -> "Updated on ${SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(updatedDate)}"
-            else -> "Invalid date"
+            yearDiff == 0 && monthDiff == 0 && dayDiff == 0 -> "today"
+            yearDiff == 0 && weekDiff == 0 -> "this week"
+            yearDiff == 0 && monthDiff == 0 && dayDiff > 0 -> "this month"
+            yearDiff == 0 && monthDiff > 0 -> "this year"
+            yearDiff > 0 -> "on ${SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(updatedDate)}"
+            else -> null
         }
     }
 }
