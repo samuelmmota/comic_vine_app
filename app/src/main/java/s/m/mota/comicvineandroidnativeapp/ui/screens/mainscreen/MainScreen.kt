@@ -11,6 +11,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import s.m.mota.comicvineandroidnativeapp.R
@@ -44,6 +46,7 @@ import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProg
 import s.m.mota.comicvineandroidnativeapp.ui.component.ExitAlertDialog
 import s.m.mota.comicvineandroidnativeapp.ui.component.SearchBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.SearchUI
+import s.m.mota.comicvineandroidnativeapp.ui.component.SortSettingAlertDialog
 import s.m.mota.comicvineandroidnativeapp.ui.screens.mainscreen.botton_navigation.BottomNavigationUI
 import s.m.mota.comicvineandroidnativeapp.utils.networkconnection.ConnectionState
 import s.m.mota.comicvineandroidnativeapp.utils.networkconnection.connectivityState
@@ -60,6 +63,8 @@ fun MainScreen() {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val pagerState = rememberPagerState { 1 }
     val openDialog = remember { mutableStateOf(false) }
+    val isSortSettingsDialogVisible = remember { mutableStateOf(false) }
+    val sortSettings by mainViewModel.sortSettings.collectAsStateWithLifecycle()
     val activity = (LocalContext.current as? Activity)
 
     /*BackHandler(
@@ -130,10 +135,28 @@ fun MainScreen() {
             }
         }, scrollBehavior = scrollBehavior, actions = {
             IconButton(onClick = {
+                isSortSettingsDialogVisible.value = true
+            }) {
+                if (currentRoute(navController) !in listOf(
+                        Screen.CharacterDetailsScreen.route,
+                        Screen.IssueDetailsScreen.route,
+                        Screen.VolumeDetailsScreen.route,
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.List,
+                        contentDescription = "Sort List action button",
+                        tint = MaterialTheme.colorScheme.tertiary
+                    )
+                }
+            }
+            IconButton(onClick = {
                 isAppBarVisible.value = false
             }) {
                 if (currentRoute(navController) !in listOf(
                         Screen.CharacterDetailsScreen.route,
+                        Screen.IssueDetailsScreen.route,
+                        Screen.VolumeDetailsScreen.route,
                     )
                 ) {
                     Icon(
@@ -146,8 +169,7 @@ fun MainScreen() {
         })
     }, floatingActionButton = {}, bottomBar = {
         when (currentRoute(navController)) {
-            Screen.CharactersScreen.route, Screen.IssuesScreen.route, Screen.VolumesScreen.route
-                -> {
+            Screen.CharactersScreen.route, Screen.IssuesScreen.route, Screen.VolumesScreen.route -> {
                 BottomNavigationUI(navController, pagerState)
             }
         }
@@ -162,7 +184,7 @@ fun MainScreen() {
     }) {
         Box(Modifier.padding(it)) {
             MainView(
-                navController, pagerState
+                navController, pagerState, sortSettings
             )
             CircularIndeterminateProgressBar(isDisplayed = searchProgressBar.value, 0.1f)
             if (isAppBarVisible.value.not()) {
@@ -174,6 +196,7 @@ fun MainScreen() {
             }
         }
     }
+    // Exit App Dialog
     if ((currentRoute(navController) == Screen.CharactersScreen.route) && openDialog.value) {
         ExitAlertDialog(title = stringResource(R.string.close_the_app),
             description = stringResource(R.string.do_you_want_to_exit_the_app),
@@ -184,12 +207,30 @@ fun MainScreen() {
                 activity?.finish()
             })
     }
+    // Sort List Settings Dialog
+    if (currentRoute(navController) !in listOf(
+            Screen.CharacterDetailsScreen.route,
+            Screen.IssueDetailsScreen.route,
+            Screen.VolumeDetailsScreen.route,
+        ) && isSortSettingsDialogVisible.value
+    ) {
+        SortSettingAlertDialog(title = "Sort by",
+            components = listOf("id", "added date", "updated date"),
+            viewmodel = mainViewModel,
+            cancel = {
+                isSortSettingsDialogVisible.value = it
+            },
+            apply = {
+                isSortSettingsDialogVisible.value = it
+            })
+    }
 }
 
 @Composable
 fun MainView(
     navigator: NavHostController,
     pagerState: PagerState,
+    sortSettings: Pair<String, String>?
 ) {
     Column {
         if (currentRoute(navigator) !in listOf(

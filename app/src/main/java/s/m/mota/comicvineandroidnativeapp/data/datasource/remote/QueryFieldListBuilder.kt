@@ -78,6 +78,9 @@ class QueryFieldListBuilder {
     val COVER_DATE: QueryFieldListBuilder
         get() = addField("cover_date")
 
+    val DATE_ADDED: QueryFieldListBuilder
+        get() = addField("date_added")
+
     val DATE_LAST_UPDATED: QueryFieldListBuilder
         get() = addField("date_last_updated")
 

@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CharactersPagingDataSource @Inject constructor(
     private val apiService: ApiService,
     private val limit: Int =  LIST_RESULT_FETCH_LIMIT,
-    private val sort: String? = null,
+    private val sort: String? = "date_added:desc",
     private val filter: String? = null
 ) : PagingSource<Int, ComicCharacter>() {
 
@@ -23,7 +23,6 @@ class CharactersPagingDataSource @Inject constructor(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ComicCharacter> {
-        // Ex result: "limit":100,"offset":0,"number_of_page_results":100,"number_of_total_results":163652,
         return try {
             val nextPage = params.key ?: 0
             val charactersList = apiService.getCharacters(
