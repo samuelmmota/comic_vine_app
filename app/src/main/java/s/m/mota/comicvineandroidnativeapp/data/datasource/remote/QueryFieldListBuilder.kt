@@ -52,6 +52,10 @@ class QueryFieldListBuilder {
 
     val COUNT_OF_ISSUES: QueryFieldListBuilder
         //get() = addField("count_of_issues")
+        get() = addField("count_of_issues")
+
+    val COUNT_OF_ISSUES_APPEARANCES: QueryFieldListBuilder
+        //get() = addField("count_of_issues")
         get() = addField("count_of_issue_appearances")
 
     val COUNT_OF_EPISODES: QueryFieldListBuilder
@@ -93,7 +97,15 @@ class QueryFieldListBuilder {
     val FIRST_APPEARANCE_CHARACTERS: QueryFieldListBuilder
         get() = addField("first_appearance_characters")
 
-
     val STORE_DATE: QueryFieldListBuilder
         get() = addField("store_date")
+
+    val VOLUME: QueryFieldListBuilder
+        get() = addField("volume")
+
+    val ASSOCIATED_IMAGES: QueryFieldListBuilder
+        get() = addField("associated_images")
+
+    val LAST_ISSUE: QueryFieldListBuilder
+        get() = addField("last_issue")
 }
