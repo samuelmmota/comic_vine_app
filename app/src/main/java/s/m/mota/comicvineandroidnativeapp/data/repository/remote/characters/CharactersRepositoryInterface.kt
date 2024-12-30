@@ -6,6 +6,6 @@ import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 
 interface CharactersRepositoryInterface {
-    fun allCharacters(): Flow<PagingData<ComicCharacter>>
+    fun allCharacters(sort: String?): Flow<PagingData<ComicCharacter>>
     suspend fun characterDetails(characterApiId: String): Flow<DataState<ComicCharacter>>
 }

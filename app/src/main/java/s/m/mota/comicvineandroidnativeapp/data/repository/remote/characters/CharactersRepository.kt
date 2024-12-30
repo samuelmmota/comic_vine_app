@@ -17,24 +17,26 @@ class CharactersRepository @Inject constructor(
     private val apiService: ApiService
 ) : CharactersRepositoryInterface {
 
-    override fun allCharacters(): Flow<PagingData<ComicCharacter>> = Pager(
-        pagingSourceFactory = { CharactersPagingDataSource(apiService) },
+    override fun allCharacters(sort: String?): Flow<PagingData<ComicCharacter>> = Pager(
+        pagingSourceFactory = { CharactersPagingDataSource(apiService = apiService, sort = sort) },
         config = PagingConfig(
-            pageSize = PAGING_CONFIG_PAGE_SIZE)
+            pageSize = PAGING_CONFIG_PAGE_SIZE
+        )
     ).flow
 
-    override suspend fun characterDetails(characterApiId: String): Flow<DataState<ComicCharacter>> = flow {
-        emit(DataState.Loading)
-        try {
-            val characterResult: ComicVineApiResponse<ComicCharacter> =
-                apiService.getCharacterDetail(characterApiId)
-            if (characterResult.results != null) {
-                emit(DataState.Success(characterResult.results))
-            }
-            //TODO: Deal with null
+    override suspend fun characterDetails(characterApiId: String): Flow<DataState<ComicCharacter>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val characterResult: ComicVineApiResponse<ComicCharacter> =
+                    apiService.getCharacterDetail(characterApiId)
+                if (characterResult.results != null) {
+                    emit(DataState.Success(characterResult.results))
+                }
+                //TODO: Deal with null
 
-        } catch (e: Exception) {
-            emit(DataState.Error(e))
+            } catch (e: Exception) {
+                emit(DataState.Error(e))
+            }
         }
-    }
 }
