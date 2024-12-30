@@ -6,6 +6,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import s.m.mota.comicvineandroidnativeapp.data.repository.remote.issues.IssuesRepository
+import s.m.mota.comicvineandroidnativeapp.data.repository.remote.volumes.VolumesRepository
 import javax.inject.Singleton
 
 @Module
@@ -20,6 +22,32 @@ object RepositoryModule {
         apiService: ApiService,
     ): CharactersRepository {
         return CharactersRepository(
+            apiService
+        )
+    }
+
+    /**
+     * Provides RemoteDataRepository for access api service method
+     */
+    @Singleton
+    @Provides
+    fun provideIssuesRepository(
+        apiService: ApiService,
+    ): IssuesRepository {
+        return IssuesRepository(
+            apiService
+        )
+    }
+
+    /**
+     * Provides RemoteDataRepository for access api service method
+     */
+    @Singleton
+    @Provides
+    fun provideVolumesRepository(
+        apiService: ApiService,
+    ): VolumesRepository {
+        return VolumesRepository(
             apiService
         )
     }
