@@ -17,8 +17,8 @@ class IssuesRepository @Inject constructor(
     private val apiService: ApiService
 ) : IssuesRepositoryInterface {
 
-    override fun allIssues(): Flow<PagingData<ComicIssue>> = Pager(
-        pagingSourceFactory = { IssuesPagingDataSource(apiService) },
+    override fun allIssues(sort: String?): Flow<PagingData<ComicIssue>> = Pager(
+        pagingSourceFactory = { IssuesPagingDataSource(apiService = apiService, sort = sort)},
         config = PagingConfig(pageSize = PAGING_CONFIG_PAGE_SIZE)
     ).flow
 
