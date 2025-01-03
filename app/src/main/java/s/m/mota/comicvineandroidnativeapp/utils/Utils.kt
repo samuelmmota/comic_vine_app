@@ -47,9 +47,7 @@ object Utils {
 
             // Handle underline styles
             spannedHtml.getSpans(
-                0,
-                spannedHtml.length,
-                android.text.style.UnderlineSpan::class.java
+                0, spannedHtml.length, android.text.style.UnderlineSpan::class.java
             ).forEach { span ->
                 addStyle(
                     style = SpanStyle(textDecoration = TextDecoration.Underline),
@@ -60,9 +58,7 @@ object Utils {
 
             // Handle clickable spans
             spannedHtml.getSpans(
-                0,
-                spannedHtml.length,
-                android.text.style.ClickableSpan::class.java
+                0, spannedHtml.length, android.text.style.ClickableSpan::class.java
             ).forEach { span ->
                 addStringAnnotation(
                     tag = "URL",
@@ -72,19 +68,14 @@ object Utils {
                 )
                 addStyle(
                     style = SpanStyle(
-                        color = Color.Blue,
-                        textDecoration = TextDecoration.Underline
-                    ),
-                    start = spannedHtml.getSpanStart(span),
-                    end = spannedHtml.getSpanEnd(span)
+                        color = Color.Blue, textDecoration = TextDecoration.Underline
+                    ), start = spannedHtml.getSpanStart(span), end = spannedHtml.getSpanEnd(span)
                 )
             }
 
             // Handle other custom spans (optional)
             spannedHtml.getSpans(
-                0,
-                spannedHtml.length,
-                android.text.style.ForegroundColorSpan::class.java
+                0, spannedHtml.length, android.text.style.ForegroundColorSpan::class.java
             ).forEach { span ->
                 addStyle(
                     style = SpanStyle(color = Color(span.foregroundColor)),
@@ -95,7 +86,7 @@ object Utils {
         }
     }
 
-    fun formatedDateMessage(dateString: String) : String? {
+    fun formatedDateMessage(dateString: String): String? {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val updatedDate: Date = dateFormat.parse(dateString) ?: return null
         val currentDate = Calendar.getInstance()
@@ -103,16 +94,36 @@ object Utils {
         val updatedCalendar = Calendar.getInstance().apply { time = updatedDate }
         val yearDiff = currentDate.get(Calendar.YEAR) - updatedCalendar.get(Calendar.YEAR)
         val monthDiff = currentDate.get(Calendar.MONTH) - updatedCalendar.get(Calendar.MONTH)
-        val weekDiff = currentDate.get(Calendar.WEEK_OF_YEAR) - updatedCalendar.get(Calendar.WEEK_OF_YEAR)
-        val dayDiff = currentDate.get(Calendar.DAY_OF_YEAR) - updatedCalendar.get(Calendar.DAY_OF_YEAR)
+        val weekDiff =
+            currentDate.get(Calendar.WEEK_OF_YEAR) - updatedCalendar.get(Calendar.WEEK_OF_YEAR)
+        val dayDiff =
+            currentDate.get(Calendar.DAY_OF_YEAR) - updatedCalendar.get(Calendar.DAY_OF_YEAR)
 
         return when {
             yearDiff == 0 && monthDiff == 0 && dayDiff == 0 -> "today"
             yearDiff == 0 && weekDiff == 0 -> "this week"
             yearDiff == 0 && monthDiff == 0 && dayDiff > 0 -> "this month"
             yearDiff == 0 && monthDiff > 0 -> "this year"
-            yearDiff > 0 -> "on ${SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(updatedDate)}"
+            yearDiff > 0 -> "on ${
+                SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(
+                    updatedDate
+                )
+            }"
+
             else -> null
         }
+    }
+
+    val uiToJsonSortMap = mapOf(
+        1 to "id", 2 to "added_date", 3 to "updated_date"
+    )
+
+    val uiToJsonOrderMap = mapOf(
+        1 to "asc",
+        2 to "desc",
+    )
+
+    fun Pair<String, String>.toSortStringFormat(): String {
+        return "${first}:${this.second}"
     }
 }
