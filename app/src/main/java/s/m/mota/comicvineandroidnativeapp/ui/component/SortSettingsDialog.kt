@@ -20,35 +20,52 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.screens.mainscreen.MainViewModel
+import s.m.mota.comicvineandroidnativeapp.utils.Utils.uiToJsonOrderMap
+import s.m.mota.comicvineandroidnativeapp.utils.Utils.uiToJsonSortMap
 
 @Composable
 fun SortSettingAlertDialog(
-    title: String,
-    components: List<String>,
     viewmodel: MainViewModel,
     cancel: (isOpen: Boolean) -> Unit,
     apply: (isOpen: Boolean) -> Unit,
 ) {
     val openDialog = remember { mutableStateOf(true) }
-    var selectedComponent by remember {
-        mutableStateOf(
-            viewmodel.sortSettings.value?.first ?: components.first()
-        )
+
+    val componentsSortMap = mapOf(
+        1 to stringResource(R.string.sort_id),
+        2 to stringResource(R.string.sort_added_date),
+        3 to stringResource(R.string.sort_updated_date)
+    )
+
+    val componentsOrderMap = mapOf(
+        1 to stringResource(R.string.sort_ascending),
+        2 to stringResource(R.string.sort_descending),
+    )
+
+
+    var selectedComponentId by remember {
+        mutableIntStateOf(viewmodel.sortSettings.value?.first?.let { jsonValue ->
+            uiToJsonSortMap.entries.firstOrNull { it.value == jsonValue }?.key
+        } ?: uiToJsonSortMap.keys.first())
     }
-    var selectedSortOrder by remember {
-        mutableStateOf(
-            viewmodel.sortSettings.value?.second ?: "asc"
-        )
+
+    var selectedSortOrderId by remember {
+        mutableIntStateOf(viewmodel.sortSettings.value?.second?.let { jsonValue ->
+            uiToJsonOrderMap.entries.firstOrNull { it.value == jsonValue }?.key
+        } ?: uiToJsonOrderMap.keys.first())
     }
 
     if (openDialog.value) {
@@ -59,7 +76,7 @@ fun SortSettingAlertDialog(
             },
             title = {
                 Text(
-                    text = title, fontWeight = FontWeight.Bold, fontSize = 18.sp
+                    text = "Sort By", fontWeight = FontWeight.Bold, fontSize = 18.sp
                 )
             },
             text = {
@@ -69,7 +86,11 @@ fun SortSettingAlertDialog(
                         TextButton(
                             onClick = { expanded = true }, modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(text = selectedComponent, fontSize = 16.sp, color = Color.Black)
+                            Text(
+                                text = componentsSortMap.get(selectedComponentId) ?: "id",
+                                fontSize = 16.sp,
+                                color = Color.Black
+                            )
                             Spacer(modifier = Modifier.weight(1f))
                             Icon(
                                 imageVector = if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
@@ -81,15 +102,15 @@ fun SortSettingAlertDialog(
                             expanded = expanded,
                             onDismissRequest = { expanded = false },
                         ) {
-                            components.forEach { component ->
+                            componentsSortMap.forEach { component ->
                                 DropdownMenuItem(onClick = {
-                                    selectedComponent = component
+                                    selectedComponentId = component.key
                                     expanded = false
                                 }, text = {
                                     Text(
-                                        text = component,
+                                        text = component.value,
                                         fontSize = 14.sp,
-                                        color = if (component == selectedComponent) Color.Blue else Color.Black
+                                        color = if (component.key == selectedComponentId) Color.Blue else Color.Black
                                     )
                                 })
                             }
@@ -101,38 +122,25 @@ fun SortSettingAlertDialog(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Row(modifier = Modifier
-                            .clickable { selectedSortOrder = "asc" }
-                            .padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Filled.KeyboardArrowUp,
-                                contentDescription = "Ascending Order",
-                                tint = if (selectedSortOrder == "asc") Color.Blue else Color.Gray,
-                                modifier = Modifier.size(24.dp)
-                            )
-                            Text(
-                                text = "asc",
-                                fontSize = 16.sp,
-                                color = if (selectedSortOrder == "asc") Color.Blue else Color.Gray,
-                                modifier = Modifier.padding(start = 4.dp)
-                            )
-                        }
-
-                        Row(modifier = Modifier
-                            .clickable { selectedSortOrder = "desc" }
-                            .padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Filled.KeyboardArrowDown,
-                                contentDescription = "Descending Order",
-                                tint = if (selectedSortOrder == "desc") Color.Blue else Color.Gray,
-                                modifier = Modifier.size(24.dp)
-                            )
-                            Text(
-                                text = "desc",
-                                fontSize = 16.sp,
-                                color = if (selectedSortOrder == "desc") Color.Blue else Color.Gray,
-                                modifier = Modifier.padding(start = 4.dp)
-                            )
+                        componentsOrderMap.forEach { componentOrder ->
+                            Row(modifier = Modifier
+                                .clickable {
+                                    selectedSortOrderId = componentOrder.key
+                                }
+                                .padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Filled.KeyboardArrowUp,
+                                    contentDescription = "${componentOrder.value} Order",
+                                    tint = if (selectedSortOrderId == componentOrder.key) Color.Blue else Color.Gray,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                                Text(
+                                    text = componentOrder.value,
+                                    fontSize = 16.sp,
+                                    color = if (selectedSortOrderId == componentOrder.key) Color.Blue else Color.Gray,
+                                    modifier = Modifier.padding(start = 4.dp)
+                                )
+                            }
                         }
                     }
                 }
@@ -140,7 +148,10 @@ fun SortSettingAlertDialog(
             confirmButton = {
                 TextButton(onClick = {
                     openDialog.value = false
-                    viewmodel.updateSortSettings(selectedComponent, selectedSortOrder)
+                    viewmodel.updateSortSettings(
+                        uiToJsonSortMap[selectedComponentId] ?: "id",
+                        uiToJsonOrderMap[selectedSortOrderId] ?: "desc"
+                    )
                     apply(false)
                 }) {
                     Text(

@@ -214,23 +214,17 @@ fun MainScreen() {
             Screen.VolumeDetailsScreen.route,
         ) && isSortSettingsDialogVisible.value
     ) {
-        SortSettingAlertDialog(title = "Sort by",
-            components = listOf("id", "added date", "updated date"),
-            viewmodel = mainViewModel,
-            cancel = {
-                isSortSettingsDialogVisible.value = it
-            },
-            apply = {
-                isSortSettingsDialogVisible.value = it
-            })
+        SortSettingAlertDialog(viewmodel = mainViewModel, cancel = {
+            isSortSettingsDialogVisible.value = it
+        }, apply = {
+            isSortSettingsDialogVisible.value = it
+        })
     }
 }
 
 @Composable
 fun MainView(
-    navigator: NavHostController,
-    pagerState: PagerState,
-    sortSettings: Pair<String, String>?
+    navigator: NavHostController, pagerState: PagerState, sortSettings: Pair<String, String>?
 ) {
     Column {
         if (currentRoute(navigator) !in listOf(

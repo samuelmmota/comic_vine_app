@@ -37,4 +37,9 @@
 <string name="unknown_issue">Issue</string>
 <string name="unknown_volume">Volume</string>
 <string name="first_appearance">First Appearance in Issue</string>
+<string name="sort_id">ID</string>
+<string name="sort_added_date">Added Date</string>
+<string name="sort_updated_date">Updated Date</string>
+<string name="sort_ascending">Older First</string>
+<string name="sort_descending">Newer First</string>
 </resources>
