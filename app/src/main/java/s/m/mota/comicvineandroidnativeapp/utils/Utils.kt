@@ -115,7 +115,7 @@ object Utils {
     }
 
     val uiToJsonSortMap = mapOf(
-        1 to "id", 2 to "added_date", 3 to "updated_date"
+        1 to "id", 2 to "date_added", 3 to "date_last_updated"
     )
 
     val uiToJsonOrderMap = mapOf(
