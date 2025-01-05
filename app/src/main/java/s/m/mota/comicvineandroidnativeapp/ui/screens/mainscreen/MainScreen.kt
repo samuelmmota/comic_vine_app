@@ -34,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import s.m.mota.comicvineandroidnativeapp.R
@@ -64,7 +63,6 @@ fun MainScreen() {
     val pagerState = rememberPagerState { 1 }
     val openDialog = remember { mutableStateOf(false) }
     val isSortSettingsDialogVisible = remember { mutableStateOf(false) }
-    val sortSettings by mainViewModel.sortSettings.collectAsStateWithLifecycle()
     val activity = (LocalContext.current as? Activity)
 
     /*BackHandler(
@@ -183,9 +181,7 @@ fun MainScreen() {
         }
     }) {
         Box(Modifier.padding(it)) {
-            MainView(
-                navController, pagerState, sortSettings
-            )
+            MainView(navController, pagerState)
             CircularIndeterminateProgressBar(isDisplayed = searchProgressBar.value, 0.1f)
             if (isAppBarVisible.value.not()) {
                 SearchUI(navController, mainViewModel.searchResultData) {
@@ -224,7 +220,7 @@ fun MainScreen() {
 
 @Composable
 fun MainView(
-    navigator: NavHostController, pagerState: PagerState, sortSettings: Pair<String, String>?
+    navigator: NavHostController, pagerState: PagerState
 ) {
     Column {
         if (currentRoute(navigator) !in listOf(

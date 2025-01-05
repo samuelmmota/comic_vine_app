@@ -116,15 +116,6 @@ object Utils {
         }
     }
 
-    val uiToJsonSortMap = mapOf(
-        1 to "id", 2 to "date_added", 3 to "date_last_updated"
-    )
-
-    val uiToJsonOrderMap = mapOf(
-        1 to "asc",
-        2 to "desc",
-    )
-
     fun Pair<FetchSortSetting, FetchOrderSetting>.toSortStringFormat(): String {
         return "${first.jsonName}:${this.second.jsonName}"
     }

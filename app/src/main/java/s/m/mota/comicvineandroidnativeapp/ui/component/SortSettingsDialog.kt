@@ -32,9 +32,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import s.m.mota.comicvineandroidnativeapp.R
+import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchOrderSetting
+import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
 import s.m.mota.comicvineandroidnativeapp.ui.screens.mainscreen.MainViewModel
-import s.m.mota.comicvineandroidnativeapp.utils.Utils.uiToJsonOrderMap
-import s.m.mota.comicvineandroidnativeapp.utils.Utils.uiToJsonSortMap
 
 @Composable
 fun SortSettingAlertDialog(
@@ -45,28 +45,20 @@ fun SortSettingAlertDialog(
     val openDialog = remember { mutableStateOf(true) }
 
     val componentsSortMap = mapOf(
-        1 to stringResource(R.string.sort_id),
-        2 to stringResource(R.string.sort_added_date),
-        3 to stringResource(R.string.sort_updated_date)
+        FetchSortSetting.ID.key to stringResource(R.string.sort_id),
+        FetchSortSetting.DATE_ADDED.key to stringResource(R.string.sort_added_date),
+        FetchSortSetting.DATE_LAST_UPDATED.key to stringResource(R.string.sort_updated_date)
     )
 
     val componentsOrderMap = mapOf(
-        1 to stringResource(R.string.sort_ascending),
-        2 to stringResource(R.string.sort_descending),
+        FetchOrderSetting.ASCENDING.key to stringResource(R.string.sort_ascending),
+        FetchOrderSetting.DESCENDING.key to stringResource(R.string.sort_descending),
     )
 
 
-    var selectedComponentId by remember {
-        mutableIntStateOf(viewmodel.sortSettings.value?.first?.let { jsonValue ->
-            uiToJsonSortMap.entries.firstOrNull { it.value == jsonValue }?.key
-        } ?: uiToJsonSortMap.keys.first())
-    }
+    var selectedComponentId by remember { mutableIntStateOf(viewmodel.sortOrderSettings.value.first.key) }
 
-    var selectedSortOrderId by remember {
-        mutableIntStateOf(viewmodel.sortSettings.value?.second?.let { jsonValue ->
-            uiToJsonOrderMap.entries.firstOrNull { it.value == jsonValue }?.key
-        } ?: uiToJsonOrderMap.keys.first())
-    }
+    var selectedSortOrderId by remember { mutableIntStateOf(viewmodel.sortOrderSettings.value.second.key) }
 
     if (openDialog.value) {
         AlertDialog(
@@ -87,7 +79,7 @@ fun SortSettingAlertDialog(
                             onClick = { expanded = true }, modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(
-                                text = componentsSortMap.get(selectedComponentId) ?: "id",
+                                text = componentsSortMap[selectedComponentId] ?: "id",
                                 fontSize = 16.sp,
                                 color = Color.Black
                             )
@@ -149,8 +141,8 @@ fun SortSettingAlertDialog(
                 TextButton(onClick = {
                     openDialog.value = false
                     viewmodel.updateSortSettings(
-                        uiToJsonSortMap[selectedComponentId] ?: "id",
-                        uiToJsonOrderMap[selectedSortOrderId] ?: "desc"
+                        FetchSortSetting.fromKey(selectedComponentId) ?: FetchSortSetting.DEFAULT,
+                        FetchOrderSetting.fromKey(selectedSortOrderId) ?: FetchOrderSetting.DEFAULT
                     )
                     apply(false)
                 }) {

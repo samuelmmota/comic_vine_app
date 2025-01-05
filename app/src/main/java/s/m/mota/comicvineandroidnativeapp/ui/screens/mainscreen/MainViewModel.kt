@@ -10,13 +10,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchOrderSetting
+import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
 import s.m.mota.comicvineandroidnativeapp.data.model.response.SearchResultModel
 import s.m.mota.comicvineandroidnativeapp.data.repository.remote.search_results.SearchResultModelRepository
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
@@ -29,31 +30,35 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     val searchResultData: MutableState<DataState<List<SearchResultModel>>?> = mutableStateOf(null)
 
-    private val _sortSettings = MutableStateFlow<Pair<String, String>?>(null)
-    val sortSettings: StateFlow<Pair<String, String>?> get() = _sortSettings.asStateFlow()
+    private val _sortOrderSettings = MutableStateFlow(getSharedPreferencesSortSettings)
+    val sortOrderSettings: StateFlow<Pair<FetchSortSetting, FetchOrderSetting>> = _sortOrderSettings
 
-    init {
-        loadSortSettings()
-    }
-
-    fun updateSortSettings(component: String, order: String) {
-        _sortSettings.value = component to order
+    fun updateSortSettings(sortSetting: FetchSortSetting, orderSetting: FetchOrderSetting) {
+        _sortOrderSettings.value = sortSetting to orderSetting
 
         sharedPreferences.edit().apply {
-            putString("sort_component", component)
-            putString("sort_order", order)
+            putString("sort_component", sortSetting.jsonName)
+            putString("sort_order", orderSetting.jsonName)
             apply()
         }
     }
 
-    private fun loadSortSettings() {
-        val component = sharedPreferences.getString("sort_component", "id")
-        val order = sharedPreferences.getString("sort_order", "asc")
+    private val getSharedPreferencesSortSettings
+        get(): Pair<FetchSortSetting, FetchOrderSetting> {
+            val component =
+                sharedPreferences.getString("sort_component", FetchSortSetting.DEFAULT.jsonName)
+            val order =
+                sharedPreferences.getString("sort_order", FetchOrderSetting.DEFAULT.jsonName)
 
-        if (order != null && component != null) {
-            _sortSettings.value = component to order
+            val sortSetting = component?.let { FetchSortSetting.fromJsonName(it) }
+            val orderSetting = order?.let { FetchOrderSetting.fromJsonName(it) }
+
+            return if (sortSetting != null && orderSetting != null) {
+                sortSetting to orderSetting
+            } else {
+                FetchSortSetting.DEFAULT to FetchOrderSetting.DEFAULT
+            }
         }
-    }
 
     @ExperimentalCoroutinesApi
     @FlowPreview
