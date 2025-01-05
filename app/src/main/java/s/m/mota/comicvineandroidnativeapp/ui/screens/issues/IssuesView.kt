@@ -40,6 +40,7 @@ import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.R
+import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
@@ -55,6 +56,7 @@ import s.m.mota.comicvineandroidnativeapp.utils.extensions.pagingLoadingState
 fun IssuesListView(
     navController: NavController,
     issueItems: LazyPagingItems<ComicIssueUi>,
+    fetchSortEnum: FetchSortSetting,
 ) {
     val progressBar = remember { mutableStateOf(false) }
     val lazyListState = rememberLazyGridState()
@@ -76,7 +78,7 @@ fun IssuesListView(
             content = {
                 items(issueItems) { item ->
                     item?.let {
-                        IssueListItem(item, navController)
+                        IssueListItem(item, navController, fetchSortEnum)
                     }
                 }
             })
@@ -107,22 +109,23 @@ fun IssuesListView(
 
 
 @Composable
-fun IssueListItem(item: ComicIssueUi, navController: NavController) {
+fun IssueListItem(
+    item: ComicIssueUi, navController: NavController, fetchSortEnum: FetchSortSetting
+) {
     Column(modifier = Modifier
         .padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 10.dp)
         .clickable {
-            item.issueApiId
-                ?.let { issueApiId ->
-                    navController.navigate(Screen.IssueDetailsScreen.route.plus("/$issueApiId"))
-                }
+            item.issueApiId?.let { issueApiId ->
+                navController.navigate(Screen.IssueDetailsScreen.route.plus("/$issueApiId"))
+            }
         }) {
         val issueName = item.volume?.let {
-            "${it.name} #${item.issueNumber?: "n/a"}"
+            "${it.name} #${item.issueNumber ?: "n/a"}"
         } ?: "${item.name} ${item.issueNumber}".takeIf { item.issueNumber != null }
         ?: (stringResource(R.string.unknown_issue) + item.id.let { " [$it]" })
 
         Text(
-            text =issueName ,
+            text = issueName,
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .align(Alignment.CenterHorizontally),
@@ -160,6 +163,9 @@ fun IssueListItem(item: ComicIssueUi, navController: NavController) {
             },
         )
 
-        AnnotatedHeaderContent(header = "Issue Number: ", content = item.issueNumber?:stringResource(R.string.unknown_information),)
+        AnnotatedHeaderContent(
+            header = "Issue Number: ",
+            content = item.issueNumber ?: stringResource(R.string.unknown_information),
+        )
     }
 }

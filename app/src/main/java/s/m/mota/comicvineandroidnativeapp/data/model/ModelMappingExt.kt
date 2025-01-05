@@ -62,7 +62,8 @@ fun ComicCharacter.toComicCharacterUi(): ComicCharacterUi {
         aliases = aliasesAsString,
         publisher = publisher?.name,
         characterApiId = characterApiId,
-        dateAdded =dateAdded?.let { formatedDateMessage(it)},
+        dateAdded = dateAdded?.let { formatedDateMessage(it) },
+        dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) }
     )
 }
 

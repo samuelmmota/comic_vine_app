@@ -40,6 +40,7 @@ import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.R
+import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
@@ -55,6 +56,7 @@ import s.m.mota.comicvineandroidnativeapp.utils.extensions.pagingLoadingState
 fun VolumesListView(
     navController: NavController,
     volumeItems: LazyPagingItems<ComicVolumeUi>,
+    fetchSortEnum: FetchSortSetting
 ) {
     val progressBar = remember { mutableStateOf(false) }
     val lazyListState = rememberLazyGridState()
@@ -76,7 +78,7 @@ fun VolumesListView(
             content = {
                 items(volumeItems) { item ->
                     item?.let {
-                        VolumeListItem(item, navController)
+                        VolumeListItem(item, navController, fetchSortEnum)
                     }
                 }
             })
@@ -107,17 +109,19 @@ fun VolumesListView(
 
 
 @Composable
-fun VolumeListItem(item: ComicVolumeUi, navController: NavController) {
+fun VolumeListItem(
+    item: ComicVolumeUi, navController: NavController, fetchSortEnum: FetchSortSetting
+) {
     Column(modifier = Modifier
         .padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 10.dp)
         .clickable {
-            item.volumeApiId
-                ?.let { volumeApiId ->
-                    navController.navigate(Screen.VolumeDetailsScreen.route.plus("/$volumeApiId"))
-                }
+            item.volumeApiId?.let { volumeApiId ->
+                navController.navigate(Screen.VolumeDetailsScreen.route.plus("/$volumeApiId"))
+            }
         }) {
         Text(
-            text = item.name ?: (stringResource(R.string.unknown_volume) + item.id.let { " [$it]" }),
+            text = item.name
+                ?: (stringResource(R.string.unknown_volume) + item.id.let { " [$it]" }),
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .align(Alignment.CenterHorizontally),

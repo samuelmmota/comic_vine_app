@@ -40,6 +40,7 @@ import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.R
+import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
@@ -55,6 +56,7 @@ import s.m.mota.comicvineandroidnativeapp.utils.extensions.pagingLoadingState
 fun CharactersListView(
     navController: NavController,
     characterItems: LazyPagingItems<ComicCharacterUi>,
+    fetchSortEnum: FetchSortSetting
 ) {
     val progressBar = remember { mutableStateOf(false) }
     val lazyListState = rememberLazyGridState()
@@ -76,7 +78,7 @@ fun CharactersListView(
             content = {
                 items(characterItems) { item ->
                     item?.let {
-                        CharacterListItem(item, navController)
+                        CharacterListItem(item, navController, fetchSortEnum)
                     }
                 }
             })
@@ -107,14 +109,15 @@ fun CharactersListView(
 
 
 @Composable
-fun CharacterListItem(item: ComicCharacterUi, navController: NavController) {
+fun CharacterListItem(
+    item: ComicCharacterUi, navController: NavController, fetchSortEnum: FetchSortSetting
+) {
     Column(modifier = Modifier
         .padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 10.dp)
         .clickable {
-            item
-                .characterApiId?.let { characterApiId ->
-                    navController.navigate(Screen.CharacterDetailsScreen.route.plus("/$characterApiId"))
-                }
+            item.characterApiId?.let { characterApiId ->
+                navController.navigate(Screen.CharacterDetailsScreen.route.plus("/$characterApiId"))
+            }
         }) {
         Text(
             text = item.name
@@ -154,10 +157,30 @@ fun CharacterListItem(item: ComicCharacterUi, navController: NavController) {
                 )
             },
         )
-        AnnotatedHeaderContent(
-            header = "Added Date: ",
-            content = item.dateAdded ?: stringResource(R.string.unknown_information)
-        )
+
+        when (fetchSortEnum) {
+            FetchSortSetting.ID -> {
+                AnnotatedHeaderContent(
+                    header = "ID: ",
+                    content = item.id ?: stringResource(R.string.unknown_information)
+                )
+            }
+
+            FetchSortSetting.DATE_ADDED -> {
+                AnnotatedHeaderContent(
+                    header = "Added Date: ",
+                    content = item.dateAdded ?: stringResource(R.string.unknown_information)
+                )
+            }
+
+            FetchSortSetting.DATE_LAST_UPDATED -> {
+                AnnotatedHeaderContent(
+                    header = "Update Date: ",
+                    content = item.dateLastUpdated ?: stringResource(R.string.unknown_information)
+                )
+            }
+        }
+
         AnnotatedHeaderContent(
             header = "Publisher:",
             content = item.publisher ?: stringResource(R.string.unknown_information)
