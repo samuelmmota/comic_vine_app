@@ -163,6 +163,29 @@ fun IssueListItem(
             },
         )
 
+        when (fetchSortEnum) {
+            FetchSortSetting.ID -> {
+                AnnotatedHeaderContent(
+                    header = "ID: ",
+                    content = item.id ?: stringResource(R.string.unknown_information)
+                )
+            }
+
+            FetchSortSetting.DATE_ADDED -> {
+                AnnotatedHeaderContent(
+                    header = "Added Date: ",
+                    content = item.dateAdded ?: stringResource(R.string.unknown_information)
+                )
+            }
+
+            FetchSortSetting.DATE_LAST_UPDATED -> {
+                AnnotatedHeaderContent(
+                    header = "Update Date: ",
+                    content = item.dateLastUpdated ?: stringResource(R.string.unknown_information)
+                )
+            }
+        }
+
         AnnotatedHeaderContent(
             header = "Issue Number: ",
             content = item.issueNumber ?: stringResource(R.string.unknown_information),

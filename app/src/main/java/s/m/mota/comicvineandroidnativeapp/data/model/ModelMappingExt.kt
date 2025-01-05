@@ -74,7 +74,9 @@ fun ComicIssue.toComicIssueUi(): ComicIssueUi {
         imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
         issueNumber = issueNumber,
         issueApiId = apiId,
-        volume = volume?.toComicVolumeUi()
+        volume = volume?.toComicVolumeUi(),
+        dateAdded = dateAdded?.let { formatedDateMessage(it) },
+        dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) }
     )
 }
 
@@ -126,6 +128,7 @@ fun ComicVolume.toComicVolumeUi(): ComicVolumeUi {
         lastIssueName = lastIssue?.name,
         publisher = publisher?.name,
         startYear = startYear,
+        dateAdded = dateAdded?.let { formatedDateMessage(it) }
     )
 }
 

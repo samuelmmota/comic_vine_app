@@ -10,4 +10,5 @@ data class ComicVolumeUi(
     val lastIssueName: String?,
     val publisher: String?,
     val startYear: String?,
+    val dateAdded: String?
 )

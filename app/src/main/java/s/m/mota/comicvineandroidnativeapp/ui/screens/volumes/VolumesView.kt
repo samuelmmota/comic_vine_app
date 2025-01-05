@@ -158,6 +158,28 @@ fun VolumeListItem(
                 )
             },
         )
+        when (fetchSortEnum) {
+            FetchSortSetting.ID -> {
+                AnnotatedHeaderContent(
+                    header = "ID: ",
+                    content = item.id ?: stringResource(R.string.unknown_information)
+                )
+            }
+
+            FetchSortSetting.DATE_ADDED -> {
+                AnnotatedHeaderContent(
+                    header = "Added Date: ",
+                    content = item.dateAdded ?: stringResource(R.string.unknown_information)
+                )
+            }
+
+            FetchSortSetting.DATE_LAST_UPDATED -> {
+                AnnotatedHeaderContent(
+                    header = "Update Date: ",
+                    content = item.dateLastUpdated ?: stringResource(R.string.unknown_information)
+                )
+            }
+        }
 
         AnnotatedHeaderContent(
             header = "Number of Issues: ",
@@ -170,10 +192,6 @@ fun VolumeListItem(
         AnnotatedHeaderContent(
             header = "Start Year: ",
             content = item.startYear ?: stringResource(R.string.unknown_information)
-        )
-        AnnotatedHeaderContent(
-            header = "Date Updated: ",
-            content = item.dateLastUpdated ?: stringResource(R.string.unknown_information)
         )
         AnnotatedHeaderContent(
             header = "Publisher: ",
