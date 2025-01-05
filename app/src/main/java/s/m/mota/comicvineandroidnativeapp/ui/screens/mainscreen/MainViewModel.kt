@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchOrderSetting
 import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
 import s.m.mota.comicvineandroidnativeapp.data.model.response.SearchResultModel
+import s.m.mota.comicvineandroidnativeapp.data.model.shared_preferences.SharedPreferencesKeysEnum
 import s.m.mota.comicvineandroidnativeapp.data.repository.remote.search_results.SearchResultModelRepository
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 import javax.inject.Inject
@@ -37,8 +38,8 @@ class MainViewModel @Inject constructor(
         _sortOrderSettings.value = sortSetting to orderSetting
 
         sharedPreferences.edit().apply {
-            putString("sort_component", sortSetting.jsonName)
-            putString("sort_order", orderSetting.jsonName)
+            putString(SharedPreferencesKeysEnum.SORT_COMPONENT.nameKey, sortSetting.jsonName)
+            putString(SharedPreferencesKeysEnum.SORT_ORDER.nameKey, orderSetting.jsonName)
             apply()
         }
     }
@@ -46,9 +47,9 @@ class MainViewModel @Inject constructor(
     private val getSharedPreferencesSortSettings
         get(): Pair<FetchSortSetting, FetchOrderSetting> {
             val component =
-                sharedPreferences.getString("sort_component", FetchSortSetting.DEFAULT.jsonName)
+                sharedPreferences.getString(SharedPreferencesKeysEnum.SORT_COMPONENT.nameKey, FetchSortSetting.DEFAULT.jsonName)
             val order =
-                sharedPreferences.getString("sort_order", FetchOrderSetting.DEFAULT.jsonName)
+                sharedPreferences.getString(SharedPreferencesKeysEnum.SORT_ORDER.nameKey, FetchOrderSetting.DEFAULT.jsonName)
 
             val sortSetting = component?.let { FetchSortSetting.fromJsonName(it) }
             val orderSetting = order?.let { FetchOrderSetting.fromJsonName(it) }

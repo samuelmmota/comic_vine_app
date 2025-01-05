@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchOrderSetting
 import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
+import s.m.mota.comicvineandroidnativeapp.data.model.shared_preferences.SharedPreferencesKeysEnum
 import s.m.mota.comicvineandroidnativeapp.data.model.toComicVolumeUi
 import s.m.mota.comicvineandroidnativeapp.data.repository.remote.volumes.VolumesRepository
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicCharacterUi
@@ -30,7 +31,7 @@ class VolumeViewModel @Inject constructor(
 
     private val preferenceChangeListener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == "sort_component" || key == "sort_order") {
+            if (key == SharedPreferencesKeysEnum.SORT_COMPONENT.nameKey || key == SharedPreferencesKeysEnum.SORT_ORDER.nameKey) {
                 _sortOrderSettings.value = getSharedPreferencesSortSettings
             }
         }
@@ -42,9 +43,9 @@ class VolumeViewModel @Inject constructor(
     private val getSharedPreferencesSortSettings
         get(): Pair<FetchSortSetting, FetchOrderSetting> {
             val component =
-                sharedPreferences.getString("sort_component", FetchSortSetting.DEFAULT.jsonName)
+                sharedPreferences.getString(SharedPreferencesKeysEnum.SORT_COMPONENT.nameKey, FetchSortSetting.DEFAULT.jsonName)
             val order =
-                sharedPreferences.getString("sort_order", FetchOrderSetting.DEFAULT.jsonName)
+                sharedPreferences.getString(SharedPreferencesKeysEnum.SORT_ORDER.nameKey, FetchOrderSetting.DEFAULT.jsonName)
 
             val sortSetting = component?.let { FetchSortSetting.fromJsonName(it) }
             val orderSetting = order?.let { FetchOrderSetting.fromJsonName(it) }
