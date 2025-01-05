@@ -11,6 +11,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.core.text.HtmlCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchOrderSetting
+import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -123,7 +125,7 @@ object Utils {
         2 to "desc",
     )
 
-    fun Pair<String, String>.toSortStringFormat(): String {
-        return "${first}:${this.second}"
+    fun Pair<FetchSortSetting, FetchOrderSetting>.toSortStringFormat(): String {
+        return "${first.jsonName}:${this.second.jsonName}"
     }
 }
