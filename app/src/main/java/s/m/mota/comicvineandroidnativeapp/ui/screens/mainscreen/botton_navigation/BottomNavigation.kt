@@ -16,8 +16,8 @@ fun BottomNavigationUI(navController: NavController, pagerState: PagerState) {
     NavigationBar {
         val items = if (pagerState.currentPage == 0) {
             listOf(
-                Screen.CharacterNav,
                 Screen.IssuesNav,
+                Screen.CharacterNav,
                 Screen.VolumesNav,
                 Screen.MoviesNav,
                 Screen.PowersNav,

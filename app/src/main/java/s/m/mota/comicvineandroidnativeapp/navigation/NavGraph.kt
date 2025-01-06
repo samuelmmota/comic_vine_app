@@ -22,7 +22,7 @@ import s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.volume_details.Volu
 fun Navigation(
     navController: NavHostController,
 ) {
-    NavHost(navController, startDestination = Screen.CharactersScreen.route) {
+    NavHost(navController, startDestination = Screen.IssuesScreen.route) {
         // Characters
         composable(Screen.CharactersScreen.route) {
             CharactersScreen(
@@ -94,7 +94,7 @@ fun Navigation(
 @Composable
 fun navigationTitle(navController: NavController): String {
     return when (currentRoute(navController)) {
-        Screen.CharactersScreen.route -> stringResource(id = R.string.app_name)
+        Screen.CharactersScreen.route -> stringResource(id = R.string.characters)
         Screen.CharacterDetailsScreen.route -> stringResource(id = R.string.character_details)
         Screen.IssuesScreen.route -> stringResource(id = R.string.issues)
         Screen.IssueDetailsScreen.route -> stringResource(id = R.string.issue_details)

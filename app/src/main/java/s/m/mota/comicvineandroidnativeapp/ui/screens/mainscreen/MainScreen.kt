@@ -65,16 +65,6 @@ fun MainScreen() {
     val isSortSettingsDialogVisible = remember { mutableStateOf(false) }
     val activity = (LocalContext.current as? Activity)
 
-    /*BackHandler(
-        enabled = !isAppBarVisible.value || currentRoute(navController) == Screen.CharactersScreen.route
-    ) {
-        if (isAppBarVisible.value.not()) {
-            isAppBarVisible.value = true
-        } else { pagerState.currentPage
-            openDialog.value = true
-        }
-    }*/
-
     BackHandler(
         enabled = isAppBarVisible.value.not()
     ) {
@@ -82,8 +72,12 @@ fun MainScreen() {
     }
 
     BackHandler(
-        enabled = currentRoute(navController) == Screen.CharactersScreen.route
-    ) {//pagerState.currentPage
+        enabled = currentRoute(navController) in listOf(
+            Screen.IssuesScreen.route,
+            Screen.CharactersScreen.route,
+            Screen.VolumesScreen.route
+        )
+    ) {
         openDialog.value = true
     }
 
@@ -104,24 +98,24 @@ fun MainScreen() {
                 color = Color.White
             )
         }, navigationIcon = {
-            when (currentRoute(navController)) {
+            when (val activeScreen = currentRoute(navController)) {
                 in listOf(
                     Screen.CharacterDetailsScreen.route,
                     Screen.IssueDetailsScreen.route,
                     Screen.VolumeDetailsScreen.route
                 ) -> {
-                    val activeScreen = currentRoute(navController)
                     IconButton(onClick = {
-                        if (activeScreen == Screen.CharactersScreen.route) {
-                            //val route = if (pagerState.currentPage == ACTIVE_CHARACTERS_TAB) Screen.CharactersScreen.route else Screen.AiringTodayTvSeries.route
-                            navController.navigate(Screen.CharactersScreen.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    inclusive = true
-                                }
-                            }
-                        } else {
-                            navController.popBackStack()
-                        }
+                        /*if (activeScreen != Screen.IssuesScreen.route) {
+                             //val route = if (pagerState.currentPage == ACTIVE_CHARACTERS_TAB) Screen.CharactersScreen.route else Screen.AiringTodayTvSeries.route
+                             navController.navigate(Screen.IssuesScreen.route) {
+                                 popUpTo(navController.graph.startDestinationId) {
+                                     inclusive = true
+                                 }
+                             }
+                         } else {
+                             navController.popBackStack()
+                         }*/
+                        navController.popBackStack()
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -193,7 +187,11 @@ fun MainScreen() {
         }
     }
     // Exit App Dialog
-    if ((currentRoute(navController) == Screen.CharactersScreen.route) && openDialog.value) {
+    if (currentRoute(navController) in listOf(
+            Screen.IssuesScreen.route,
+            Screen.CharactersScreen.route,
+            Screen.VolumesScreen.route
+        ) && openDialog.value) {
         ExitAlertDialog(title = stringResource(R.string.close_the_app),
             description = stringResource(R.string.do_you_want_to_exit_the_app),
             {
