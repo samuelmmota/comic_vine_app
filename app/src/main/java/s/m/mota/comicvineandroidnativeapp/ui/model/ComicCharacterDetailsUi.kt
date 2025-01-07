@@ -18,5 +18,6 @@ data class ComicCharacterDetailsUi(
     val birth: String?,
     val issuesDiedIn: List<ComicResourceUi>?,
     val gender: String?,
-    val deck: String?
+    val deck: String?,
+    val siteDetailUrl: String?
 )

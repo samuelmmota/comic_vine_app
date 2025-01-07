@@ -50,7 +50,8 @@ fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
         birth = birth,
         issuesDiedIn = issuesDiedIn?.toListOfComicResourceUi(),
         gender = genderDescription,
-        deck = deck
+        deck = deck,
+        siteDetailUrl = siteDetailUrl
     )
 }
 

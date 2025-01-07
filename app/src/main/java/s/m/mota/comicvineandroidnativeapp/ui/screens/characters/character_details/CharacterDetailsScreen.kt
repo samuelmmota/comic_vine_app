@@ -69,7 +69,7 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
             if (isLoading.not()) {
                 item {
                     characterDetail?.let {
-                        CharacterDetailsImageView(it.imageUrl) {
+                        CharacterDetailsImageView(it.imageUrl, it.siteDetailUrl) {
                             //onFavoriteButtonClick action
                         }
                     }
