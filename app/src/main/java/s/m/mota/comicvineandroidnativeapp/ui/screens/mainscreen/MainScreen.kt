@@ -126,31 +126,25 @@ fun MainScreen() {
                 }
             }
         }, scrollBehavior = scrollBehavior, actions = {
-            IconButton(onClick = {
-                isSortSettingsDialogVisible.value = true
-            }) {
-                if (currentRoute(navController) !in listOf(
-                        Screen.CharacterDetailsScreen.route,
-                        Screen.IssueDetailsScreen.route,
-                        Screen.VolumeDetailsScreen.route,
-                    )
-                ) {
+            if (currentRoute(navController) !in listOf(
+                    Screen.CharacterDetailsScreen.route,
+                    Screen.IssueDetailsScreen.route,
+                    Screen.VolumeDetailsScreen.route,
+                )
+            ) {
+                IconButton(onClick = {
+                    isSortSettingsDialogVisible.value = true
+                }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.List,
                         contentDescription = "Sort List action button",
                         tint = MaterialTheme.colorScheme.tertiary
                     )
                 }
-            }
-            IconButton(onClick = {
-                isAppBarVisible.value = false
-            }) {
-                if (currentRoute(navController) !in listOf(
-                        Screen.CharacterDetailsScreen.route,
-                        Screen.IssueDetailsScreen.route,
-                        Screen.VolumeDetailsScreen.route,
-                    )
-                ) {
+
+                IconButton(onClick = {
+                    isAppBarVisible.value = false
+                }) {
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = "search action button",
@@ -191,7 +185,8 @@ fun MainScreen() {
             Screen.IssuesScreen.route,
             Screen.CharactersScreen.route,
             Screen.VolumesScreen.route
-        ) && openDialog.value) {
+        ) && openDialog.value
+    ) {
         ExitAlertDialog(title = stringResource(R.string.close_the_app),
             description = stringResource(R.string.do_you_want_to_exit_the_app),
             {
