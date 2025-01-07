@@ -154,6 +154,7 @@ fun ComicVolume.toComicVolumeDetailsUi(): ComicVolumeDetailsUi {
         characterCreditsName = characterCreditsList,
         objectCreditsName = objectCreditsList,
         personCreditsName = personCreditsList,
-        teamCreditsName = teamCreditsList
+        teamCreditsName = teamCreditsList,
+        siteDetailUrl = siteDetailUrl
     )
 }

@@ -19,4 +19,5 @@ data class ComicVolumeDetailsUi(
     val objectCreditsName: List<String>?,
     val personCreditsName: List<String>?,
     val teamCreditsName: List<String>?,
+    val siteDetailUrl: String?
 )

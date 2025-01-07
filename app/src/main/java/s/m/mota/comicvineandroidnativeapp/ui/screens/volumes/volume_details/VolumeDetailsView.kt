@@ -1,5 +1,6 @@
 package s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.volume_details
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -35,7 +38,8 @@ import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
 
 @Composable
-fun VolumeDetailsImageView(imageUrl: String, onFavoriteClick: () -> Unit) {
+fun VolumeDetailsImageView(imageUrl: String, shareSiteDetailsUrl: String?, onFavoriteClick: () -> Unit) {
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,6 +61,29 @@ fun VolumeDetailsImageView(imageUrl: String, onFavoriteClick: () -> Unit) {
                     )
                 )
             })
+        IconButton(
+            onClick = {
+                shareSiteDetailsUrl?.let {
+                    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                        putExtra(Intent.EXTRA_TEXT, it)
+                        type = "text/plain"
+                    }
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    context.startActivity(shareIntent)
+                }
+            },
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(8.dp)
+                .clip(CircleShape)
+                .background(Color.White.copy(alpha = 0.8f))
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Share,
+                contentDescription = "Share Page button",
+                tint = MaterialTheme.colorScheme.tertiary
+            )
+        }
         IconButton(
             onClick = onFavoriteClick,
             modifier = Modifier

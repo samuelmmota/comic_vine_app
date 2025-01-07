@@ -70,7 +70,7 @@ fun VolumeDetailsScreen(navController: NavController, volumeApiId: String) {
             if (isLoading.not()) {
                 item {
                     volumeDetails?.let {
-                        VolumeDetailsImageView(it.imageUrl) {
+                        VolumeDetailsImageView(it.imageUrl, it.siteDetailUrl) {
                             //onFavoriteButtonClick action
                         }
                     }
