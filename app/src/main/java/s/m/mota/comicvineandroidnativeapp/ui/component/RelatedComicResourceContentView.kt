@@ -37,6 +37,7 @@ import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicResourceUi
 import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.cornerRadius
 import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration

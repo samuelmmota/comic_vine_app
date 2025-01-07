@@ -1,4 +1,4 @@
-package s.m.mota.comicvineandroidnativeapp.ui.component
+package s.m.mota.comicvineandroidnativeapp.ui.model
 
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 

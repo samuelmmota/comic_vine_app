@@ -2,7 +2,7 @@ package s.m.mota.comicvineandroidnativeapp.data.model
 
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
-import s.m.mota.comicvineandroidnativeapp.ui.component.ComicResourceUi
+import s.m.mota.comicvineandroidnativeapp.ui.model.ComicResourceUi
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicCharacterUi
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicCharacterDetailsUi
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicIssueUi
