@@ -114,7 +114,8 @@ fun ComicIssue.toComicIssueDetailsUi(): ComicIssueDetailsUi {
         firstAppearanceTeams = firstAppearanceTeams?.toListOfComicResourceUi(),
         teamsDisbandedIn = teamsDisbandedIn?.toListOfComicResourceUi(),
         disbandedTeams = disbandedTeams?.toListOfComicResourceUi(),
-        charactersDiedIn = charactersDiedIn?.toListOfComicResourceUi()
+        charactersDiedIn = charactersDiedIn?.toListOfComicResourceUi(),
+        siteDetailUrl = siteDetailUrl
     )
 }
 

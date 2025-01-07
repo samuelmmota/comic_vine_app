@@ -70,7 +70,7 @@ fun IssueDetailsScreen(navController: NavController, issueApiId: String) {
             if (isLoading.not()) {
                 item {
                     issueDetails?.let {
-                        IssueDetailsImageView(it.associatedImages) {
+                        IssueDetailsImageView(it.associatedImages, it.siteDetailUrl) {
                             //onFavoriteButtonClick action
                         }
                     }

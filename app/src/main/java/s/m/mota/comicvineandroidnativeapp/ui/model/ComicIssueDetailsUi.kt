@@ -31,5 +31,6 @@ data class ComicIssueDetailsUi(
     val firstAppearanceTeams: List<ComicResourceUi>?,
     val teamsDisbandedIn: List<ComicResourceUi>?,
     val disbandedTeams: List<ComicResourceUi>?,
-    val charactersDiedIn: List<ComicResourceUi>?
+    val charactersDiedIn: List<ComicResourceUi>?,
+    val siteDetailUrl: String?
 )
