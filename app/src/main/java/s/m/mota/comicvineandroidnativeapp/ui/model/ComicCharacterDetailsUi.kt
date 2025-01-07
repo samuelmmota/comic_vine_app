@@ -4,7 +4,7 @@ data class ComicCharacterDetailsUi(
     val id: String?,
     val name: String?,
     val realName: String?,
-    val imageUrl: String,
+    val imageUrl: String?,
     val aliases: List<String>?,
     val creators: List<String>?,
     val powers: List<String>?,

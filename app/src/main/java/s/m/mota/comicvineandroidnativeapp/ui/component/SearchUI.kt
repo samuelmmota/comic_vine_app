@@ -16,26 +16,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.animation.circular.CircularRevealPlugin
-import com.skydoves.landscapist.coil.CoilImage
-import com.skydoves.landscapist.components.rememberImageComponent
-import com.skydoves.landscapist.placeholder.shimmer.Shimmer
-import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 import s.m.mota.comicvineandroidnativeapp.data.model.response.SearchResultModel
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
-import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.cornerRadius
-import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
 
 @Composable
@@ -67,49 +57,45 @@ fun SearchUI(
                                     when (resourceType) {
                                         ComicResourceType.CHARACTER -> {
                                             item.resourceApiId?.let { characterApiId ->
-                                                navController.navigate(Screen.CharacterDetailsScreen.route.plus("/$characterApiId"))
+                                                navController.navigate(
+                                                    Screen.CharacterDetailsScreen.route.plus(
+                                                        "/$characterApiId"
+                                                    )
+                                                )
                                             }
                                         }
+
                                         ComicResourceType.ISSUE -> {
                                             item.resourceApiId?.let { issueApiId ->
-                                                navController.navigate(Screen.IssueDetailsScreen.route.plus("/$issueApiId"))
+                                                navController.navigate(
+                                                    Screen.IssueDetailsScreen.route.plus(
+                                                        "/$issueApiId"
+                                                    )
+                                                )
                                             }
                                         }
+
                                         ComicResourceType.VOLUME -> {
                                             item.resourceApiId?.let { volumeApiId ->
-                                                navController.navigate(Screen.VolumeDetailsScreen.route.plus("/$volumeApiId"))
+                                                navController.navigate(
+                                                    Screen.VolumeDetailsScreen.route.plus(
+                                                        "/$volumeApiId"
+                                                    )
+                                                )
                                             }
                                         }
+
                                         else -> {}
                                     }
                                 }
                         }) {
-                        CoilImage(
-                            modifier = Modifier
+                        ComicCoilImage(
+                            imageUrl = item.image?.smallUrl ?: item.image?.iconUrl
+                            ?: item.image?.iconUrl,
+                            contentDescription = "Comic Search item", modifier = Modifier
                                 .height(100.dp)
                                 .width(80.dp)
-                                .cornerRadius(8),
-                            imageModel = {
-                                item.image?.smallUrl ?: item.image?.iconUrl ?: item.image?.iconUrl
-                                ?: ""
-                            },
-                            imageOptions = ImageOptions(
-                                contentScale = ContentScale.Crop,
-                                alignment = Alignment.Center,
-                                contentDescription = "search item",
-                                colorFilter = null,
-                            ),
-                            component = rememberImageComponent {
-                                +CircularRevealPlugin(
-                                    duration = CircularRevealPluginDuration
-                                )
-                                +ShimmerPlugin(
-                                    shimmer = Shimmer.Flash(
-                                        baseColor = SecondaryFontColor,
-                                        highlightColor = MaterialTheme.colorScheme.background
-                                    )
-                                )
-                            },
+                                .cornerRadius(8)
                         )
 
                         Column {

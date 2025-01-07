@@ -4,7 +4,7 @@ data class ComicVolumeDetailsUi(
     val id: String?,
     val name: String?,
     val volumeApiId: String?,
-    val imageUrl: String,
+    val imageUrl: String?,
     val countOfIssues: String?,
     val dateAdded: String?,
     val dateLastUpdated: String?,

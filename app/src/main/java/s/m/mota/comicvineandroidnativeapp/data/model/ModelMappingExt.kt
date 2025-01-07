@@ -11,15 +11,11 @@ import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeUi
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeDetailsUi
 import s.m.mota.comicvineandroidnativeapp.utils.Utils.formatedDateMessage
 
-const val blanckComicImageUrl: String =
-    "https://comicvine.gamespot.com/a/uploads/screen_kubrick/11122/111222211/6373148-blank.png"
-
 fun ComicResource.toComicResourceUi(): ComicResourceUi {
     return ComicResourceUi(
         id = id,
         name = name,
-        thumbnailImageUrl = image?.thumbUrl ?: image?.originalUrl ?: image?.mediumUrl
-        ?: blanckComicImageUrl,
+        thumbnailImageUrl = image?.thumbUrl ?: image?.originalUrl ?: image?.mediumUrl,
         resourceType = resourceType,
         apiId = apiId
     )
@@ -38,7 +34,7 @@ fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
         name = name,
         realName = realName,
         imageUrl = image?.superUrl ?: image?.screenLargeUrl ?: image?.screenUrl
-        ?: image?.originalUrl ?: blanckComicImageUrl,
+        ?: image?.originalUrl,
         aliases = aliasesList,
         creators = creatorsList,
         powers = powersList,
@@ -59,7 +55,7 @@ fun ComicCharacter.toComicCharacterUi(): ComicCharacterUi {
     return ComicCharacterUi(
         id = id?.toString(),
         name = name,
-        imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
+        imageUrl = image?.originalUrl ?: image?.mediumUrl,
         aliases = aliasesAsString,
         publisher = publisher?.name,
         characterApiId = characterApiId,
@@ -72,7 +68,7 @@ fun ComicIssue.toComicIssueUi(): ComicIssueUi {
     return ComicIssueUi(
         id = id?.toString(),
         name = name,
-        imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
+        imageUrl = image?.originalUrl ?: image?.mediumUrl,
         issueNumber = issueNumber,
         issueApiId = apiId,
         volume = volume?.toComicVolumeUi(),
@@ -123,7 +119,7 @@ fun ComicVolume.toComicVolumeUi(): ComicVolumeUi {
     return ComicVolumeUi(
         id = id?.toString(),
         name = name,
-        imageUrl = image?.originalUrl ?: image?.mediumUrl ?: blanckComicImageUrl,
+        imageUrl = image?.originalUrl ?: image?.mediumUrl,
         volumeApiId = volumeApiId,
         countOfIssues = countOfIssues?.toString(),
         dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) },
@@ -139,7 +135,7 @@ fun ComicVolume.toComicVolumeDetailsUi(): ComicVolumeDetailsUi {
         id = id?.toString(),
         name = name,
         imageUrl = image?.superUrl ?: image?.screenLargeUrl ?: image?.screenUrl
-        ?: image?.originalUrl ?: blanckComicImageUrl,
+        ?: image?.originalUrl,
         description = description,
         dateAdded = dateAdded,
         dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) },

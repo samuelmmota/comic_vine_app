@@ -22,25 +22,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.animation.circular.CircularRevealPlugin
-import com.skydoves.landscapist.coil.CoilImage
-import com.skydoves.landscapist.components.rememberImageComponent
-import com.skydoves.landscapist.placeholder.shimmer.Shimmer
-import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicResourceUi
-import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.cornerRadius
-import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
 
 
 @Composable
@@ -104,29 +95,15 @@ fun RelatedComicResourceItem(
         .width(125.dp)
         .fillMaxHeight()
         .clickable { onClick.invoke() }) {
-        CoilImage(
+
+        ComicCoilImage(
+            imageUrl = comicResourceItem.thumbnailImageUrl,
+            contentDescription = "Comic Resource related content",
             modifier = Modifier
                 .size(125.dp)
                 .cornerRadius(10),
-            imageModel = { comicResourceItem.thumbnailImageUrl },
-            imageOptions = ImageOptions(
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.Center,
-                contentDescription = "Comic Resource related content",
-                colorFilter = null,
-            ),
-            component = rememberImageComponent {
-                +CircularRevealPlugin(
-                    duration = CircularRevealPluginDuration
-                )
-                +ShimmerPlugin(
-                    shimmer = Shimmer.Flash(
-                        baseColor = SecondaryFontColor,
-                        highlightColor = MaterialTheme.colorScheme.background
-                    )
-                )
-            },
         )
+
         Text(
             text = comicResourceItem.name
                 ?: (comicResourceItem.resourceType?.name + comicResourceItem.id.let { " [$it]" }),

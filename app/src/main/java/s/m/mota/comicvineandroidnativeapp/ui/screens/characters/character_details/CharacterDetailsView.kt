@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,44 +31,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.animation.circular.CircularRevealPlugin
-import com.skydoves.landscapist.coil.CoilImage
-import com.skydoves.landscapist.components.rememberImageComponent
-import com.skydoves.landscapist.placeholder.shimmer.Shimmer
-import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import s.m.mota.comicvineandroidnativeapp.R
+import s.m.mota.comicvineandroidnativeapp.ui.component.ComicCoilImage
 import s.m.mota.comicvineandroidnativeapp.ui.component.HorizontalScrollableRowSection
 import s.m.mota.comicvineandroidnativeapp.ui.component.RelatedComicResourceContentListView
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicCharacterDetailsUi
-import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
-import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
 
 @Composable
-fun CharacterDetailsImageView(imageUrl: String, shareSiteDetailsUrl: String?, onFavoriteClick: () -> Unit) {
+fun CharacterDetailsImageView(imageUrl: String?, shareSiteDetailsUrl: String?, onFavoriteClick: () -> Unit) {
     val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(300.dp)
     ) {
-        CoilImage(modifier = Modifier.fillMaxWidth(),
-            imageModel = { imageUrl },
-            imageOptions = ImageOptions(
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.Center,
-                contentDescription = "Comic Character Details Image"
-            ),
-            component = rememberImageComponent {
-                +CircularRevealPlugin(duration = CircularRevealPluginDuration)
-                +ShimmerPlugin(
-                    shimmer = Shimmer.Flash(
-                        baseColor = SecondaryFontColor,
-                        highlightColor = MaterialTheme.colorScheme.background
-                    )
-                )
-            })
+        ComicCoilImage(imageUrl= imageUrl,
+            contentDescription = "Comic Character Details Image",
+            modifier =  Modifier.fillMaxWidth())
         IconButton(
             onClick = {
                 shareSiteDetailsUrl?.let {
@@ -78,7 +57,7 @@ fun CharacterDetailsImageView(imageUrl: String, shareSiteDetailsUrl: String?, on
                         type = "text/plain"
                     }
                     val shareIntent = Intent.createChooser(sendIntent, null)
-                   context.startActivity(shareIntent)
+                    context.startActivity(shareIntent)
                 }
             },
             modifier = Modifier

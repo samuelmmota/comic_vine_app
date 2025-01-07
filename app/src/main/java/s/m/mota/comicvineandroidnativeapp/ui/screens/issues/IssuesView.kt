@@ -24,7 +24,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -32,23 +31,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.animation.circular.CircularRevealPlugin
-import com.skydoves.landscapist.coil.CoilImage
-import com.skydoves.landscapist.components.rememberImageComponent
-import com.skydoves.landscapist.placeholder.shimmer.Shimmer
-import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
+import s.m.mota.comicvineandroidnativeapp.ui.component.ComicCoilImage
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicIssueUi
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
-import s.m.mota.comicvineandroidnativeapp.ui.theme.SecondaryFontColor
 import s.m.mota.comicvineandroidnativeapp.ui.theme.cornerRadius
-import s.m.mota.comicvineandroidnativeapp.utils.CircularRevealPluginDuration
 import s.m.mota.comicvineandroidnativeapp.utils.extensions.items
 import s.m.mota.comicvineandroidnativeapp.utils.extensions.pagingLoadingState
 
@@ -137,30 +129,12 @@ fun IssueListItem(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
-        println(item.imageUrl)
-        CoilImage(
+        ComicCoilImage(
+            imageUrl = item.imageUrl,
+            contentDescription = "Issues List item",
             modifier = Modifier
                 .size(250.dp)
-                .cornerRadius(10),
-            //.clickable {},
-            imageModel = { item.imageUrl },
-            imageOptions = ImageOptions(
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.Center,
-                contentDescription = "Character List item",
-                colorFilter = null,
-            ),
-            component = rememberImageComponent {
-                +CircularRevealPlugin(
-                    duration = CircularRevealPluginDuration
-                )
-                +ShimmerPlugin(
-                    shimmer = Shimmer.Flash(
-                        baseColor = SecondaryFontColor,
-                        highlightColor = MaterialTheme.colorScheme.background
-                    )
-                )
-            },
+                .cornerRadius(10)
         )
 
         when (fetchSortEnum) {
