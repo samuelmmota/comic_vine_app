@@ -88,8 +88,9 @@ fun IssueDetailsScreen(navController: NavController, issueApiId: String) {
                 item {
                     parsedDescription?.let {
                         AnnotatedHtmlContent(
-                            stringResource(R.string.description), (it)
-                        )
+                            title = stringResource(R.string.description),
+                            annotatedString = it,
+                            navController = navController)
                     }
                 }
             }

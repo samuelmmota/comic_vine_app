@@ -83,8 +83,9 @@ fun VolumeDetailsScreen(navController: NavController, volumeApiId: String) {
                 item {
                     parsedDescription?.let {
                         AnnotatedHtmlContent(
-                            stringResource(R.string.description), (it)
-                        )
+                            title = stringResource(R.string.description),
+                            annotatedString = it,
+                            navController = navController)
                     }
                 }
             }

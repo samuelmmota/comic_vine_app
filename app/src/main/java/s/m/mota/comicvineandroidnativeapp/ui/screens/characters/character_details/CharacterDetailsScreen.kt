@@ -28,7 +28,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.R
-import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHtmlContent
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
@@ -89,8 +88,9 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
                 item {
                     parsedDescription?.let {
                         AnnotatedHtmlContent(
-                            stringResource(R.string.description), (it)
-                        )
+                            title = stringResource(R.string.description),
+                            annotatedString = it,
+                            navController = navController)
                     }
                 }
             }
