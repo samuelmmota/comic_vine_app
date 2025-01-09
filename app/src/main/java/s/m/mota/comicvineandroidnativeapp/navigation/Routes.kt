@@ -10,4 +10,5 @@ object Routes {
     val MOVIES_SCREEN_ROUTE = "movies_screen"
     val MOVIE_DETAILS_SCREEN_ROUTE = "movie_details_screen"
     val POWERS_SCREEN_ROUTE = "powers_screen"
+    val WEBVIEW_SCREEN_ROUTE = "webview_screen"
 }

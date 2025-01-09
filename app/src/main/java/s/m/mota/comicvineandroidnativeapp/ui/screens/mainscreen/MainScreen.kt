@@ -102,7 +102,8 @@ fun MainScreen() {
                 in listOf(
                     Screen.CharacterDetailsScreen.route,
                     Screen.IssueDetailsScreen.route,
-                    Screen.VolumeDetailsScreen.route
+                    Screen.VolumeDetailsScreen.route,
+                    Screen.WebViewScreen.route
                 ) -> {
                     IconButton(onClick = {
                         /*if (activeScreen != Screen.IssuesScreen.route) {
@@ -130,6 +131,7 @@ fun MainScreen() {
                     Screen.CharacterDetailsScreen.route,
                     Screen.IssueDetailsScreen.route,
                     Screen.VolumeDetailsScreen.route,
+                    Screen.WebViewScreen.route
                 )
             ) {
                 IconButton(onClick = {

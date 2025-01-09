@@ -31,16 +31,24 @@ sealed class Screen(
     data object IssuesScreen : Screen(route = Routes.ISSUES_SCREEN_ROUTE)
     data object VolumesScreen : Screen(route = Routes.VOLUMES_SCREEN_ROUTE)
 
+    data object WebViewScreen : Screen(
+        route = Routes.WEBVIEW_SCREEN_ROUTE,
+        objectPath = "/{url}",
+        objectName = "url"
+    )
+
     data object CharacterDetailsScreen : Screen(
         route = Routes.CHARACTER_DETAILS_ROUTE,
         objectName = "characterApiId",
         objectPath = "/{characterApiId}"
     )
+
     data object IssueDetailsScreen : Screen(
         route = Routes.ISSUE_DETAILS_SCREEN_ROUTE,
         objectName = "issueApiId",
         objectPath = "/{issueApiId}"
     )
+
     data object VolumeDetailsScreen : Screen(
         route = Routes.VOLUME_DETAILS_SCREEN_ROUTE,
         objectName = "volumeApiId",

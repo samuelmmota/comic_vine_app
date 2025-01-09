@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import s.m.mota.comicvineandroidnativeapp.R
+import s.m.mota.comicvineandroidnativeapp.ui.component.ComicWebView
 import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.CharactersScreen
 import s.m.mota.comicvineandroidnativeapp.ui.screens.characters.character_details.CharacterDetailsScreen
 import s.m.mota.comicvineandroidnativeapp.ui.screens.issues.IssuesScreen
@@ -86,6 +87,21 @@ fun Navigation(
                 VolumeDetailsScreen(
                     navController = navController, volumeApiId
                 )
+            }
+        }
+
+        // WebView
+        composable(
+            route = Screen.WebViewScreen.route.plus(Screen.WebViewScreen.objectPath),
+            arguments = listOf(navArgument(Screen.WebViewScreen.objectName) {
+                type = NavType.StringType
+            })
+        ) {
+            val url = it.arguments?.getString(Screen.WebViewScreen.objectName)?.also {
+                println("Navigated to URL: $it")
+            }
+            url?.let { webUrl ->
+                ComicWebView(mUrl = webUrl)
             }
         }
     }
