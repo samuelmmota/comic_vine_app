@@ -8,6 +8,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.core.text.HtmlCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,7 +18,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-
+data class ComicHtmlElement(
+    val text: AnnotatedString? = null,
+    val imageUrl: String? = null
+)
 object Utils {
     suspend fun parseHtmlAsync(html: String): Spanned {
         return withContext(Dispatchers.IO) {
@@ -151,5 +155,74 @@ object Utils {
         }
 
         return resolvedParts.joinToString(separator = "/", postfix = "/")
+    }
+
+
+    fun parseHtmlToHtmlElements(spannedHtml: Spanned): List<ComicHtmlElement> {
+        val elements = mutableListOf<ComicHtmlElement>()
+
+        var currentTextStart = 0
+
+        // Iterate over all spans in the HTML
+        spannedHtml.getSpans(0, spannedHtml.length, Any::class.java).forEach { span ->
+            val spanStart = spannedHtml.getSpanStart(span)
+            val spanEnd = spannedHtml.getSpanEnd(span)
+
+            // Handle text before the current span
+            if (currentTextStart < spanStart) {
+                val text = spannedHtml.subSequence(currentTextStart, spanStart).toString()
+                elements.add(ComicHtmlElement(text = AnnotatedString(text)))
+            }
+
+            when (span) {
+                is android.text.style.ImageSpan -> {
+                    // Add image element
+                    elements.add(ComicHtmlElement(imageUrl = span.source))
+                }
+                is android.text.style.StyleSpan -> {
+                    // Handle bold and italic styles
+                    if (span.style == android.graphics.Typeface.BOLD || span.style == android.graphics.Typeface.ITALIC) {
+                        val text = spannedHtml.subSequence(spanStart, spanEnd).toString()
+                        val style = if (span.style == android.graphics.Typeface.BOLD) {
+                            SpanStyle(fontWeight = FontWeight.Bold)
+                        } else {
+                            SpanStyle(fontStyle = FontStyle.Italic)
+                        }
+                        elements.add(ComicHtmlElement(text = buildAnnotatedString {
+                            withStyle(style) {
+                                append(text)
+                            }
+                        }))
+                    }
+                }
+                is android.text.style.URLSpan -> {
+                    // Handle clickable links
+                    val url = span.url
+                    val text = spannedHtml.subSequence(spanStart, spanEnd).toString()
+                    elements.add(ComicHtmlElement(text = buildAnnotatedString {
+                        append(text)
+                        addStyle(
+                            style = SpanStyle(
+                                color = Color.Blue,
+                                textDecoration = TextDecoration.Underline
+                            ),
+                            start = 0,
+                            end = text.length
+                        )
+                        addStringAnnotation(tag = "URL", annotation = url, start = 0, end = text.length)
+                    }))
+                }
+            }
+
+            currentTextStart = spanEnd
+        }
+
+        // Handle remaining text
+        if (currentTextStart < spannedHtml.length) {
+            val text = spannedHtml.subSequence(currentTextStart, spannedHtml.length).toString()
+            elements.add(ComicHtmlElement(text = AnnotatedString(text)))
+        }
+
+        return elements
     }
 }
