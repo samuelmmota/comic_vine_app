@@ -59,23 +59,37 @@ object Utils {
             }
 
             // Handle clickable spans
-            spannedHtml.getSpans(
-                0, spannedHtml.length, android.text.style.ClickableSpan::class.java
-            ).forEach { span ->
-                addStringAnnotation(
-                    tag = "URL",
-                    annotation = span.toString(),
-                    start = spannedHtml.getSpanStart(span),
-                    end = spannedHtml.getSpanEnd(span)
-                )
-                addStyle(
-                    style = SpanStyle(
-                        color = Color.Blue, textDecoration = TextDecoration.Underline
-                    ), start = spannedHtml.getSpanStart(span), end = spannedHtml.getSpanEnd(span)
-                )
-            }
+            spannedHtml.getSpans(0, spannedHtml.length, android.text.style.URLSpan::class.java)
+                .forEach { span ->
+                    val start = spannedHtml.getSpanStart(span)
+                    val end = spannedHtml.getSpanEnd(span)
 
-            // Handle other custom spans (optional)
+                    /*val link =
+                        LinkAnnotation.Url(
+                            span.url,
+                            TextLinkStyles(SpanStyle(color = Color.Blue))
+                        ) {
+                            val url = (it as LinkAnnotation.Url).url
+                            // log some metrics
+                           // uriHandler.openUri(url)
+                            println("Clicked URL: $url")
+                        }
+                    addLink(
+                        start = start,
+                        end = end,
+                        url = link
+                    )*/
+                    addStringAnnotation(
+                        tag = "URL", annotation = span.url, start = start, end = end
+                    )
+                    addStyle(
+                        style = SpanStyle(
+                            color = Color.Blue, textDecoration = TextDecoration.Underline
+                        ), start = start, end = end
+                    )
+                }
+
+            // Handle other custom spans
             spannedHtml.getSpans(
                 0, spannedHtml.length, android.text.style.ForegroundColorSpan::class.java
             ).forEach { span ->
@@ -118,5 +132,24 @@ object Utils {
 
     fun Pair<FetchSortSetting, FetchOrderSetting>.toSortStringFormat(): String {
         return "${first.jsonName}:${this.second.jsonName}"
+    }
+
+    fun resolvePath(inputPath: String): String {
+        val parts = inputPath.split("/")
+        val resolvedParts = mutableListOf<String>()
+
+        for (part in parts) {
+            when {
+                part.isEmpty() || part == "." || part == ".." || part == "https:" || part == "www.comicvine.com" || part == "comicvine.gamespot.com" -> {
+                    continue
+                }
+
+                else -> {
+                    resolvedParts.add(part)
+                }
+            }
+        }
+
+        return resolvedParts.joinToString(separator = "/", postfix = "/")
     }
 }
