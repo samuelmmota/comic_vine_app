@@ -17,7 +17,8 @@ fun ComicResource.toComicResourceUi(): ComicResourceUi {
         name = name,
         thumbnailImageUrl = image?.thumbUrl ?: image?.originalUrl ?: image?.mediumUrl,
         resourceType = resourceType,
-        apiId = apiId
+        apiId = apiId,
+        siteDetailUrl = siteDetailUrl
     )
 }
 

@@ -1,5 +1,6 @@
 package s.m.mota.comicvineandroidnativeapp.ui.component
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -66,17 +67,35 @@ fun RelatedComicResourceContentListView(
                     items(comicResourceItems) { item ->
 
                         RelatedComicResourceItem(item) {
-                            item.apiId?.let { apiId ->
-                                val navigateScreen = when (item.resourceType) {
-                                    ComicResourceType.CHARACTER -> Screen.CharacterDetailsScreen
-                                    ComicResourceType.ISSUE -> Screen.IssueDetailsScreen
-                                    ComicResourceType.VOLUME -> Screen.VolumeDetailsScreen
-                                    else -> null
+                            when (item.resourceType) {
+                                ComicResourceType.CHARACTER,
+                                ComicResourceType.ISSUE,
+                                ComicResourceType.VOLUME -> {
+                                    if (!item.apiId.isNullOrEmpty()) {
+                                        val navigateScreen = when (item.resourceType) {
+                                            ComicResourceType.CHARACTER -> Screen.CharacterDetailsScreen
+                                            ComicResourceType.ISSUE -> Screen.IssueDetailsScreen
+                                            ComicResourceType.VOLUME -> Screen.VolumeDetailsScreen
+                                            else -> null
+                                        }
+                                        navigateScreen?.let { screen ->
+                                            navController.navigate(
+                                                screen.route.plus("/${item.apiId}")
+                                            )
+                                        }
+                                    } else if (!item.siteDetailUrl.isNullOrEmpty()) {
+                                        navController.navigate(
+                                            Screen.WebViewScreen.route.plus("/${Uri.encode(item.siteDetailUrl)}")
+                                        )
+                                    }
                                 }
-                                navigateScreen?.let { screen ->
-                                    navController.navigate(
-                                        screen.route.plus("/${apiId}")
-                                    )
+
+                                else -> {
+                                    if (!item.siteDetailUrl.isNullOrEmpty()) {
+                                        navController.navigate(
+                                            Screen.WebViewScreen.route.plus("/${Uri.encode(item.siteDetailUrl)}")
+                                        )
+                                    }
                                 }
                             }
                         }

@@ -8,4 +8,5 @@ data class ComicResourceUi(
     val thumbnailImageUrl: String?,
     val apiId: String?,
     val resourceType: ComicResourceType?,
+    val siteDetailUrl: String?
 )
