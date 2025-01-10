@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import s.m.mota.comicvineandroidnativeapp.data.model.html.ComicHtmlAnnotatedElement
 import s.m.mota.comicvineandroidnativeapp.data.model.toComicVolumeDetailsUi
 import s.m.mota.comicvineandroidnativeapp.data.repository.remote.volumes.VolumesRepository
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeDetailsUi
-import s.m.mota.comicvineandroidnativeapp.utils.ComicHtmlElement
 import s.m.mota.comicvineandroidnativeapp.utils.Utils
 import s.m.mota.comicvineandroidnativeapp.utils.Utils.parseHtmlAsync
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
@@ -34,8 +34,8 @@ class VolumeDetailsViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow<Boolean>(false)
     val isLoading get() = _isLoading.asStateFlow()
 
-    private val _parsedDescription = MutableStateFlow<List<ComicHtmlElement>?>(null)
-    val parsedDescription: StateFlow<List<ComicHtmlElement>?> get() = _parsedDescription.asStateFlow()
+    private val _parsedDescription = MutableStateFlow<List<ComicHtmlAnnotatedElement>?>(null)
+    val parsedDescription: StateFlow<List<ComicHtmlAnnotatedElement>?> get() = _parsedDescription.asStateFlow()
 
     init {
         if (volumeApiId != null) {

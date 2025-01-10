@@ -15,15 +15,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import s.m.mota.comicvineandroidnativeapp.data.model.html.ComicHtmlAnnotatedElement
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
-import s.m.mota.comicvineandroidnativeapp.utils.ComicHtmlElement
 import s.m.mota.comicvineandroidnativeapp.utils.Utils
 import s.m.mota.comicvineandroidnativeapp.utils.WEBVIEW_COMIC_VINE_URL
 
 @Composable
 fun DisplayAnnotatedHtmlContent(
     title: String,
-    annotatedElements: List<ComicHtmlElement>,
+    annotatedElements: List<ComicHtmlAnnotatedElement>,
     navController: NavController,
     modifier: Modifier = Modifier
         .fillMaxWidth()

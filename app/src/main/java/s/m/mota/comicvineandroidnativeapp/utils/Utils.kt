@@ -12,16 +12,14 @@ import androidx.compose.ui.text.withStyle
 import androidx.core.text.HtmlCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import s.m.mota.comicvineandroidnativeapp.data.model.html.ComicHtmlAnnotatedElement
 import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchOrderSetting
 import s.m.mota.comicvineandroidnativeapp.data.model.response.FetchSortSetting
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-data class ComicHtmlElement(
-    val text: AnnotatedString? = null,
-    val imageUrl: String? = null
-)
+
 object Utils {
     suspend fun parseHtmlAsync(html: String): Spanned {
         return withContext(Dispatchers.IO) {
@@ -158,8 +156,8 @@ object Utils {
     }
 
 
-    fun parseHtmlToHtmlElements(spannedHtml: Spanned): List<ComicHtmlElement> {
-        val elements = mutableListOf<ComicHtmlElement>()
+    fun parseHtmlToHtmlElements(spannedHtml: Spanned): List<ComicHtmlAnnotatedElement> {
+        val elements = mutableListOf<ComicHtmlAnnotatedElement>()
 
         var currentTextStart = 0
 
@@ -171,13 +169,13 @@ object Utils {
             // Handle text before the current span
             if (currentTextStart < spanStart) {
                 val text = spannedHtml.subSequence(currentTextStart, spanStart).toString()
-                elements.add(ComicHtmlElement(text = AnnotatedString(text)))
+                elements.add(ComicHtmlAnnotatedElement(text = AnnotatedString(text)))
             }
 
             when (span) {
                 is android.text.style.ImageSpan -> {
                     // Add image element
-                    elements.add(ComicHtmlElement(imageUrl = span.source))
+                    elements.add(ComicHtmlAnnotatedElement(imageUrl = span.source))
                 }
                 is android.text.style.StyleSpan -> {
                     // Handle bold and italic styles
@@ -188,7 +186,7 @@ object Utils {
                         } else {
                             SpanStyle(fontStyle = FontStyle.Italic)
                         }
-                        elements.add(ComicHtmlElement(text = buildAnnotatedString {
+                        elements.add(ComicHtmlAnnotatedElement(text = buildAnnotatedString {
                             withStyle(style) {
                                 append(text)
                             }
@@ -199,7 +197,7 @@ object Utils {
                     // Handle clickable links
                     val url = span.url
                     val text = spannedHtml.subSequence(spanStart, spanEnd).toString()
-                    elements.add(ComicHtmlElement(text = buildAnnotatedString {
+                    elements.add(ComicHtmlAnnotatedElement(text = buildAnnotatedString {
                         append(text)
                         addStyle(
                             style = SpanStyle(
@@ -220,7 +218,7 @@ object Utils {
         // Handle remaining text
         if (currentTextStart < spannedHtml.length) {
             val text = spannedHtml.subSequence(currentTextStart, spannedHtml.length).toString()
-            elements.add(ComicHtmlElement(text = AnnotatedString(text)))
+            elements.add(ComicHtmlAnnotatedElement(text = AnnotatedString(text)))
         }
 
         return elements
