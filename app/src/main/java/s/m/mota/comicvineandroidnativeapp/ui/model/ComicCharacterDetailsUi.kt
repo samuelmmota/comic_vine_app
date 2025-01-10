@@ -6,8 +6,8 @@ data class ComicCharacterDetailsUi(
     val realName: String?,
     val imageUrl: String?,
     val aliases: List<String>?,
-    val creators: List<String>?,
-    val powers: List<String>?,
+    val creatorsUi: List<ComicResourceUi>?,
+    val powersUi: List<ComicResourceUi>?,
     val firstAppearedInIssue: ComicResourceUi?,//replace to ComicIssueUI to be a clickable
     val description: String?,
     val publisher: String?,

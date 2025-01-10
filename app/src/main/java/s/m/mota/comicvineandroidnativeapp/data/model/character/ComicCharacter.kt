@@ -68,10 +68,6 @@ data class ComicCharacter(
 
     val creatorsFormated: String? get() = creatorsList?.joinToString(", ")
 
-    val powersList: List<String>? get() = powers?.map { it.name }?.takeIf { it.isNotEmpty() }
-
-    val powersFormatedString: String? get() = powersList?.joinToString(", ")
-
     val characterApiId: String? get() = apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()
 
     val issuesDiedInList: List<String>? get() = issuesDiedIn?.mapNotNull { it.name }
