@@ -36,8 +36,8 @@ fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
         imageUrl = image?.superUrl ?: image?.screenLargeUrl ?: image?.screenUrl
         ?: image?.originalUrl,
         aliases = aliasesList,
-        creators = creatorsList,
-        powers = powersList,
+        creatorsUi = creators?.toListOfComicResourceUi(),
+        powersUi = powers?.toListOfComicResourceUi(),
         firstAppearedInIssue = firstAppearedInIssue?.toComicResourceUi(),
         description = description,
         publisher = publisher?.name,

@@ -48,6 +48,7 @@ enum class ComicResourceType(val typeName: String) {
     STORY_ARC("story_arc"), VOLUME("volume"), PUBLISHER("publisher"), PERSON("person"), TEAM("team"), VIDEO(
         "video"
     ),
+    POWER("power"),
     SERIES(
         "series"
     );

@@ -179,11 +179,6 @@ fun CharacterDetailsView(
             contentStyle = MaterialTheme.typography.bodyMedium
         )
 
-        HorizontalScrollableRowSection(
-            stringResource(R.string.creators) + ":",
-            characterUi.creators ?: listOf(stringResource(R.string.unknown_information))
-        )
-
         AnnotatedHeaderContent(
             header = "Gender: ",
             content = characterUi.gender ?: stringResource(R.string.unknown_information),
@@ -203,14 +198,6 @@ fun CharacterDetailsView(
             ),
             contentStyle = MaterialTheme.typography.bodyMedium
         )
-
-        characterUi.firstAppearedInIssue?.let { comicResource ->
-            RelatedComicResourceContentListView(
-                comicResourceItems = listOf(comicResource),
-                title = stringResource(R.string.first_appearance),
-                navController = navController
-            )
-        }
 
         AnnotatedHeaderContent(
             header = "Appears in ",
@@ -233,6 +220,22 @@ fun CharacterDetailsView(
             contentStyle = MaterialTheme.typography.bodyMedium
         )
 
+        characterUi.creatorsUi?.let { comicResource ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = comicResource,
+                title = stringResource(R.string.creators) + ":",
+                navController = navController
+            )
+        }
+
+        characterUi.firstAppearedInIssue?.let { comicResource ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = listOf(comicResource),
+                title = stringResource(R.string.first_appearance),
+                navController = navController
+            )
+        }
+
         characterUi.issuesDiedIn?.let { comicResourceList ->
             RelatedComicResourceContentListView(
                 comicResourceItems = comicResourceList,
@@ -241,9 +244,12 @@ fun CharacterDetailsView(
             )
         }
 
-        HorizontalScrollableRowSection(
-            stringResource(R.string.powers) + ":",
-            characterUi.powers ?: listOf(stringResource(R.string.unknown_information))
-        )
+        characterUi.powersUi?.let { comicResource ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = comicResource,
+                title = stringResource(R.string.powers) + ":",
+                navController = navController
+            )
+        }
     }
 }
