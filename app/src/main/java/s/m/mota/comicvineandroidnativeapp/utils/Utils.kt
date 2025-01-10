@@ -169,14 +169,17 @@ object Utils {
             // Handle text before the current span
             if (currentTextStart < spanStart) {
                 val text = spannedHtml.subSequence(currentTextStart, spanStart).toString()
-                elements.add(ComicHtmlAnnotatedElement(text = AnnotatedString(text)))
+                elements.add(ComicHtmlAnnotatedElement.Text(content = AnnotatedString(text)))
             }
 
             when (span) {
                 is android.text.style.ImageSpan -> {
                     // Add image element
-                    elements.add(ComicHtmlAnnotatedElement(imageUrl = span.source))
+                    span.source?.let {
+                        elements.add(ComicHtmlAnnotatedElement.Image(imageUrl = it))
+                    }
                 }
+
                 is android.text.style.StyleSpan -> {
                     // Handle bold and italic styles
                     if (span.style == android.graphics.Typeface.BOLD || span.style == android.graphics.Typeface.ITALIC) {
@@ -186,29 +189,35 @@ object Utils {
                         } else {
                             SpanStyle(fontStyle = FontStyle.Italic)
                         }
-                        elements.add(ComicHtmlAnnotatedElement(text = buildAnnotatedString {
+                        elements.add(ComicHtmlAnnotatedElement.Text(content = buildAnnotatedString {
                             withStyle(style) {
                                 append(text)
                             }
                         }))
                     }
                 }
+
                 is android.text.style.URLSpan -> {
                     // Handle clickable links
                     val url = span.url
                     val text = spannedHtml.subSequence(spanStart, spanEnd).toString()
-                    elements.add(ComicHtmlAnnotatedElement(text = buildAnnotatedString {
-                        append(text)
-                        addStyle(
-                            style = SpanStyle(
-                                color = Color.Blue,
-                                textDecoration = TextDecoration.Underline
-                            ),
-                            start = 0,
-                            end = text.length
-                        )
-                        addStringAnnotation(tag = "URL", annotation = url, start = 0, end = text.length)
-                    }))
+                    elements.add(ComicHtmlAnnotatedElement.Url(urlText = text, urlLink = url))
+                }
+
+                is android.text.style.AbsoluteSizeSpan -> {
+                    val size = span.size
+                    val text = spannedHtml.subSequence(spanStart, spanEnd).toString()
+                    if (size > 24) { // Assuming larger sizes are titles
+                        elements.add(ComicHtmlAnnotatedElement.Title(title = text))
+                    }
+                }
+
+                is android.text.style.RelativeSizeSpan -> {
+                    val sizeFactor = span.sizeChange
+                    val text = spannedHtml.subSequence(spanStart, spanEnd).toString()
+                    if (sizeFactor > 1.2f) { // Assuming larger size factor indicates a header
+                        elements.add(ComicHtmlAnnotatedElement.Header(header = text))
+                    }
                 }
             }
 
@@ -218,7 +227,7 @@ object Utils {
         // Handle remaining text
         if (currentTextStart < spannedHtml.length) {
             val text = spannedHtml.subSequence(currentTextStart, spannedHtml.length).toString()
-            elements.add(ComicHtmlAnnotatedElement(text = AnnotatedString(text)))
+            elements.add(ComicHtmlAnnotatedElement.Text(content = AnnotatedString(text)))
         }
 
         return elements
