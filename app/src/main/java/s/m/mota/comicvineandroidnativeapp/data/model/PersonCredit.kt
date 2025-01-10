@@ -9,7 +9,7 @@ data class PersonCredit(
     @SerializedName("role") val role: String?,
     @SerializedName("count") val issueCount: String?,
     @SerializedName("api_detail_url") val apiDetailUrl: String?, // URL to the issue detail
-    @SerializedName("site_detail_url") val siteDetailUrl: String?,
+    @SerializedName("site_detail_url") override val siteDetailUrl: String?,
     override val image: Image?,
 ) : ComicResource {
     override val apiId get(): String? = apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()

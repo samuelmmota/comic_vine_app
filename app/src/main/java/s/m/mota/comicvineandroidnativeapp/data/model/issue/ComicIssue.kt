@@ -39,7 +39,7 @@ data class ComicIssue(
     @SerializedName("name") override val name: String?, // Name of the issue
     @SerializedName("object_credits") val objectCredits: List<ObjectCredit>?, // Objects in the issue
     @SerializedName("person_credits") val personCredits: List<PersonCredit>?, // People who worked on the issue
-    @SerializedName("site_detail_url") val siteDetailUrl: String?, // URL to the issue on Giant Bomb
+    @SerializedName("site_detail_url") override val siteDetailUrl: String?, // URL to the issue on Giant Bomb
     @SerializedName("store_date") val storeDate: String?, // Store release date
     @SerializedName("story_arc_credits") val storyArcCredits: List<StoryArcCredits>?, // Story arcs in the issue
     @SerializedName("team_credits") val teamCredits: List<TeamCredit>?, // Teams in the issue

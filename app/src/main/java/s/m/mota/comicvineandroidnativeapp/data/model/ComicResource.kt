@@ -7,5 +7,6 @@ interface ComicResource {
     val name: String?
     val image: Image?
     val apiId: String?
+    val siteDetailUrl: String?
     val resourceType: ComicResourceType
 }

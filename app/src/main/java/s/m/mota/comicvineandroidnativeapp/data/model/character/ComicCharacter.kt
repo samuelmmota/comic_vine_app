@@ -26,7 +26,7 @@ data class ComicCharacter(
     @SerializedName("origin") val characterType: Origin?,
     @SerializedName("publisher") val publisher: Publisher?,
     @SerializedName("real_name") val realName: String?,
-    @SerializedName("site_detail_url") val siteDetailUrl: String?,
+    @SerializedName("site_detail_url") override val siteDetailUrl: String?,
     @SerializedName("powers") val powers: List<Power>?,
     @SerializedName("creators") val creators: List<ComicCreator>?,
     @SerializedName("issues_died_in") val issuesDiedIn: List<ComicIssue>?,

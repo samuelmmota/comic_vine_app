@@ -25,7 +25,7 @@ data class ComicVolume(
     @SerializedName("people") val personCredits: List<PersonCredit>?,
     @SerializedName("publisher") val publisher: Publisher?,
     @SerializedName("issues") val issues: List<ComicIssue>?,
-    @SerializedName("site_detail_url") val siteDetailUrl: String?,
+    @SerializedName("site_detail_url") override val siteDetailUrl: String?,
     @SerializedName("start_year") val startYear: String?,
     @SerializedName("teams") val teamCredits: List<TeamCredit>?
 ) : ComicResource {

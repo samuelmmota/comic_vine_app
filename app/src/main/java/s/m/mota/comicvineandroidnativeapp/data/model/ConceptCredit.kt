@@ -7,7 +7,7 @@ data class ConceptCredit(
     @SerializedName("id") override val id: Int?,
     @SerializedName("name") override val name: String?,
     @SerializedName("api_detail_url") val apiDetailUrl: String?,
-    @SerializedName("site_detail_url") val siteDetailUrl: String?,
+    @SerializedName("site_detail_url") override val siteDetailUrl: String?,
     override val image: Image?,
 ) : ComicResource {
     override val apiId get(): String? = apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()
