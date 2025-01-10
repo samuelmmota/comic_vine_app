@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
+import com.skydoves.landscapist.coil.CoilImage
 import s.m.mota.comicvineandroidnativeapp.data.model.html.ComicHtmlAnnotatedElement
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.utils.Utils
@@ -56,9 +56,8 @@ fun DisplayAnnotatedHtmlContent(
                     })
             }
             element.imageUrl?.let { imageUrl ->
-                AsyncImage(
-                    model = imageUrl,
-                    contentDescription = null,
+                CoilImage(
+                    imageModel = { imageUrl },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
