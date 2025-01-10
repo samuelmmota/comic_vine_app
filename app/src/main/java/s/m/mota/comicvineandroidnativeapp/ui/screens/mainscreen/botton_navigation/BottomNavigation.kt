@@ -19,8 +19,8 @@ fun BottomNavigationUI(navController: NavController, pagerState: PagerState) {
                 Screen.IssuesNav,
                 Screen.CharacterNav,
                 Screen.VolumesNav,
-                Screen.MoviesNav,
-                Screen.PowersNav,
+                //Screen.MoviesNav,
+                //Screen.PowersNav,
             )
         } else {
             listOf(
