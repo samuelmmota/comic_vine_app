@@ -14,10 +14,10 @@ data class ComicVolumeDetailsUi(
     val startYear: String?,
     val deck: String?,
     val description: String?,
-    val locationCreditsName: List<String>?,
-    val characterCreditsName: List<String>?,
-    val objectCreditsName: List<String>?,
-    val personCreditsName: List<String>?,
-    val teamCreditsName: List<String>?,
+    val locationCreditsUi:  List<ComicResourceUi>?,
+    val characterCreditsUi: List<ComicResourceUi>?,
+    val objectCreditsUi:  List<ComicResourceUi>?,
+    val personCreditsUi: List<ComicResourceUi>?,
+    val teamCreditsUi:  List<ComicResourceUi>?,
     val siteDetailUrl: String?
 )

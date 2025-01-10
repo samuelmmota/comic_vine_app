@@ -52,34 +52,29 @@ fun ComicCharacter.toComicCharacterDetailsUi(): ComicCharacterDetailsUi {
 }
 
 fun ComicCharacter.toComicCharacterUi(): ComicCharacterUi {
-    return ComicCharacterUi(
-        id = id?.toString(),
+    return ComicCharacterUi(id = id?.toString(),
         name = name,
         imageUrl = image?.originalUrl ?: image?.mediumUrl,
         aliases = aliasesAsString,
         publisher = publisher?.name,
         characterApiId = characterApiId,
         dateAdded = dateAdded?.let { formatedDateMessage(it) },
-        dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) }
-    )
+        dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) })
 }
 
 fun ComicIssue.toComicIssueUi(): ComicIssueUi {
-    return ComicIssueUi(
-        id = id?.toString(),
+    return ComicIssueUi(id = id?.toString(),
         name = name,
         imageUrl = image?.originalUrl ?: image?.mediumUrl,
         issueNumber = issueNumber,
         issueApiId = apiId,
         volume = volume?.toComicVolumeUi(),
         dateAdded = dateAdded?.let { formatedDateMessage(it) },
-        dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) }
-    )
+        dateLastUpdated = dateLastUpdated?.let { formatedDateMessage(it) })
 }
 
 fun ComicIssue.toComicIssueDetailsUi(): ComicIssueDetailsUi {
-    return ComicIssueDetailsUi(
-        id = id?.toString(),
+    return ComicIssueDetailsUi(id = id?.toString(),
         name = name,
         issueNumber = issueNumber,
         issueApiId = apiId,
@@ -116,8 +111,7 @@ fun ComicIssue.toComicIssueDetailsUi(): ComicIssueDetailsUi {
 }
 
 fun ComicVolume.toComicVolumeUi(): ComicVolumeUi {
-    return ComicVolumeUi(
-        id = id?.toString(),
+    return ComicVolumeUi(id = id?.toString(),
         name = name,
         imageUrl = image?.originalUrl ?: image?.mediumUrl,
         volumeApiId = volumeApiId,
@@ -126,13 +120,11 @@ fun ComicVolume.toComicVolumeUi(): ComicVolumeUi {
         lastIssueName = lastIssue?.name,
         publisher = publisher?.name,
         startYear = startYear,
-        dateAdded = dateAdded?.let { formatedDateMessage(it) }
-    )
+        dateAdded = dateAdded?.let { formatedDateMessage(it) })
 }
 
 fun ComicVolume.toComicVolumeDetailsUi(): ComicVolumeDetailsUi {
-    return ComicVolumeDetailsUi(
-        id = id?.toString(),
+    return ComicVolumeDetailsUi(id = id?.toString(),
         name = name,
         imageUrl = image?.superUrl ?: image?.screenLargeUrl ?: image?.screenUrl
         ?: image?.originalUrl,
@@ -146,11 +138,37 @@ fun ComicVolume.toComicVolumeDetailsUi(): ComicVolumeDetailsUi {
         lastIssue = lastIssue?.toComicIssueUi(),
         publisher = publisher?.name,
         startYear = startYear,
-        locationCreditsName = locationCreditsList,
-        characterCreditsName = characterCreditsList,
-        objectCreditsName = objectCreditsList,
-        personCreditsName = personCreditsList,
-        teamCreditsName = teamCreditsList,
+        locationCreditsUi = locationCredits?.map {
+            val updateResource = it.toComicResourceUi()
+            val name = if (it.name.isNullOrEmpty()) "" else "${it.name}"
+            val issueCount = if (it.issueCount.isNullOrEmpty()) "" else " (${it.issueCount} issues)"
+            updateResource.copy(name = name + issueCount)
+        }?.takeIf { it.isNotEmpty() },
+        characterCreditsUi = characterCredits?.map {
+            val updateResource = it.toComicResourceUi()
+            val name = if (it.name.isNullOrEmpty()) "" else "${it.name}"
+            val issueCount = if (it.issueCount.isNullOrEmpty()) "" else " (${it.issueCount} issues)"
+            updateResource.copy(name = name + issueCount)
+        }?.takeIf { it.isNotEmpty() },
+        objectCreditsUi = objectCredits?.map {
+            val updateResource = it.toComicResourceUi()
+            val name = if (it.name.isNullOrEmpty()) "" else "${it.name}"
+            val issueCount = if (it.issueCount.isNullOrEmpty()) "" else " (${it.issueCount} issues)"
+            updateResource.copy(name = name + issueCount)
+        }?.takeIf { it.isNotEmpty() },
+        personCreditsUi = personCredits?.map {
+            val updatedPerson = it.toComicResourceUi()
+            val name = if (it.name.isNullOrEmpty()) "" else "${it.name}"
+            val role = if (it.role.isNullOrEmpty()) "" else "/${it.role}"
+            val issueCount = if (it.issueCount.isNullOrEmpty()) "" else " (${it.issueCount} issues)"
+            updatedPerson.copy(name = name + role + issueCount)
+        }?.takeIf { it.isNotEmpty() },
+        teamCreditsUi = teamCredits?.map {
+            val updateResource = it.toComicResourceUi()
+            val name = if (it.name.isNullOrEmpty()) "" else "${it.name}"
+            val issueCount = if (it.issueCount.isNullOrEmpty()) "" else " (${it.issueCount} issues)"
+            updateResource.copy(name = name + issueCount)
+        }?.takeIf { it.isNotEmpty() },
         siteDetailUrl = siteDetailUrl
     )
 }

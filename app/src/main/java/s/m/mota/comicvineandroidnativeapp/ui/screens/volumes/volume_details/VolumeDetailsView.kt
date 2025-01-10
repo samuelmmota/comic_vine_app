@@ -23,9 +23,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.ComicCoilImage
 import s.m.mota.comicvineandroidnativeapp.ui.component.HorizontalScrollableRowSection
+import s.m.mota.comicvineandroidnativeapp.ui.component.RelatedComicResourceContentListView
 import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHeaderContent
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeDetailsUi
 
@@ -87,7 +89,7 @@ fun VolumeDetailsImageView(
 }
 
 @Composable
-fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
+fun VolumeDetailsView(navController: NavController, volumeUi: ComicVolumeDetailsUi) {
 
     Column(
         modifier = Modifier
@@ -168,25 +170,52 @@ fun VolumeDetailsView(volumeUi: ComicVolumeDetailsUi) {
             contentStyle = MaterialTheme.typography.bodyMedium
         )
 
-        HorizontalScrollableRowSection(
-            "Location Credits :",
-            volumeUi.locationCreditsName ?: listOf(stringResource(R.string.unknown_information))
-        )
-        HorizontalScrollableRowSection(
-            "Character Credits :",
-            volumeUi.characterCreditsName ?: listOf(stringResource(R.string.unknown_information))
-        )
-        HorizontalScrollableRowSection(
-            "Object Credits :",
-            volumeUi.objectCreditsName ?: listOf(stringResource(R.string.unknown_information))
-        )
-        HorizontalScrollableRowSection(
-            "Person Credits :",
-            volumeUi.personCreditsName ?: listOf(stringResource(R.string.unknown_information))
-        )
-        HorizontalScrollableRowSection(
-            "Team Credits :",
-            volumeUi.teamCreditsName ?: listOf(stringResource(R.string.unknown_information))
-        )
+        volumeUi.locationCreditsUi?.let { locationCredits ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = locationCredits,
+                title = "Location Credits:",
+                navController = navController
+            )
+        }
+
+        volumeUi.personCreditsUi?.let { personCredits ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = personCredits,
+                title = "Person Credits :",
+                navController = navController
+            )
+        }
+
+        volumeUi.characterCreditsUi?.let { characterCredits ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = characterCredits,
+                title = "Character Credits :",
+                navController = navController
+            )
+        }
+
+        volumeUi.teamCreditsUi?.let { teamCredits ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = teamCredits,
+                title = "Team Credits:",
+                navController = navController
+            )
+        }
+
+        volumeUi.objectCreditsUi?.let { objectCredits ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = objectCredits,
+                title = "Object Credits:",
+                navController = navController
+            )
+        }
+
+        volumeUi.teamCreditsUi?.let { teamCredits ->
+            RelatedComicResourceContentListView(
+                comicResourceItems = teamCredits,
+                title = "Team Credits:",
+                navController = navController
+            )
+        }
     }
 }

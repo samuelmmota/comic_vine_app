@@ -7,6 +7,7 @@ data class PersonCredit(
     @SerializedName("id") override val id: Int?,
     @SerializedName("name") override val name: String?,
     @SerializedName("role") val role: String?,
+    @SerializedName("count") val issueCount: String?,
     @SerializedName("api_detail_url") val apiDetailUrl: String?, // URL to the issue detail
     @SerializedName("site_detail_url") val siteDetailUrl: String?,
     override val image: Image?,

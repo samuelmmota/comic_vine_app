@@ -13,6 +13,7 @@ data class ComicCharacter(
     @SerializedName("api_detail_url") val apiDetailUrl: String?,
     @SerializedName("birth") val birth: String?,
     @SerializedName("count_of_issue_appearances") val countOfIssueAppearances: Int?,
+    @SerializedName("count") val issueCount: String?,
     @SerializedName("date_added") val dateAdded: String?,
     @SerializedName("date_last_updated") val dateLastUpdated: String?,
     @SerializedName("deck") val deck: String?,

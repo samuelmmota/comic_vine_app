@@ -6,6 +6,7 @@ import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 data class TeamCredit(
     @SerializedName("id") override val id: Int?,
     @SerializedName("name") override  val name: String?,
+    @SerializedName("count") val issueCount: String?,
     @SerializedName("api_detail_url") val apiDetailUrl: String?, // URL to the issue detail
     @SerializedName("site_detail_url") val siteDetailUrl: String?,
     override val image: Image?,

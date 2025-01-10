@@ -1,15 +1,15 @@
 package s.m.mota.comicvineandroidnativeapp.data.model
 
 import com.google.gson.annotations.SerializedName
-import s.m.mota.comicvineandroidnativeapp.data.model.character.CharacterCredit
+import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
 
 data class ComicVolume(
     @SerializedName("aliases") val aliases: String?,
     @SerializedName("api_detail_url") val apiDetailUrl: String?,
-    @SerializedName("character_credits") val characterCredits: List<CharacterCredit>?,
-    @SerializedName("concept_credits") val conceptCredits: List<ConceptCredit>?,
+    @SerializedName("characters") val characterCredits: List<ComicCharacter>?,
+    @SerializedName("concepts") val conceptCredits: List<ConceptCredit>?,
     @SerializedName("count_of_issues") val countOfIssues: Int?,
     @SerializedName("date_added") val dateAdded: String?,
     @SerializedName("date_last_updated") val dateLastUpdated: String?,
@@ -19,14 +19,15 @@ data class ComicVolume(
     @SerializedName("id") override val id: Int?,
     @SerializedName("image") override val image: Image?,
     @SerializedName("last_issue") val lastIssue: ComicIssue?,
-    @SerializedName("location_credits") val locationCredits: List<LocationCredit>?,
+    @SerializedName("locations") val locationCredits: List<LocationCredit>?,
     @SerializedName("name") override val name: String?,
-    @SerializedName("object_credits") val objectCredits: List<ObjectCredit>?,
-    @SerializedName("person_credits") val personCredits: List<PersonCredit>?,
+    @SerializedName("objects") val objectCredits: List<ObjectCredit>?,
+    @SerializedName("people") val personCredits: List<PersonCredit>?,
     @SerializedName("publisher") val publisher: Publisher?,
+    @SerializedName("issues") val issues: List<ComicIssue>?,
     @SerializedName("site_detail_url") val siteDetailUrl: String?,
     @SerializedName("start_year") val startYear: String?,
-    @SerializedName("team_credits") val teamCredits: List<TeamCredit>?
+    @SerializedName("teams") val teamCredits: List<TeamCredit>?
 ) : ComicResource {
     override val apiId: String? get() = volumeApiId
     override val resourceType get(): ComicResourceType = ComicResourceType.VOLUME
