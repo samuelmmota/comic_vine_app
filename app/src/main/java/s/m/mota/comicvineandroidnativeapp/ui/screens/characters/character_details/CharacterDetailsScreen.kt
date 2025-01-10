@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
-import s.m.mota.comicvineandroidnativeapp.ui.component.text.DisplayHtmlContent
+import s.m.mota.comicvineandroidnativeapp.ui.component.text.DisplayAnnotatedHtmlContent
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 
 @Composable
@@ -87,12 +87,7 @@ fun CharacterDetailsScreen(navController: NavController, characterApiId: String)
                 }
                 item {
                     parsedDescription?.let {
-                        /*AnnotatedHtmlContent(
-                            title = stringResource(R.string.description),
-                            annotatedString = it,
-                            navController = navController)
-                    */
-                        DisplayHtmlContent(title = stringResource(R.string.description),
+                        DisplayAnnotatedHtmlContent(title = stringResource(R.string.description),
                             annotatedElements = it,
                             navController = navController)
                     }

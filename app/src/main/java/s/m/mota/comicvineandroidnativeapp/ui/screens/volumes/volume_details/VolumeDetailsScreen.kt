@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import s.m.mota.comicvineandroidnativeapp.R
 import s.m.mota.comicvineandroidnativeapp.ui.component.CircularIndeterminateProgressBar
-import s.m.mota.comicvineandroidnativeapp.ui.component.text.AnnotatedHtmlContent
+import s.m.mota.comicvineandroidnativeapp.ui.component.text.DisplayAnnotatedHtmlContent
 import s.m.mota.comicvineandroidnativeapp.ui.theme.FloatingActionBackground
 
 @Composable
@@ -82,9 +82,9 @@ fun VolumeDetailsScreen(navController: NavController, volumeApiId: String) {
                 }
                 item {
                     parsedDescription?.let {
-                        AnnotatedHtmlContent(
+                        DisplayAnnotatedHtmlContent(
                             title = stringResource(R.string.description),
-                            annotatedString = it,
+                            annotatedElements = it,
                             navController = navController)
                     }
                 }

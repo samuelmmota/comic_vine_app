@@ -1,6 +1,5 @@
 package s.m.mota.comicvineandroidnativeapp.ui.screens.volumes.volume_details
 
-import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +16,7 @@ import s.m.mota.comicvineandroidnativeapp.data.model.toComicVolumeDetailsUi
 import s.m.mota.comicvineandroidnativeapp.data.repository.remote.volumes.VolumesRepository
 import s.m.mota.comicvineandroidnativeapp.navigation.Screen
 import s.m.mota.comicvineandroidnativeapp.ui.model.ComicVolumeDetailsUi
+import s.m.mota.comicvineandroidnativeapp.utils.ComicHtmlElement
 import s.m.mota.comicvineandroidnativeapp.utils.Utils
 import s.m.mota.comicvineandroidnativeapp.utils.Utils.parseHtmlAsync
 import s.m.mota.comicvineandroidnativeapp.utils.network.DataState
@@ -34,8 +34,8 @@ class VolumeDetailsViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow<Boolean>(false)
     val isLoading get() = _isLoading.asStateFlow()
 
-    private val _parsedDescription = MutableStateFlow<AnnotatedString?>(null)
-    val parsedDescription: StateFlow<AnnotatedString?> get() = _parsedDescription.asStateFlow()
+    private val _parsedDescription = MutableStateFlow<List<ComicHtmlElement>?>(null)
+    val parsedDescription: StateFlow<List<ComicHtmlElement>?> get() = _parsedDescription.asStateFlow()
 
     init {
         if (volumeApiId != null) {
@@ -46,7 +46,7 @@ class VolumeDetailsViewModel @Inject constructor(
     private suspend fun parseHtml(description: String) {
         withContext(Dispatchers.IO) {
             val parsedText = parseHtmlAsync(description)
-            val annotatedString = Utils.parseHtmlToAnnotatedString(parsedText)
+            val annotatedString = Utils.parseHtmlToHtmlElements(parsedText)
             _parsedDescription.value = annotatedString
         }
     }
