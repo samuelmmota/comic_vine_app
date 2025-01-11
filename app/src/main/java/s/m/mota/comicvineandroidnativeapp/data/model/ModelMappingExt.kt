@@ -18,7 +18,8 @@ fun ComicResource.toComicResourceUi(): ComicResourceUi {
         thumbnailImageUrl = image?.thumbUrl ?: image?.originalUrl ?: image?.mediumUrl,
         resourceType = resourceType,
         apiId = apiId,
-        siteDetailUrl = siteDetailUrl
+        siteDetailUrl = siteDetailUrl,
+        alternativeSiteDetailUrl = alternativeSiteDetailUrl
     )
 }
 
@@ -137,7 +138,7 @@ fun ComicVolume.toComicVolumeDetailsUi(): ComicVolumeDetailsUi {
         countOfIssues = countOfIssues?.toString(),
         firstIssue = firstIssue?.toComicIssueUi(),
         lastIssue = lastIssue?.toComicIssueUi(),
-        publisher = publisher?.name,
+        publisher = publisher?.toComicResourceUi(),
         startYear = startYear,
         locationCreditsUi = locationCredits?.map {
             val updateResource = it.toComicResourceUi()

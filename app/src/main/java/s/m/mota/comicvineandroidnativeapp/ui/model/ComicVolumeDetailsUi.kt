@@ -10,7 +10,7 @@ data class ComicVolumeDetailsUi(
     val dateLastUpdated: String?,
     val firstIssue: ComicIssueUi?,
     val lastIssue: ComicIssueUi?,
-    val publisher: String?,
+    val publisher: ComicResourceUi?,
     val startYear: String?,
     val deck: String?,
     val description: String?,
