@@ -81,6 +81,11 @@ fun VolumeDetailsScreen(navController: NavController, volumeApiId: String) {
                 }
                 item {
                     volumeDetails?.let {
+                        VolumeCard(navController, it)
+                    }
+                }
+                item {
+                    volumeDetails?.let {
                         VolumeDetailsView(navController, it)
                     }
                 }

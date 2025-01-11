@@ -43,4 +43,6 @@
 <string name="sort_updated_date">Updated Date</string>
 <string name="sort_ascending">Older First</string>
 <string name="sort_descending">Newer First</string>
+<string name="published_by">Published by</string>
+
 </resources>
