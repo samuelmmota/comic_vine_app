@@ -2,6 +2,7 @@ package s.m.mota.comicvineandroidnativeapp.data.model
 
 import com.google.gson.annotations.SerializedName
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
+import s.m.mota.comicvineandroidnativeapp.utils.WEBVIEW_COMIC_VINE_URL
 
 data class TeamCredit(
     @SerializedName("id") override val id: Int?,
@@ -13,4 +14,12 @@ data class TeamCredit(
 ): ComicResource {
     override val apiId get(): String? =  apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()
     override val resourceType get(): ComicResourceType = ComicResourceType.TEAM
+    override val alternativeSiteDetailUrl
+        get(): String? {
+            return if (!apiId.isNullOrEmpty()) {
+                WEBVIEW_COMIC_VINE_URL + "${resourceType.typeName}/${apiId}"
+            } else {
+                null
+            }
+        }
 }

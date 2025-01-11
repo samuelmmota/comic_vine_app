@@ -12,6 +12,7 @@ import s.m.mota.comicvineandroidnativeapp.data.model.StoryArcCredits
 import s.m.mota.comicvineandroidnativeapp.data.model.TeamCredit
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
+import s.m.mota.comicvineandroidnativeapp.utils.WEBVIEW_COMIC_VINE_URL
 
 data class ComicIssue(
     @SerializedName("aliases") val aliases: String?, // List of aliases separated by \n
@@ -48,6 +49,14 @@ data class ComicIssue(
 ) : ComicResource {
     override val apiId get(): String? =  apiDetailUrl?.split("/")?.dropLast(1)?.lastOrNull()
     override val resourceType get(): ComicResourceType = ComicResourceType.ISSUE
+    override val alternativeSiteDetailUrl
+        get(): String? {
+            return if (!apiId.isNullOrEmpty()) {
+                WEBVIEW_COMIC_VINE_URL + "${resourceType.typeName}/${apiId}"
+            } else {
+                null
+            }
+        }
 
     val aliasesList: List<String>?
         get() {

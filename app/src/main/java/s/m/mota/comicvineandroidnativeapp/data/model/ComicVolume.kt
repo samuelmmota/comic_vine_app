@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import s.m.mota.comicvineandroidnativeapp.data.model.character.ComicCharacter
 import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
+import s.m.mota.comicvineandroidnativeapp.utils.WEBVIEW_COMIC_VINE_URL
 
 data class ComicVolume(
     @SerializedName("aliases") val aliases: String?,
@@ -31,6 +32,14 @@ data class ComicVolume(
 ) : ComicResource {
     override val apiId: String? get() = volumeApiId
     override val resourceType get(): ComicResourceType = ComicResourceType.VOLUME
+    override val alternativeSiteDetailUrl
+        get(): String? {
+            return if (!apiId.isNullOrEmpty()) {
+                WEBVIEW_COMIC_VINE_URL + "${resourceType.typeName}/${apiId}"
+            } else {
+                null
+            }
+        }
 
     val aliasesList: List<String>?
         get() {

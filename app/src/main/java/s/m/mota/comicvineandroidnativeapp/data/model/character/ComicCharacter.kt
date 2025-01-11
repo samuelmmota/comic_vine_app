@@ -7,6 +7,7 @@ import s.m.mota.comicvineandroidnativeapp.data.model.issue.ComicIssue
 import s.m.mota.comicvineandroidnativeapp.data.model.Image
 import s.m.mota.comicvineandroidnativeapp.data.model.Publisher
 import s.m.mota.comicvineandroidnativeapp.data.model.response.ComicResourceType
+import s.m.mota.comicvineandroidnativeapp.utils.WEBVIEW_COMIC_VINE_URL
 
 data class ComicCharacter(
     @SerializedName("aliases") val aliases: String?,
@@ -46,6 +47,14 @@ data class ComicCharacter(
 ): ComicResource {
     override val apiId get(): String? = characterApiId
     override val resourceType get(): ComicResourceType = ComicResourceType.CHARACTER
+    override val alternativeSiteDetailUrl
+        get(): String? {
+            return if (!apiId.isNullOrEmpty()) {
+                WEBVIEW_COMIC_VINE_URL + "${resourceType.typeName}/${apiId}"
+            } else {
+                null
+            }
+        }
 
     val genderDescription: String
         get() = when (gender) {
